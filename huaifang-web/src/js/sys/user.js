@@ -343,7 +343,7 @@
                             method: "POST",
                             action: App.href + "/api/sys/user/insert",//表单action
                             ajaxSubmit: true,//是否使用ajax提交表单
-                            rowEleNum: 1,
+                            rowEleNum: 2,
                             beforeSubmit: function () {
                             },
                             beforeSend: function (request) {
@@ -364,150 +364,169 @@
                                 }
                             }],
                             buttonsAlign: "center",
-                            items: [{
-                                type: 'hidden',
-                                name: 'id',
-                                id: 'id'
-                            }, {
-                                type: 'text',
-                                name: 'loginName',
-                                id: 'loginName',
-                                label: '登录名',
-                                cls: 'input-large',
-                                rule: {
-                                    required: true,
-                                    remote: {
-                                        type: "post",
-                                        url: App.href + "/api/noneAuth/unique",
-                                        data: {
-                                            loginName: function () {
-                                                return $("#loginName").val();
-                                            }
-                                        },
-                                        dataType: "json",
-                                        dataFilter: function (data, type) {
-                                            return data;
-                                        }
-                                    }
-                                },
-                                message: {//对应验证提示信息
-                                    required: "请输入登录名",
-                                    remote: "登录名被占用"
-                                }
-                            }, {
-                                type: 'password',
-                                name: 'password',
-                                id: 'password',
-                                label: '密码',
-                                cls: 'input-medium',
-                                rule: {
-                                    required: true,
-                                    minlength: 8,
-                                    maxlength: 64
-                                },
-                                message: {
-                                    required: "请输入密码",
-                                    minlength: "至少{0}位",
-                                    maxlength: "做多{0}位"
-                                }
-                            }, {
-                                type: 'password',
-                                name: 'password2',
-                                id: 'password2',
-                                label: '确认密码',
-                                cls: 'input-medium',
-                                rule: {
-                                    required: true,
-                                    equalTo: "#password"
-                                },
-                                message: {
-                                    required: "请输入确认密码密码",
-                                    equalTo: "与密码不一致"
-                                }
-                            }, {
-                                type: 'text',
-                                name: 'displayName',
-                                id: 'displayName',
-                                label: '昵称',
-                                cls: 'input-large',
-                                rule: {
-                                    required: true
-                                },
-                                message: {
-                                    required: "请输入昵称"
-                                }
-                            }, {
-                                type: 'text',
-                                name: 'contactPhone',
-                                id: 'contactPhone',
-                                label: '手机'
-                            }, {
-                                type: 'text',
-                                name: 'email',
-                                id: 'email',
-                                label: '邮箱',
-                                rule: {
-                                    email: true
-                                },
-                                message: {
-                                    email: "请输入正确的邮箱"
-                                }
-                            }, {
-                                type: 'radioGroup',
-                                name: 'enabled',
-                                id: 'enabled',
-                                label: '是否有效',
-                                inline: true,
-                                items: [{
-                                    value: true,
-                                    text: '有效'
+                            items: [
+                                {
+                                    type: 'hidden',
+                                    name: 'id',
+                                    id: 'id'
                                 }, {
-                                    value: false,
-                                    text: '失效'
-                                }],
-                                rule: {
-                                    required: true
-                                },
-                                message: {
-                                    required: "请选择"
-                                }
-                            }, {
-                                type: 'radioGroup',
-                                name: 'accountNonLocked',
-                                id: 'accountNonLocked',
-                                label: '账号锁定状态',
-                                items: [
-                                    {
+                                    type: 'text',
+                                    name: 'loginName',
+                                    id: 'loginName',
+                                    label: '登录名',
+                                    cls: 'input-large',
+                                    span: 2,
+                                    rule: {
+                                        required: true,
+                                        remote: {
+                                            type: "post",
+                                            url: App.href + "/api/noneAuth/unique",
+                                            data: {
+                                                loginName: function () {
+                                                    return $("#loginName").val();
+                                                }
+                                            },
+                                            dataType: "json",
+                                            dataFilter: function (data, type) {
+                                                return data;
+                                            }
+                                        }
+                                    },
+                                    message: {//对应验证提示信息
+                                        required: "请输入登录名",
+                                        remote: "登录名被占用"
+                                    }
+                                }, {
+                                    type: 'password',
+                                    name: 'password',
+                                    id: 'password',
+                                    span: 2,
+                                    label: '密码',
+                                    cls: 'input-medium',
+                                    rule: {
+                                        required: true,
+                                        minlength: 8,
+                                        maxlength: 64
+                                    },
+                                    message: {
+                                        required: "请输入密码",
+                                        minlength: "至少{0}位",
+                                        maxlength: "做多{0}位"
+                                    }
+                                }, {
+                                    type: 'password',
+                                    name: 'password2',
+                                    span: 2,
+                                    id: 'password2',
+                                    label: '确认密码',
+                                    cls: 'input-medium',
+                                    rule: {
+                                        required: true,
+                                        equalTo: "#password"
+                                    },
+                                    message: {
+                                        required: "请输入确认密码密码",
+                                        equalTo: "与密码不一致"
+                                    }
+                                }, {
+                                    type: 'text',
+                                    name: 'displayName',
+                                    id: 'displayName',
+                                    span: 2,
+                                    label: '昵称',
+                                    cls: 'input-large',
+                                    rule: {
+                                        required: true
+                                    },
+                                    message: {
+                                        required: "请输入昵称"
+                                    }
+                                }, {
+                                    type: 'text',
+                                    name: 'contactPhone',
+                                    id: 'contactPhone',
+                                    span: 2,
+                                    label: '手机'
+                                }, {
+                                    type: 'text',
+                                    name: 'email',
+                                    id: 'email',
+                                    span: 2,
+                                    label: '邮箱',
+                                    rule: {
+                                        email: true
+                                    },
+                                    message: {
+                                        email: "请输入正确的邮箱"
+                                    }
+                                }, {
+                                    type: 'radioGroup',
+                                    name: 'enabled',
+                                    id: 'enabled',
+                                    span: 2,
+                                    label: '是否有效',
+                                    inline: true,
+                                    items: [{
                                         value: true,
-                                        text: '开启'
+                                        text: '有效'
                                     }, {
                                         value: false,
-                                        text: '锁定'
+                                        text: '失效'
+                                    }],
+                                    rule: {
+                                        required: true
+                                    },
+                                    message: {
+                                        required: "请选择"
                                     }
-                                ],
-                                rule: {
-                                    required: true
-                                },
-                                message: {
-                                    required: "请选择"
+                                }, {
+                                    type: 'radioGroup',
+                                    name: 'accountNonLocked',
+                                    id: 'accountNonLocked',
+                                    span: 2,
+                                    label: '账号锁定状态',
+                                    items: [
+                                        {
+                                            value: true,
+                                            text: '开启'
+                                        }, {
+                                            value: false,
+                                            text: '锁定'
+                                        }
+                                    ],
+                                    rule: {
+                                        required: true
+                                    },
+                                    message: {
+                                        required: "请选择"
+                                    }
+                                }, {
+                                    type: 'tree',
+                                    name: 'roles',
+                                    id: 'roles',
+                                    label: '角色',
+                                    url: App.href + "/api/sys/role/treeNodes",
+                                    expandAll: true,
+                                    autoParam: ["id", "name", "pId"],
+                                    chkStyle: "checkbox",
+                                    detail: "如何设置角色?<a target='_blank' href='?u=/api/sys/role/pageList'>点击设置</a>",
+                                    rule: {
+                                        required: true
+                                    },
+                                    message: {
+                                        required: "请选择至少一个角色"
+                                    }
+                                }, {
+                                    type: 'tree',
+                                    name: 'menus',
+                                    id: 'menus',
+                                    label: '功能预览',
+                                    url: App.href + "/api/sys/role/functions",
+                                    expandAll: true,
+                                    autoParam: ["id", "name", "pId"],
+                                    checkable: false
                                 }
-                            }, {
-                                type: 'tree',
-                                name: 'roles',
-                                id: 'roles',
-                                label: '角色',
-                                url: App.href + "/api/sys/role/treeNodes",
-                                expandAll: true,
-                                autoParam: ["id", "name", "pId"],
-                                chkStyle: "checkbox",
-                                detail: "如何设置角色?<a target='_blank' href='?u=/api/sys/role/pageList'>点击设置</a>",
-                                rule: {
-                                    required: true
-                                },
-                                message: {
-                                    required: "请选择至少一个角色"
-                                }
-                            }]
+                            ]
                         };
                         var form = modal.$body.orangeForm(formOpts);
                         modal.show();
