@@ -11,6 +11,8 @@ CREATE TABLE `d_common_query` (
   COMMENT '导出',
   `where_query`    VARCHAR(255)          DEFAULT ''
   COMMENT '参数',
+  `group_query`    VARCHAR(64)  NULL     DEFAULT ''
+  COMMENT 'group语句',
   `order_query`    VARCHAR(128)          DEFAULT ''
   COMMENT '排序',
   `script_content` TEXT         NULL
@@ -23,8 +25,5 @@ CREATE TABLE `d_common_query` (
   DEFAULT CHARSET = utf8
   COMMENT '通用执行sql';
 
-
-ALTER TABLE d_common_query
-  ADD COLUMN `group_query` VARCHAR(64) NULL  DEFAULT ''
-COMMENT 'group语句'
-  AFTER where_query;
+INSERT INTO `d_function` VALUES ('6', '2', '通用查询设置', '1', '1', NULL, '/api/core/commonQuery/list', '4', NULL, NULL);
+INSERT INTO `d_role_function` (role_id, function_id) VALUES ('1', '6');
