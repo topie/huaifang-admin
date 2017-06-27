@@ -515,6 +515,13 @@
                                     },
                                     message: {
                                         required: "请选择至少一个角色"
+                                    },
+                                    change: function (g, v) {
+                                        var module = g._module['menus'];
+                                        var data = module.data("data");
+                                        data.url = App.href + "/api/sys/role/functions?roleIds=" + v;
+                                        g._module['menus'].data("data", data);
+                                        g._refreshItem('menus');
                                     }
                                 }, {
                                     type: 'tree',
