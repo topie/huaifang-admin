@@ -53,7 +53,7 @@
         <javaClientGenerator targetPackage="com.topie.huaifang.database.core.dao"
                              targetProject="${targetBasedir}/src/main/java" type="XMLMAPPER"/>
 
-        <table tableName="d_profile_field" domainObjectName="ProfileField">
+        <table tableName="d_notice" domainObjectName="Notice">
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>
     </context>
