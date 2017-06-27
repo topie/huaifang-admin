@@ -1,6 +1,6 @@
 body {
     padding-top: 90px;
-    background-color: #d73c6b;
+    background-color: #f8f8f8;
 }
 
 .panel-login {
@@ -63,7 +63,7 @@ body {
 }
 
 .btn-login {
-    background-color: #d73c6b;
+    background-color: #7fd2f1;
     outline: none;
     color: #fff;
     font-size: 14px;
@@ -71,14 +71,14 @@ body {
     font-weight: normal;
     padding: 14px 0;
     text-transform: uppercase;
-    border-color: #d73c6b;
+    border-color: #8dc8f1;
 }
 
 .btn-login:hover,
 .btn-login:focus {
     color: #fff;
-    background-color: #d73c6b;
-    border-color: #d73c6b;
+    background-color: #7fd2f1;
+    border-color: #8dc8f1;
 }
 
 .forgot-password {

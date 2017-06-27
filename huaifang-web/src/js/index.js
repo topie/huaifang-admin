@@ -3,7 +3,7 @@
  */
 ;
 (function ($, window, document, undefined) {
-    var token = $.cookie('bi_token');
+    var token = $.cookie('huaifang_token');
     if (token == undefined) {
         window.location.href = '../login.html';
     }
