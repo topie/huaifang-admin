@@ -26,7 +26,8 @@
             checkboxWidth: "3%",
             showIndexNum: true,
             indexNumWidth: "5%",
-            pageSelect: [2, 15, 30, 50],
+            pageSelect: [5, 15, 30, 50],
+            sort: 'pTime_desc',
             columns: [
                 {
                     title: "标题",
@@ -37,6 +38,26 @@
                 }, {
                     title: '发布时间',
                     field: 'pTime'
+                }, {
+                    title: '类型',
+                    field: 'type',
+                    format: function (i, d) {
+                        if (d.type == 1) {
+                            return '物业公告';
+                        } else {
+                            return '社区公告';
+                        }
+                    }
+                }, {
+                    title: '是否上线',
+                    field: 'isOnline',
+                    format: function (i, d) {
+                        if (d.isOnline == 1) {
+                            return '已上线';
+                        } else {
+                            return '已下线';
+                        }
+                    }
                 }
             ],
             actionColumnText: "操作",//操作列文本
@@ -89,6 +110,26 @@
                                     label: '',
                                     format: function (val) {
                                         return '<h1>' + val + '</h1>'
+                                    }
+                                },
+                                {
+                                    type: 'display',
+                                    name: 'cUser',
+                                    id: 'cUser',
+                                    style: 'text-align: right;',
+                                    label: '',
+                                    format: function (val) {
+                                        return '<h3>发布者:' + val + '</h3>'
+                                    }
+                                },
+                                {
+                                    type: 'display',
+                                    name: 'bannerUri',
+                                    id: 'bannerUri',
+                                    style: 'text-align: center;',
+                                    label: '',
+                                    format: function (val) {
+                                        return '<img src="' + val + '"/>'
                                     }
                                 },
                                 {
@@ -151,23 +192,60 @@
                                         required: "请输入标题"
                                     }
                                 }, {
-                                    type: 'datepicker',
-                                    name: 'pTime',
-                                    id: 'pTime',
-                                    label: '发布时间',
-                                    config: {
-                                        timePicker: true,
-                                        singleDatePicker: true,
-                                        locale: {
-                                            format: 'YYYY-MM-DD HH:mm:ss'
+                                    type: 'select',
+                                    name: 'type',
+                                    id: 'type',
+                                    label: '公告类型',
+                                    items: [
+                                        {
+                                            text: '社区公告',
+                                            value: 0
+                                        },
+                                        {
+                                            text: '物业公告',
+                                            value: 1
                                         }
-                                    },
+                                    ],
                                     rule: {
                                         required: true
                                     },
                                     message: {
-                                        required: "请选择日期"
+                                        required: "请选择公告类型"
                                     }
+                                }, {
+                                    type: 'select',
+                                    name: 'position',
+                                    id: 'position',
+                                    label: '公告位置',
+                                    items: [
+                                        {
+                                            text: '普通',
+                                            value: 0
+                                        },
+                                        {
+                                            text: '轮播',
+                                            value: 1
+                                        }
+                                    ],
+                                    rule: {
+                                        required: true
+                                    },
+                                    message: {
+                                        required: "请选择公告位置"
+                                    }
+                                }, {
+                                    type: 'file',
+                                    id: 'bannerUri',
+                                    name: 'bannerUri',
+                                    label: '轮播图Uri',
+                                    isAjaxUpload: true,
+                                    onSuccess: function (data) {
+                                        $("#bannerUri").attr("value", data.attachmentUrl);
+                                    },
+                                    deleteHandle: function () {
+                                        $("#bannerUri").attr("value", "");
+                                    },
+                                    allowTypes: ".jpg,.png,.bmp"
                                 }, {
                                     type: 'kindEditor',
                                     name: 'content',
@@ -180,10 +258,77 @@
                                     message: {
                                         required: "正文"
                                     }
+                                }, {
+                                    type: 'text',
+                                    name: 'cUser',
+                                    id: 'cUser',
+                                    label: '发布者'
                                 }
                             ]
                         });
                         form.loadRemote(App.href + "/api/core/notice/load/" + data.id);
+                    }
+                }, {
+                    text: "上线",
+                    visible: function (i, d) {
+                        return d.isOnline == 0;
+                    },
+                    cls: "btn-info btn-sm",
+                    handle: function (index, data) {
+                        bootbox.confirm("确定该操作?", function (result) {
+                            if (result) {
+                                var requestUrl = App.href + "/api/core/notice/updateToOnline";
+                                $.ajax({
+                                    type: "POST",
+                                    dataType: "json",
+                                    data: {
+                                        id: data.id
+                                    },
+                                    url: requestUrl,
+                                    success: function (data) {
+                                        if (data.code === 200) {
+                                            grid.reload()
+                                        } else {
+                                            alert(data.message)
+                                        }
+                                    },
+                                    error: function (e) {
+                                        alert("请求异常。")
+                                    }
+                                });
+                            }
+                        });
+                    }
+                }, {
+                    text: "下线",
+                    visible: function (i, d) {
+                        return d.isOnline == 1;
+                    },
+                    cls: "btn-warning btn-sm",
+                    handle: function (index, data) {
+                        bootbox.confirm("确定该操作?", function (result) {
+                            if (result) {
+                                var requestUrl = App.href + "/api/core/notice/updateToOffline";
+                                $.ajax({
+                                    type: "POST",
+                                    dataType: "json",
+                                    data: {
+                                        id: data.id
+                                    },
+                                    url: requestUrl,
+                                    success: function (data) {
+                                        if (data.code === 200) {
+                                            grid.reload()
+                                        } else {
+                                            alert(data.message)
+                                        }
+                                    },
+                                    error: function (e) {
+                                        alert("请求异常。")
+                                    }
+                                });
+                            }
+                        });
                     }
                 }, {
                     text: "删除",
@@ -213,7 +358,8 @@
                             }
                         });
                     }
-                }],
+                }
+            ],
             tools: [
                 {
                     text: " 添 加",
@@ -264,22 +410,58 @@
                                         required: "请输入标题"
                                     }
                                 }, {
-                                    type: 'datepicker',
-                                    name: 'pTime',
-                                    id: 'pTime',
-                                    label: '发布时间',
-                                    config: {
-                                        timePicker: true,
-                                        singleDatePicker: true,
-                                        locale: {
-                                            format: 'YYYY-MM-DD HH:mm:ss'
+                                    type: 'select',
+                                    name: 'type',
+                                    id: 'type',
+                                    label: '公告类型',
+                                    items: [
+                                        {
+                                            text: '社区公告',
+                                            value: 0
+                                        },
+                                        {
+                                            text: '物业公告',
+                                            value: 1
                                         }
-                                    },
+                                    ],
                                     rule: {
                                         required: true
                                     },
                                     message: {
-                                        required: "请选择日期"
+                                        required: "请选择公告类型"
+                                    }
+                                }, {
+                                    type: 'select',
+                                    name: 'position',
+                                    id: 'position',
+                                    label: '公告位置',
+                                    items: [
+                                        {
+                                            text: '普通',
+                                            value: 0
+                                        },
+                                        {
+                                            text: '轮播',
+                                            value: 1
+                                        }
+                                    ],
+                                    rule: {
+                                        required: true
+                                    },
+                                    message: {
+                                        required: "请选择公告位置"
+                                    }
+                                }, {
+                                    type: 'image',
+                                    id: 'bannerUri',
+                                    name: 'bannerUri',
+                                    label: '轮播图Uri',
+                                    isAjaxUpload: true,
+                                    onSuccess: function (data) {
+                                        $("#bannerUri").attr("value", data.attachmentUrl);
+                                    },
+                                    deleteHandle: function () {
+                                        $("#bannerUri").attr("value", "");
                                     }
                                 }, {
                                     type: 'kindEditor',
@@ -293,6 +475,11 @@
                                     message: {
                                         required: "正文"
                                     }
+                                }, {
+                                    type: 'text',
+                                    name: 'cUser',
+                                    id: 'cUser',
+                                    label: '发布者'
                                 }
                             ]
                         })
@@ -304,10 +491,42 @@
                 //搜索栏元素
                 items: [
                     {
-                        type: "text",
-                        label: "标题",
-                        name: "title",
-                        placeholder: "搜索标题"
+                        type: "select",
+                        label: "公告类型",
+                        name: "type",
+                        items: [
+                            {
+                                text: '全部',
+                                value: ''
+                            },
+                            {
+                                text: '社区公告',
+                                value: 0
+                            },
+                            {
+                                text: '物业公告',
+                                value: 1
+                            }
+                        ]
+                    },
+                    {
+                        type: "select",
+                        label: "状态",
+                        name: "isOnline",
+                        items: [
+                            {
+                                text: '全部',
+                                value: ''
+                            },
+                            {
+                                text: '已上线',
+                                value: 1
+                            },
+                            {
+                                text: '已下线',
+                                value: 0
+                            }
+                        ]
                     }
                 ]
             }

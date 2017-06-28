@@ -7,6 +7,7 @@ import com.topie.huaifang.common.utils.Result;
 import com.topie.huaifang.core.service.INoticeService;
 import com.topie.huaifang.database.core.model.Notice;
 import com.topie.huaifang.security.utils.SecurityUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -35,9 +36,15 @@ public class NoticeController {
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     @ResponseBody
     public Result insert(Notice notice) {
-        String currentUser = SecurityUtil.getCurrentUserName();
-        notice.setcUser(currentUser);
-        notice.setcTime(new Date());
+        if (notice.getPosition() == 1 && StringUtils.isEmpty(notice.getBannerUri())) {
+            ResponseUtil.error("公告位置为轮播时，轮播图必须上传！");
+        }
+        if (StringUtils.isEmpty(notice.getcUser())) {
+            String currentUser = SecurityUtil.getCurrentUserName();
+            notice.setcUser(currentUser);
+        }
+        if (notice.getcTime() == null) notice.setcTime(new Date());
+        if (notice.getpTime() == null) notice.setpTime(new Date());
         int result = iNoticeService.saveNotNull(notice);
         return result > 0 ? ResponseUtil.success() : ResponseUtil.error();
     }
@@ -45,6 +52,24 @@ public class NoticeController {
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
     public Result update(Notice notice) {
+        iNoticeService.updateNotNull(notice);
+        return ResponseUtil.success();
+    }
+
+    @RequestMapping(value = "/updateToOnline", method = RequestMethod.POST)
+    @ResponseBody
+    public Result updateToOnline(@RequestParam(value = "id") Integer id) {
+        Notice notice = iNoticeService.selectByKey(id);
+        notice.setIsOnline(true);
+        iNoticeService.updateNotNull(notice);
+        return ResponseUtil.success();
+    }
+
+    @RequestMapping(value = "/updateToOffline", method = RequestMethod.POST)
+    @ResponseBody
+    public Result updateToOffline(@RequestParam(value = "id") Integer id) {
+        Notice notice = iNoticeService.selectByKey(id);
+        notice.setIsOnline(false);
         iNoticeService.updateNotNull(notice);
         return ResponseUtil.success();
     }

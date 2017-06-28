@@ -30,6 +30,7 @@ public class NoticeServiceImpl extends BaseService<Notice> implements INoticeSer
         Example.Criteria criteria = example.createCriteria();
         if (StringUtils.isNotEmpty(notice.getTitle())) criteria.andLike("title", "%" + notice.getTitle() + "%");
         if (notice.getType() != null) criteria.andEqualTo("type", notice.getType());
+        if (notice.getPosition() != null) criteria.andEqualTo("position", notice.getPosition());
         if (notice.getIsOnline() != null) criteria.andEqualTo("isOnline", notice.getIsOnline());
         if (StringUtils.isNotEmpty(notice.getPeriodC())) {
             String[] dateArr = notice.getPeriodC().split(" 到 ");

@@ -11,7 +11,7 @@ import java.util.Date;
 @Table(name = "d_notice")
 public class Notice extends Sortable {
 
-    private static final long serialVersionUID = -2884017637104568758L;
+    private static final long serialVersionUID = -1220249619726982531L;
 
     /**
      * 公告ID
@@ -21,14 +21,25 @@ public class Notice extends Sortable {
     private Integer id;
 
     /**
-     * 公告类型
+     * 类型 0:社区 1：物业
      */
     private Integer type;
+
+    /**
+     * 位置 0：普通 1：轮播
+     */
+    private Integer position;
 
     /**
      * 标题
      */
     private String title;
+
+    /**
+     * 轮播图uri
+     */
+    @Column(name = "banner_uri")
+    private String bannerUri;
 
     /**
      * 是否上线
@@ -104,21 +115,39 @@ public class Notice extends Sortable {
     }
 
     /**
-     * 获取公告类型
+     * 获取类型 0:社区 1：物业
      *
-     * @return type - 公告类型
+     * @return type - 类型 0:社区 1：物业
      */
     public Integer getType() {
         return type;
     }
 
     /**
-     * 设置公告类型
+     * 设置类型 0:社区 1：物业
      *
-     * @param type 公告类型
+     * @param type 类型 0:社区 1：物业
      */
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    /**
+     * 获取位置 0：普通 1：轮播
+     *
+     * @return position - 位置 0：普通 1：轮播
+     */
+    public Integer getPosition() {
+        return position;
+    }
+
+    /**
+     * 设置位置 0：普通 1：轮播
+     *
+     * @param position 位置 0：普通 1：轮播
+     */
+    public void setPosition(Integer position) {
+        this.position = position;
     }
 
     /**
@@ -137,6 +166,24 @@ public class Notice extends Sortable {
      */
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    /**
+     * 获取轮播图uri
+     *
+     * @return banner_uri - 轮播图uri
+     */
+    public String getBannerUri() {
+        return bannerUri;
+    }
+
+    /**
+     * 设置轮播图uri
+     *
+     * @param bannerUri 轮播图uri
+     */
+    public void setBannerUri(String bannerUri) {
+        this.bannerUri = bannerUri;
     }
 
     /**
