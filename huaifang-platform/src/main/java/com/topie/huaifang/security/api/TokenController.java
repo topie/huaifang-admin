@@ -97,4 +97,35 @@ public class TokenController {
         return ResponseEntity.ok(HttpResponseUtil.success(token));
     }
 
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ResponseEntity<?> login(HttpServletRequest request,
+            @RequestBody AuthenticationRequest authenticationRequest) throws AuthenticationException {
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+                authenticationRequest.getUsername(), authenticationRequest.getPassword());
+        usernamePasswordAuthenticationToken.setDetails(new HttpAuthenticationDetails());
+        Authentication authentication = null;
+        try {
+            authentication = this.authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+            if (authentication == null) {
+                return ResponseEntity.ok(HttpResponseUtil.error("未检测到验证信息"));
+            }
+        } catch (InternalAuthenticationServiceException failed) {
+            logger.error("An internal error occurred while trying to authenticate the user.", failed);
+            return ResponseEntity.ok(HttpResponseUtil.error(failed.getMessage()));
+        } catch (AuthenticationException failed) {
+            return ResponseEntity.ok(HttpResponseUtil.error(failed.getMessage()));
+        }
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        UserDetails userDetails = (UserDetails) redisCache
+                .get(SecurityConstant.USER_CACHE_PREFIX + authenticationRequest.getUsername());
+        if (userDetails == null) {
+            userDetails = this.userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+            redisCache.set(SecurityConstant.USER_CACHE_PREFIX + authenticationRequest.getUsername(), userDetails);
+        }
+        String token = this.tokenUtils.generateToken(userDetails);
+        userService.updateLastLoginInfoByUserName(authenticationRequest.getUsername(), new Date(),
+                request.getRemoteAddr());
+        return ResponseEntity.ok(HttpResponseUtil.success(token));
+    }
+
 }
