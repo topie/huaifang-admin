@@ -17,7 +17,7 @@
           entry-point-ref="osHttpAuthenticationEntryPoint">
         <!-- token filter -->
         <custom-filter ref="osHttpAuthenticationTokenFilter" position="PRE_AUTH_FILTER"/>
-        <intercept-url pattern="/api/exception" access="permitAll"/>
+        <intercept-url pattern="/api/m/**" access="permitAll"/>
         <intercept-url pattern="/api/logout" access="permitAll"/>
         <intercept-url pattern="/**" access="isAuthenticated()"/>
         <!-- 加载权限拦截 -->
