@@ -1,4 +1,4 @@
-package com.topie.huaifang.core.api;
+package com.topie.huaifang.core.api.mobile;
 
 import com.github.pagehelper.PageInfo;
 import com.topie.huaifang.common.utils.PageConvertUtil;
@@ -17,19 +17,29 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * Created by chenguojun on 2017/4/19.
  */
 @Controller
-@RequestMapping("/api/m")
-public class MobileController {
+@RequestMapping("/api/m/notice")
+public class NoticeController {
 
     @Autowired
     private INoticeService iNoticeService;
 
-    @RequestMapping(value = "/notice/list", method = RequestMethod.GET)
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
-    public Result noticeList(Notice notice,
+    public Result list(Notice notice,
             @RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum,
             @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize) {
         notice.setIsOnline(true);
         PageInfo<Notice> pageInfo = iNoticeService.selectByFilterAndPage(notice, pageNum, pageSize);
+        for (Notice item : pageInfo.getList()) {
+            item.setContent(null);
+        }
         return ResponseUtil.success(PageConvertUtil.grid(pageInfo));
+    }
+
+    @RequestMapping(value = "/detail", method = RequestMethod.GET)
+    @ResponseBody
+    public Result detail(@RequestParam(value = "id") Integer id) {
+        Notice notice = iNoticeService.selectByKey(id);
+        return ResponseUtil.success(notice);
     }
 }

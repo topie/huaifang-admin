@@ -40,7 +40,8 @@
 ```
 
 
-### 2. 通知公告接口 
+### 2 通知公告接口 
+#### 2.1 通知公告列表 
 ##### 接口地址： /m/core/notice/list
 ##### 请求方法： GET 
 <table>
@@ -85,11 +86,47 @@
               title:"标题",
               pTime:"发布时间",
               cUser:"发布用户",
-              bannerUri:"轮播图uri",
-              content:"内容",
+              bannerUri:"轮播图uri"
             },
             ...
         ]
+    }
+}
+```
+#### 2.2 通知公告详细 
+##### 接口地址： /m/core/notice/detail
+##### 请求方法： GET 
+<table>
+    <tr>
+        <td>参数</td>
+        <td>是否必选</td>
+        <td>说明</td>
+    </tr>
+    <tr>
+        <td>huaifang_token</td>
+        <td>是</td>
+        <td>请求token 设置在请求头部 X-Auth-Token:xxxxx</td>
+    </tr>
+    <tr>
+        <td>id</td>
+        <td>是</td>
+        <td>公告id</td>
+    </tr>
+</table>
+
+#####   请求返回：json
+成功：
+```
+{
+    "code":200,
+    "data": {
+          id:1,
+          type:1,
+          title:"标题",
+          pTime:"发布时间",
+          cUser:"发布用户",
+          bannerUri:"轮播图uri",
+          content:"内容"
     }
 }
 ```
