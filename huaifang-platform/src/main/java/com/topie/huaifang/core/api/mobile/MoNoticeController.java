@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping("/api/m/notice")
-public class NoticeController {
+public class MoNoticeController {
 
     @Autowired
     private INoticeService iNoticeService;
