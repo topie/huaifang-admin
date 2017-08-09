@@ -84,7 +84,7 @@ CREATE TABLE d_person_info_residence (
 
 
 DROP TABLE IF EXISTS d_person_info_work;
-CREATE TABLE d_person_info_residence (
+CREATE TABLE d_person_info_work (
   id              INT(11)      NOT NULL  AUTO_INCREMENT
   COMMENT 'ID',
   situation       VARCHAR(64)  NOT NULL  DEFAULT ''
