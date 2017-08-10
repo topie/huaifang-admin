@@ -97,7 +97,7 @@
         rowTmpl: '<div data-row=${row_} class="row"></div>',
         eleTmpl: '<div class="col-md-${span_}"><div class="form-group"></div></div>',
         sectionTmpl: '<div class="col-md-12"><h3 class="form-section">${title_}</h3></div>',
-        labelTmpl: '<label class="control-label ${cls_}">${label_}</label>',
+        labelTmpl: '<label style="text-align: left" class="control-label ${cls_}">${label_}</label>',
         blockSpanTmpl: '<span class="help-block">${help_}</span>',
         buttonTmpl: '<button type="${type_}" class="btn ${cls_}" ${attribute_}>${text_}</button>',
         alertTmpl: '<div class="alert alert-${type_} alert-dismissable" role="alert">'
@@ -331,7 +331,7 @@
             var that = this;
             var ele = this._formEles[item.type](item, this);
             var label = $.tmpl(Form.statics.labelTmpl, {
-                "cls_": that._labelInline ? "col-md-2" : "",
+                "cls_": that._labelInline ? "col-md-3" : "",
                 "label_": item.label === undefined ? "" : item.label
             });
             wrapper.find(".form-group").append(label);
@@ -343,7 +343,7 @@
                 help.append(item.detail);
             }
             if (that._labelInline) {
-                var div = $('<div formele="' + item.type + '" class="col-md-10"></div>');
+                var div = $('<div formele="' + item.type + '" class="col-md-9"></div>');
                 if (item.showIcon) {
                     item.icon = "";
                 }
@@ -948,9 +948,9 @@
                             var file = ele.find("[role='file']").val();
                             var type = file.substring(file.lastIndexOf("."));
                             if (!(type.toLowerCase() == ".jpg"
-                                || type.toLowerCase() == ".png"
-                                || type.toLowerCase() == ".bmp" || type
-                                    .toLowerCase() == ".jpeg")) {
+                                    || type.toLowerCase() == ".png"
+                                    || type.toLowerCase() == ".bmp" || type
+                                        .toLowerCase() == ".jpeg")) {
                                 alert("必须是.jpp,.png,.bmp,.jpeg格式中的一种");
                                 return;
                             }
@@ -981,21 +981,21 @@
                                                         preview.css('height'),
                                                         10)
                                                     - parseInt(
-                                                        preview
-                                                            .css('padding-top'),
-                                                        10)
+                                                    preview
+                                                        .css('padding-top'),
+                                                    10)
                                                     - parseInt(
-                                                        preview
-                                                            .css('padding-bottom'),
-                                                        10)
+                                                    preview
+                                                        .css('padding-bottom'),
+                                                    10)
                                                     - parseInt(
-                                                        preview
-                                                            .css('border-top'),
-                                                        10)
+                                                    preview
+                                                        .css('border-top'),
+                                                    10)
                                                     - parseInt(
-                                                        preview
-                                                            .css('border-bottom'),
-                                                        10))
+                                                    preview
+                                                        .css('border-bottom'),
+                                                    10))
                                             preview.html($img);
                                         }
 
