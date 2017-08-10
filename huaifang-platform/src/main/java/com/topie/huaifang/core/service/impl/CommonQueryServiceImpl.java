@@ -1,13 +1,17 @@
 package com.topie.huaifang.core.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.topie.huaifang.common.baseservice.impl.BaseService;
 import com.topie.huaifang.common.tools.excel.ExcelFileUtil;
+import com.topie.huaifang.common.tools.plugins.FormItem;
+import com.topie.huaifang.common.utils.CamelUtil;
+import com.topie.huaifang.common.utils.Option;
 import com.topie.huaifang.core.dto.CommonQueryDto;
 import com.topie.huaifang.core.service.ICommonQueryService;
 import com.topie.huaifang.core.service.ICommonService;
+import com.topie.huaifang.database.core.dao.CommonQueryMapper;
 import com.topie.huaifang.database.core.model.CommonQuery;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +31,9 @@ public class CommonQueryServiceImpl extends BaseService<CommonQuery> implements 
 
     @Autowired
     private ICommonService iCommonService;
+
+    @Autowired
+    private CommonQueryMapper commonQueryMapper;
 
     @Override
     public PageInfo<CommonQuery> selectByFilterAndPage(CommonQuery commonQuery, int pageNum, int pageSize) {
@@ -70,6 +77,37 @@ public class CommonQueryServiceImpl extends BaseService<CommonQuery> implements 
             ExcelFileUtil.exportXlsx(path, list, m, h);
         }
 
+    }
+
+    @Override
+    public List<FormItem> selectFormItemsByTable(String table) {
+        List<Map> list = commonQueryMapper.selectColumnsByTable(table);
+        List<FormItem> items = new ArrayList<>();
+        for (Map map : list) {
+            String name = (String) map.get("dataColumn");
+            String comment = (String) map.get("dataComment");
+            FormItem formItem = new FormItem();
+            formItem.setName(CamelUtil.underlineToCamel(name));
+            String[] cs = comment.split(":");
+            formItem.setLabel(cs[0]);
+            formItem.setType("text");
+            if (cs.length == 2) {
+                formItem.setType(cs[1]);
+            }
+            if (cs.length == 3) {
+                formItem.setType(cs[1]);
+                List<Option> options = new ArrayList<>();
+                String[] arr = cs[2].split("[,\\]\\[]");
+                for (String option : arr) {
+                    if (StringUtils.isNotEmpty(option)) {
+                        options.add(new Option(option, option));
+                    }
+                }
+                formItem.setItems(options);
+            }
+            items.add(formItem);
+        }
+        return items;
     }
 
 }

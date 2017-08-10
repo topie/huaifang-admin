@@ -16,4 +16,12 @@
         <result column="script_content" property="scriptContent" jdbcType="LONGVARCHAR"/>
         <result column="html_content" property="htmlContent" jdbcType="LONGVARCHAR"/>
     </resultMap>
+    <select id="selectColumnsByTable" resultType="java.util.Map">
+        select
+        COLUMN_NAME dataColumn,
+        DATA_TYPE dataType,
+        COLUMN_COMMENT dataComment
+        from information_schema.columns
+        where table_name=#{table}
+    </select>
 </mapper>

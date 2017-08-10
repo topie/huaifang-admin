@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.topie.huaifang.database.core.dao.HouseInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.topie.huaifang.database.core.model.HouseInfo" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="house_node_id" property="houseNodeId" jdbcType="INTEGER" />
+    <result column="house_no" property="houseNo" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="fczh" property="fczh" jdbcType="VARCHAR" />
+    <result column="house_type" property="houseType" jdbcType="VARCHAR" />
+    <result column="qzf_type" property="qzfType" jdbcType="VARCHAR" />
+    <result column="jzxz" property="jzxz" jdbcType="VARCHAR" />
+    <result column="jz_type" property="jzType" jdbcType="VARCHAR" />
+    <result column="police_station" property="policeStation" jdbcType="VARCHAR" />
+    <result column="police" property="police" jdbcType="VARCHAR" />
+    <result column="owner_type" property="ownerType" jdbcType="VARCHAR" />
+    <result column="house_has_danger" property="houseHasDanger" jdbcType="VARCHAR" />
+    <result column="owner_name" property="ownerName" jdbcType="VARCHAR" />
+    <result column="owner_gender" property="ownerGender" jdbcType="VARCHAR" />
+    <result column="owner_zhenjian_type" property="ownerZhenjianType" jdbcType="VARCHAR" />
+    <result column="owner_zhengjian_no" property="ownerZhengjianNo" jdbcType="VARCHAR" />
+    <result column="owner_huji_type" property="ownerHujiType" jdbcType="VARCHAR" />
+    <result column="owner_huji_address" property="ownerHujiAddress" jdbcType="VARCHAR" />
+    <result column="owner_live_address" property="ownerLiveAddress" jdbcType="VARCHAR" />
+    <result column="owner_phone" property="ownerPhone" jdbcType="VARCHAR" />
+    <result column="owner_country" property="ownerCountry" jdbcType="VARCHAR" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="company_address" property="companyAddress" jdbcType="VARCHAR" />
+    <result column="company_manager_name" property="companyManagerName" jdbcType="VARCHAR" />
+    <result column="company_manager_phone" property="companyManagerPhone" jdbcType="VARCHAR" />
+    <result column="zhongjie_name" property="zhongjieName" jdbcType="VARCHAR" />
+    <result column="zhongjie_manager_name" property="zhongjieManagerName" jdbcType="VARCHAR" />
+    <result column="zhongjie_manager_phone" property="zhongjieManagerPhone" jdbcType="VARCHAR" />
+    <result column="zhongjie_manager_id_no" property="zhongjieManagerIdNo" jdbcType="VARCHAR" />
+    <result column="zhuanzu_name" property="zhuanzuName" jdbcType="VARCHAR" />
+    <result column="zhuanzu_live_address" property="zhuanzuLiveAddress" jdbcType="VARCHAR" />
+    <result column="zhuanzu_phone" property="zhuanzuPhone" jdbcType="VARCHAR" />
+    <result column="zhuanzu_id_type" property="zhuanzuIdType" jdbcType="VARCHAR" />
+    <result column="zhuanzu_id_no" property="zhuanzuIdNo" jdbcType="VARCHAR" />
+    <result column="rent_type" property="rentType" jdbcType="VARCHAR" />
+    <result column="rent_number" property="rentNumber" jdbcType="INTEGER" />
+    <result column="rent_area" property="rentArea" jdbcType="DECIMAL" />
+    <result column="rent_useage" property="rentUseage" jdbcType="VARCHAR" />
+    <result column="rent_live_number" property="rentLiveNumber" jdbcType="INTEGER" />
+    <result column="rent_pay_type" property="rentPayType" jdbcType="VARCHAR" />
+    <result column="rent_money" property="rentMoney" jdbcType="DECIMAL" />
+    <result column="dengjibeian" property="dengjibeian" jdbcType="VARCHAR" />
+    <result column="nashui" property="nashui" jdbcType="VARCHAR" />
+    <result column="zerenbook" property="zerenbook" jdbcType="VARCHAR" />
+    <result column="hetong" property="hetong" jdbcType="VARCHAR" />
+    <result column="rent_begin" property="rentBegin" jdbcType="DATE" />
+    <result column="rent_end" property="rentEnd" jdbcType="DATE" />
+    <result column="danger_detail" property="dangerDetail" jdbcType="VARCHAR" />
+  </resultMap>
+</mapper>

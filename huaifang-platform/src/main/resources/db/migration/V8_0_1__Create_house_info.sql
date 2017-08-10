@@ -1,9 +1,8 @@
-
 CREATE TABLE d_house_info (
   id                     INT(11) NOT NULL AUTO_INCREMENT
-  COMMENT '房屋id',
+  COMMENT '房屋id:hidden',
   house_node_id          INT(11) NOT NULL DEFAULT 0
-  COMMENT '架构id',
+  COMMENT '架构id:hidden',
   house_no               VARCHAR(32)      DEFAULT ''
   COMMENT '房屋编号',
   address                VARCHAR(255)     DEFAULT ''
@@ -23,13 +22,13 @@ CREATE TABLE d_house_info (
   police                 VARCHAR(16)      DEFAULT ''
   COMMENT '社区民警',
   owner_type             VARCHAR(16)      DEFAULT ''
-  COMMENT '所有权类型:radio:[个人,单位,违法建设]',
+  COMMENT '所有权类型:radioGroup:[个人,单位,违法建设]',
   house_has_danger       VARCHAR(4)       DEFAULT '无'
   COMMENT '有无安全隐患',
   owner_name             VARCHAR(16)      DEFAULT ''
   COMMENT '房主名称',
   owner_gender           VARCHAR(4)       DEFAULT ''
-  COMMENT '房主性别',
+  COMMENT '房主性别:radioGroup:[男,女]',
   owner_zhenjian_type    VARCHAR(16)      DEFAULT '身份证'
   COMMENT '房主证件类型:select:[身份证,护照,港澳通行证]',
   owner_zhengjian_no     VARCHAR(255)     DEFAULT ''
@@ -81,17 +80,17 @@ CREATE TABLE d_house_info (
   rent_live_number       INT(11)          DEFAULT 0
   COMMENT '现住人数',
   rent_pay_type          VARCHAR(16)      DEFAULT ''
-  COMMENT '租金支付方式:radio:[月租,年租]',
+  COMMENT '租金支付方式:radioGroup:[月租,年租]',
   rent_money             DECIMAL(10, 2)   DEFAULT 0
   COMMENT '租金（元）',
   dengjibeian            VARCHAR(16)      DEFAULT ''
-  COMMENT '登记备案:radio:[已办,未办]',
+  COMMENT '登记备案:radioGroup:[已办,未办]',
   nashui                 VARCHAR(16)      DEFAULT ''
-  COMMENT '登记备案:radio:[已缴,未缴]',
+  COMMENT '登记备案:radioGroup:[已缴,未缴]',
   zerenbook              VARCHAR(64)      DEFAULT ''
   COMMENT '责任书:checkbox:[治安,消防,婚育]',
   hetong                 VARCHAR(8)       DEFAULT ''
-  COMMENT '租赁合同:radio:[有,无]',
+  COMMENT '租赁合同:radioGroup:[有,无]',
   rent_begin             DATE    NULL     DEFAULT NULL
   COMMENT '出租起始日期',
   rent_end               DATE    NULL     DEFAULT NULL
@@ -102,3 +101,6 @@ CREATE TABLE d_house_info (
 )
   DEFAULT CHARSET = utf8
   COMMENT '房屋信息';
+
+INSERT INTO `d_function` VALUES ('11', '7', '房屋信息管理', '1', '1', NULL, '/api/core/houseInfo/list', '7', NULL, NULL);
+INSERT INTO `d_role_function` (role_id, function_id) VALUES ('1', '11');

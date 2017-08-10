@@ -1,6 +1,7 @@
 package com.topie.huaifang.core.service;
 
 import com.topie.huaifang.common.baseservice.IService;
+import com.topie.huaifang.common.tools.plugins.FormItem;
 import com.topie.huaifang.core.dto.CommonQueryDto;
 import com.topie.huaifang.database.core.model.CommonQuery;
 import com.github.pagehelper.PageInfo;
@@ -18,5 +19,7 @@ public interface ICommonQueryService extends IService<CommonQuery> {
     List<CommonQuery> selectByFilter(CommonQuery commonQuery);
 
     void export(CommonQueryDto commonQueryDto, String path) throws IOException;
+
+    List<FormItem> selectFormItemsByTable(String table);
 
 }
