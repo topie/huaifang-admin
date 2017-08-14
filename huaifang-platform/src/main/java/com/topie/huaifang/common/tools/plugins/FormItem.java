@@ -4,6 +4,7 @@ import com.topie.huaifang.common.utils.Option;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 public class FormItem implements Serializable {
 
@@ -22,6 +23,16 @@ public class FormItem implements Serializable {
     private List<Option> items;
 
     private Integer span = 1;
+
+    private Map config;
+
+    public Map getConfig() {
+        return config;
+    }
+
+    public void setConfig(Map config) {
+        this.config = config;
+    }
 
     public String getType() {
         return type;

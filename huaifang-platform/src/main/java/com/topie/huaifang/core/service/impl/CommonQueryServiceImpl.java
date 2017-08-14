@@ -20,6 +20,7 @@ import tk.mybatis.mapper.entity.Example;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -91,8 +92,28 @@ public class CommonQueryServiceImpl extends BaseService<CommonQuery> implements 
             String[] cs = comment.split(":");
             formItem.setLabel(cs[0]);
             formItem.setType("text");
+            if (cs.length > 2 && "skip".equals(cs[1])) continue;
             if (cs.length == 2) {
                 formItem.setType(cs[1]);
+                if ("date".equals(cs[1])) {
+                    formItem.setType("datepicker");
+                    Map config = new HashMap();
+                    config.put("timePicker", false);
+                    config.put("singleDatePicker", true);
+                    Map locale = new HashMap();
+                    locale.put("format", "YYYY-MM-DD");
+                    config.put("locale", locale);
+                    formItem.setConfig(config);
+                } else if ("datetime".equals(cs[1])) {
+                    formItem.setType("datepicker");
+                    Map config = new HashMap();
+                    config.put("timePicker", false);
+                    config.put("singleDatePicker", true);
+                    Map locale = new HashMap();
+                    locale.put("format", "YYYY-MM-DD HH:mm:ss");
+                    config.put("locale", locale);
+                    formItem.setConfig(config);
+                }
             }
             if (cs.length == 3) {
                 formItem.setType(cs[1]);

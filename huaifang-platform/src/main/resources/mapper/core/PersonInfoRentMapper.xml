@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topie.huaifang.database.core.dao.PersonInfoRentMapper">
+  <resultMap id="BaseResultMap" type="com.topie.huaifang.database.core.model.PersonInfoRent">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="person_id" jdbcType="VARCHAR" property="personId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="birth" jdbcType="DATE" property="birth" />
+    <result column="identify_number" jdbcType="VARCHAR" property="identifyNumber" />
+    <result column="nation" jdbcType="VARCHAR" property="nation" />
+    <result column="political_status" jdbcType="VARCHAR" property="politicalStatus" />
+    <result column="census_type" jdbcType="VARCHAR" property="censusType" />
+    <result column="census_address" jdbcType="VARCHAR" property="censusAddress" />
+    <result column="born_place" jdbcType="VARCHAR" property="bornPlace" />
+    <result column="residence_place" jdbcType="VARCHAR" property="residencePlace" />
+    <result column="marriage_status" jdbcType="VARCHAR" property="marriageStatus" />
+    <result column="contact" jdbcType="VARCHAR" property="contact" />
+    <result column="is_family_in" jdbcType="VARCHAR" property="isFamilyIn" />
+    <result column="family_in_num" jdbcType="SMALLINT" property="familyInNum" />
+    <result column="family_in_lt_sixteen_male" jdbcType="SMALLINT" property="familyInLtSixteenMale" />
+    <result column="family_in_lt_sixteen_female" jdbcType="SMALLINT" property="familyInLtSixteenFemale" />
+    <result column="is_owner" jdbcType="VARCHAR" property="isOwner" />
+    <result column="owner_name" jdbcType="VARCHAR" property="ownerName" />
+    <result column="owner_relate" jdbcType="VARCHAR" property="ownerRelate" />
+    <result column="leave_hometown_date" jdbcType="DATE" property="leaveHometownDate" />
+    <result column="enter_beijing_date" jdbcType="DATE" property="enterBeijingDate" />
+    <result column="enter_residence_date" jdbcType="DATE" property="enterResidenceDate" />
+    <result column="enter_beijing_resion" jdbcType="VARCHAR" property="enterBeijingResion" />
+    <result column="residence_type" jdbcType="VARCHAR" property="residenceType" />
+    <result column="police_station" jdbcType="VARCHAR" property="policeStation" />
+    <result column="police" jdbcType="VARCHAR" property="police" />
+    <result column="household_name" jdbcType="VARCHAR" property="householdName" />
+    <result column="household_phone" jdbcType="VARCHAR" property="householdPhone" />
+    <result column="situation" jdbcType="VARCHAR" property="situation" />
+    <result column="firm_or_school" jdbcType="VARCHAR" property="firmOrSchool" />
+    <result column="firm_address" jdbcType="VARCHAR" property="firmAddress" />
+    <result column="firm_industry" jdbcType="VARCHAR" property="firmIndustry" />
+    <result column="main_job" jdbcType="VARCHAR" property="mainJob" />
+    <result column="profession" jdbcType="VARCHAR" property="profession" />
+    <result column="social_security" jdbcType="VARCHAR" property="socialSecurity" />
+    <result column="has_contract" jdbcType="VARCHAR" property="hasContract" />
+  </resultMap>
+</mapper>

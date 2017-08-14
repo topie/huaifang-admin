@@ -1,21 +1,23 @@
 DROP TABLE IF EXISTS d_person_info;
 CREATE TABLE d_person_info (
-  id              INT(11)     NOT NULL  AUTO_INCREMENT
-  COMMENT 'ID',
-  person_id       VARCHAR(32) NOT NULL  DEFAULT ''
-  COMMENT '人口ID',
-  person_type     VARCHAR(8)            DEFAULT ''
+  id              INT(11)     NOT NULL      AUTO_INCREMENT
+  COMMENT 'ID:hidden',
+  person_id       VARCHAR(32) NOT NULL      DEFAULT ''
+  COMMENT '人口ID:skip',
+  person_type     VARCHAR(8)                DEFAULT ''
   COMMENT '人口身份:select:[租户,住户]',
-  house_node_id   INT(11)               DEFAULT 0
-  COMMENT '绑定架构id',
-  house_info      VARCHAR(255)          DEFAULT ''
-  COMMENT '绑定房屋信息',
-  name            VARCHAR(64) NOT NULL  DEFAULT ''
+  house_node_id   INT(11)                   DEFAULT 0
+  COMMENT '绑定架构id:hidden',
+  house_info      VARCHAR(255)              DEFAULT ''
+  COMMENT '绑定房屋信息:skip',
+  name            VARCHAR(64) NOT NULL      DEFAULT ''
   COMMENT '姓名',
-  birth           TIMESTAMP   NULL      DEFAULT NULL
-  COMMENT '出生年月',
-  identify_number VARCHAR(32) NOT NULL  DEFAULT ''
+  birth           DATE        NULL          DEFAULT NULL
+  COMMENT '出生年月:date',
+  identify_number VARCHAR(32) NOT NULL      DEFAULT ''
   COMMENT '身份证号',
+  import_time     TIMESTAMP   NOT NULL      DEFAULT CURRENT_TIMESTAMP
+  COMMENT '入库时间:datetime',
   PRIMARY KEY (id)
 )
   DEFAULT CHARSET = utf8
@@ -27,15 +29,15 @@ INSERT INTO `d_role_function` (role_id, function_id) VALUES ('1', '12');
 DROP TABLE IF EXISTS d_person_info_rent;
 CREATE TABLE d_person_info_rent (
   id                          INT(11)       NOT NULL  AUTO_INCREMENT
-  COMMENT 'ID',
+  COMMENT 'ID:hidden',
   person_id                   VARCHAR(32)   NOT NULL  DEFAULT ''
-  COMMENT '人口ID',
+  COMMENT '人口ID:hidden',
   name                        VARCHAR(64)   NOT NULL  DEFAULT ''
   COMMENT '姓名',
   gender                      VARCHAR(8)    NOT NULL  DEFAULT ''
-  COMMENT '性别',
-  birth                       TIMESTAMP     NULL      DEFAULT NULL
-  COMMENT '出生年月',
+  COMMENT '性别:radioGroup:[男,女]',
+  birth                       DATE          NULL      DEFAULT NULL
+  COMMENT '出生年月:date',
   identify_number             VARCHAR(32)   NOT NULL  DEFAULT ''
   COMMENT '身份证号',
   nation                      VARCHAR(32)   NOT NULL  DEFAULT ''
@@ -55,25 +57,25 @@ CREATE TABLE d_person_info_rent (
   contact                     VARCHAR(32)   NOT NULL  DEFAULT ''
   COMMENT '联系电话',
   is_family_in                VARCHAR(4)    NOT NULL  DEFAULT '否'
-  COMMENT '家庭流入',
+  COMMENT '是否家庭流入:radioGroup:[是,否]',
   family_in_num               SMALLINT      NOT NULL  DEFAULT 0
-  COMMENT '人',
+  COMMENT '流入人数',
   family_in_lt_sixteen_male   SMALLINT      NOT NULL  DEFAULT 0
-  COMMENT '男',
+  COMMENT '16岁以下男性人数',
   family_in_lt_sixteen_female SMALLINT      NOT NULL  DEFAULT 0
-  COMMENT '女',
+  COMMENT '16岁以下女性人数',
   is_owner                    VARCHAR(4)    NOT NULL  DEFAULT '否'
-  COMMENT '是否户主',
+  COMMENT '是否户主:radioGroup:[是,否]',
   owner_name                  VARCHAR(32)   NOT NULL  DEFAULT ''
   COMMENT '户主名称',
   owner_relate                VARCHAR(32)   NOT NULL  DEFAULT ''
   COMMENT '与户主关系',
-  leave_hometown_date         TIMESTAMP     NULL      DEFAULT NULL
-  COMMENT '离开原籍日期',
-  enter_beijing_date          TIMESTAMP     NULL      DEFAULT NULL
-  COMMENT '来京日期',
-  enter_residence_date        TIMESTAMP     NULL      DEFAULT NULL
-  COMMENT '来居住地日期',
+  leave_hometown_date         DATE          NULL      DEFAULT NULL
+  COMMENT '离开原籍日期:date',
+  enter_beijing_date          DATE          NULL      DEFAULT NULL
+  COMMENT '来京日期:date',
+  enter_residence_date        DATE          NULL      DEFAULT NULL
+  COMMENT '来居住地日期:date',
   enter_beijing_resion        VARCHAR(255)  NOT NULL  DEFAULT ''
   COMMENT '来京原因',
   residence_type              VARCHAR(32)   NOT NULL  DEFAULT ''
@@ -108,13 +110,15 @@ CREATE TABLE d_person_info_rent (
 DROP TABLE IF EXISTS d_person_info_live;
 CREATE TABLE d_person_info_live (
   id                 INT(11)       NOT NULL  AUTO_INCREMENT
-  COMMENT 'ID',
+  COMMENT 'ID:hidden',
+  person_id          VARCHAR(32)   NOT NULL  DEFAULT ''
+  COMMENT '人口ID:hidden',
   name               VARCHAR(64)   NOT NULL  DEFAULT ''
   COMMENT '姓名',
   gender             VARCHAR(8)    NOT NULL  DEFAULT ''
-  COMMENT '性别',
-  birth              TIMESTAMP     NULL      DEFAULT NULL
-  COMMENT '出生年月',
+  COMMENT '性别:radioGroup:[男,女]',
+  birth              DATE          NULL      DEFAULT NULL
+  COMMENT '出生年月:date',
   identify_number    VARCHAR(32)   NOT NULL  DEFAULT ''
   COMMENT '身份证号',
   nation             VARCHAR(32)   NOT NULL  DEFAULT ''
@@ -134,7 +138,7 @@ CREATE TABLE d_person_info_live (
   contact            VARCHAR(32)   NOT NULL  DEFAULT ''
   COMMENT '联系电话',
   is_owner           VARCHAR(4)    NOT NULL  DEFAULT '否'
-  COMMENT '是否户主:radio:[是,否]',
+  COMMENT '是否户主:radioGroup:[是,否]',
   owner_relate       VARCHAR(32)   NOT NULL  DEFAULT ''
   COMMENT '与户主关系',
   company_huaifang   VARCHAR(128)  NOT NULL  DEFAULT ''
@@ -151,8 +155,8 @@ CREATE TABLE d_person_info_live (
   COMMENT '是否残疾人员:select:[正常,是]',
   is_dead            VARCHAR(4)              DEFAULT ''
   COMMENT '是否死亡人员:select:[否,是]',
-  dead_date          TIMESTAMP     NULL
-  COMMENT '死亡日期',
+  dead_date          DATE          NULL
+  COMMENT '死亡日期:date',
   memo               VARCHAR(1024)           DEFAULT ''
   COMMENT '备注:textarea',
   PRIMARY KEY (id)

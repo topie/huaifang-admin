@@ -67,7 +67,8 @@
             },
             timePicker: true,
             timePicker24Hour: true,
-            timePickerSeconds: true
+            timePickerSeconds: true,
+            singleDatePicker: false
         };
     }
     var Form = function (element, options, callback) {

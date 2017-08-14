@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topie.huaifang.database.core.dao.PersonInfoLiveMapper">
+  <resultMap id="BaseResultMap" type="com.topie.huaifang.database.core.model.PersonInfoLive">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="person_id" jdbcType="VARCHAR" property="personId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="birth" jdbcType="DATE" property="birth" />
+    <result column="identify_number" jdbcType="VARCHAR" property="identifyNumber" />
+    <result column="nation" jdbcType="VARCHAR" property="nation" />
+    <result column="political_status" jdbcType="VARCHAR" property="politicalStatus" />
+    <result column="census_type" jdbcType="VARCHAR" property="censusType" />
+    <result column="census_address" jdbcType="VARCHAR" property="censusAddress" />
+    <result column="born_place" jdbcType="VARCHAR" property="bornPlace" />
+    <result column="residence_place" jdbcType="VARCHAR" property="residencePlace" />
+    <result column="marriage_status" jdbcType="VARCHAR" property="marriageStatus" />
+    <result column="contact" jdbcType="VARCHAR" property="contact" />
+    <result column="is_owner" jdbcType="VARCHAR" property="isOwner" />
+    <result column="owner_relate" jdbcType="VARCHAR" property="ownerRelate" />
+    <result column="company_huaifang" jdbcType="VARCHAR" property="companyHuaifang" />
+    <result column="company_other" jdbcType="VARCHAR" property="companyOther" />
+    <result column="job_position" jdbcType="VARCHAR" property="jobPosition" />
+    <result column="is_huaifang_pepole" jdbcType="VARCHAR" property="isHuaifangPepole" />
+    <result column="rksx" jdbcType="VARCHAR" property="rksx" />
+    <result column="is_canji" jdbcType="VARCHAR" property="isCanji" />
+    <result column="is_dead" jdbcType="VARCHAR" property="isDead" />
+    <result column="dead_date" jdbcType="DATE" property="deadDate" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+  </resultMap>
+</mapper>
