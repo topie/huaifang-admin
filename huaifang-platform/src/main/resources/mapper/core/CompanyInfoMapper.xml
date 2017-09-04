@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.topie.huaifang.database.core.dao.CompanyInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.topie.huaifang.database.core.model.CompanyInfo" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+    <result column="company_code" property="companyCode" jdbcType="VARCHAR" />
+    <result column="yingyezhizhao" property="yingyezhizhao" jdbcType="VARCHAR" />
+    <result column="company_type" property="companyType" jdbcType="VARCHAR" />
+    <result column="farendaibiao" property="farendaibiao" jdbcType="VARCHAR" />
+    <result column="zhucezijin" property="zhucezijin" jdbcType="VARCHAR" />
+    <result column="reg_date" property="regDate" jdbcType="DATE" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="gudong" property="gudong" jdbcType="VARCHAR" />
+    <result column="gudong_count" property="gudongCount" jdbcType="INTEGER" />
+  </resultMap>
+</mapper>

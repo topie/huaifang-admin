@@ -932,6 +932,8 @@
                 if (data.uploadUrl === undefined) {
                     data.uploadUrl = App.href + "/api/common/uploadImage";
                 }
+                if (data.isAjaxUpload === undefined)
+                    data.isAjaxUpload = true;
                 if (data.isAjaxUpload) {
                     // 上传符号
                     var successIcon = $('<a href="javascript:;" class="btn" style="border-color: white;background:white;cursor:default;"><span class="glyphicon glyphicon-ok" style="color: #45B6AF;cursor:default;"></span></a>');

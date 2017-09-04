@@ -87,12 +87,13 @@ public class CommonQueryServiceImpl extends BaseService<CommonQuery> implements 
         for (Map map : list) {
             String name = (String) map.get("dataColumn");
             String comment = (String) map.get("dataComment");
+            String[] cs = comment.split(":");
+            if (cs.length > 2 && "skip".equals(cs[1])) continue;
             FormItem formItem = new FormItem();
             formItem.setName(CamelUtil.underlineToCamel(name));
-            String[] cs = comment.split(":");
+            formItem.setId(CamelUtil.underlineToCamel(name));
             formItem.setLabel(cs[0]);
             formItem.setType("text");
-            if (cs.length > 2 && "skip".equals(cs[1])) continue;
             if (cs.length == 2) {
                 formItem.setType(cs[1]);
                 if ("date".equals(cs[1])) {

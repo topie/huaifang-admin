@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.topie.huaifang.database.core.dao.AssetInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.topie.huaifang.database.core.model.AssetInfo" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="asset_no" property="assetNo" jdbcType="VARCHAR" />
+    <result column="asset_type" property="assetType" jdbcType="VARCHAR" />
+    <result column="asset_name" property="assetName" jdbcType="VARCHAR" />
+    <result column="guigexinghao" property="guigexinghao" jdbcType="VARCHAR" />
+    <result column="brand" property="brand" jdbcType="VARCHAR" />
+    <result column="yuanzhi" property="yuanzhi" jdbcType="VARCHAR" />
+    <result column="canzhi" property="canzhi" jdbcType="VARCHAR" />
+    <result column="jiazhi" property="jiazhi" jdbcType="VARCHAR" />
+    <result column="get_way" property="getWay" jdbcType="VARCHAR" />
+    <result column="get_date" property="getDate" jdbcType="DATE" />
+    <result column="use_situation" property="useSituation" jdbcType="VARCHAR" />
+    <result column="caiwuruzhang_date" property="caiwuruzhangDate" jdbcType="DATE" />
+    <result column="use_type" property="useType" jdbcType="VARCHAR" />
+    <result column="use_person" property="usePerson" jdbcType="VARCHAR" />
+    <result column="use_department" property="useDepartment" jdbcType="VARCHAR" />
+    <result column="manager_department" property="managerDepartment" jdbcType="VARCHAR" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+  </resultMap>
+</mapper>
