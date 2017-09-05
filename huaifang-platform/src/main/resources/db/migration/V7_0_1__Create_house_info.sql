@@ -102,5 +102,5 @@ CREATE TABLE d_house_info (
   DEFAULT CHARSET = utf8
   COMMENT '房屋信息';
 
-INSERT INTO `d_function` VALUES ('11', '7', '房屋信息管理', '1', '1', NULL, '/api/core/houseInfo/list', '7', NULL, NULL);
-INSERT INTO `d_role_function` (role_id, function_id) VALUES ('1', '11');
+INSERT INTO `d_function` VALUES ('12', '10', '房屋信息管理', '1', '1', NULL, '/api/core/houseInfo/list', '2', NULL, NULL);
+INSERT INTO `d_role_function` (role_id, function_id) VALUES ('1', '12');

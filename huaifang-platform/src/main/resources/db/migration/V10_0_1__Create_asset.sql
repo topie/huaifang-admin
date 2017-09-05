@@ -41,8 +41,8 @@ CREATE TABLE d_asset_info (
   DEFAULT CHARSET = utf8
   COMMENT '资产信息';
 
-INSERT INTO `d_function` VALUES ('14', '7', '资产信息管理', '1', '1', NULL, '/api/core/assetInfo/list', '8', NULL, NULL);
-INSERT INTO `d_role_function` (role_id, function_id) VALUES ('1', '14');
+INSERT INTO `d_function` VALUES ('15', '7', '资产信息管理', '1', '1', NULL, '/api/core/assetInfo/list', '4', NULL, NULL);
+INSERT INTO `d_role_function` (role_id, function_id) VALUES ('1', '15');
 
 
 

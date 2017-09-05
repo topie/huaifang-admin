@@ -23,8 +23,8 @@ CREATE TABLE d_person_info (
   DEFAULT CHARSET = utf8
   COMMENT '人口信息';
 
-INSERT INTO `d_function` VALUES ('12', '7', '人口信息管理', '1', '1', NULL, '/api/core/personInfo/list', '8', NULL, NULL);
-INSERT INTO `d_role_function` (role_id, function_id) VALUES ('1', '12');
+INSERT INTO `d_function` VALUES ('13', '10', '人口信息管理', '1', '1', NULL, '/api/core/personInfo/list', '3', NULL, NULL);
+INSERT INTO `d_role_function` (role_id, function_id) VALUES ('1', '13');
 
 DROP TABLE IF EXISTS d_person_info_rent;
 CREATE TABLE d_person_info_rent (

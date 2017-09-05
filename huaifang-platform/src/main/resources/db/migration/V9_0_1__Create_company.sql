@@ -27,8 +27,8 @@ CREATE TABLE d_company_info (
   DEFAULT CHARSET = utf8
   COMMENT '企业信息';
 
-INSERT INTO `d_function` VALUES ('13', '7', '企业信息管理', '1', '1', NULL, '/api/core/companyInfo/list', '7', NULL, NULL);
-INSERT INTO `d_role_function` (role_id, function_id) VALUES ('1', '13');
+INSERT INTO `d_function` VALUES ('14', '10', '企业信息管理', '1', '1', NULL, '/api/core/companyInfo/list', '4', NULL, NULL);
+INSERT INTO `d_role_function` (role_id, function_id) VALUES ('1', '14');
 
 
 
