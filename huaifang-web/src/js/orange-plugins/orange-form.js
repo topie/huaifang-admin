@@ -806,6 +806,7 @@
                 if (data.uploadUrl === undefined) {
                     data.uploadUrl = App.href + "/api/common/uploadFile";
                 }
+                if (data.isAjaxUpload == undefined) data.isAjaxUpload = true;
                 if (data.isAjaxUpload) {
 
                     var uploadFile = function () {
@@ -866,6 +867,7 @@
                                 }
                             });
                     };
+                    if (data.autoUpload == undefined) data.autoUpload = true;
                     if (data.autoUpload) {
                         ele.find('[role="file"]').on("change", function () {
                             uploadFile();
@@ -1569,12 +1571,14 @@
                             "fileinput-exists");
                     }
                 } else if (ele.attr("role") == "file-input") {
-                    ele.attr("value", value);
-                    ele.parent().parent().parent().removeClass("fileinput-new")
-                        .addClass("fileinput-exists");
-                    ele.parent().parent().parent().find(
-                        "span.fileinput-filename ").text(
-                        value.substring(value.lastIndexOf("/") + 1));
+                    if (value != '') {
+                        ele.attr("value", value);
+                        ele.parent().parent().parent().removeClass("fileinput-new")
+                            .addClass("fileinput-exists");
+                        ele.parent().parent().parent().find(
+                            "span.fileinput-filename ").text(
+                            value.substring(value.lastIndexOf("/") + 1));
+                    }
                 } else if (ele.is('table')) {
                     this._renderMultipleFiles(ele, name, value);
                 } else {

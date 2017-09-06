@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topie.huaifang.database.core.dao.PartyMembersInfoMapper">
+  <resultMap id="BaseResultMap" type="com.topie.huaifang.database.core.model.PartyMembersInfo">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="node_id" jdbcType="INTEGER" property="nodeId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="flag" jdbcType="VARCHAR" property="flag" />
+    <result column="enter_date" jdbcType="DATE" property="enterDate" />
+    <result column="tag" jdbcType="VARCHAR" property="tag" />
+  </resultMap>
+</mapper>

@@ -4,26 +4,18 @@
 ;
 (function ($, window, document, undefined) {
     var uploadMapping = {
-        "/api/core/houseInfo/list": "coreHouseInfo"
+        "/api/core/partyMembersActivity/list": "corePartyMembersActivity"
     };
     App.requestMapping = $.extend({}, window.App.requestMapping, uploadMapping);
-    App.coreHouseInfo = {
+    App.corePartyMembersActivity = {
         page: function (title) {
             window.App.content.empty();
             window.App.title(title);
             var content = $('<div class="panel-body" >' +
                 '<div class="row">' +
-                '<div class="col-md-3" >' +
+                '<div class="col-md-12" >' +
                 '<div class="panel panel-default" >' +
-                '<div class="panel-heading">架构节点</div>' +
-                '<div class="panel-body">' +
-                '<ul id="tree" class="ztree"></ul>' +
-                '</div>' +
-                '</div>' +
-                '</div>' +
-                '<div class="col-md-9" >' +
-                '<div class="panel panel-default" >' +
-                '<div class="panel-heading">房屋列表</div>' +
+                '<div class="panel-heading">党活动管理</div>' +
                 '<div class="panel-body" id="grid"></div>' +
                 '</div>' +
                 '</div>' +
@@ -35,9 +27,8 @@
     };
     var initEvents = function () {
         var grid;
-        var tree;
         var options = {
-            url: App.href + "/api/core/houseInfo/list",
+            url: App.href + "/api/core/partyMembersActivity/list",
             contentType: "table",
             contentTypeItems: "table,card,list",
             pageNum: 1,//当前页码
@@ -51,15 +42,53 @@
             pageSelect: [2, 15, 30, 50],
             columns: [
                 {
-                    title: "id",
+                    title: "ID",
                     field: "id",
-                    sort: true,
                     width: "5%"
                 },
                 {
-                    title: "房屋编号",
-                    field: "houseNo",
-                    sort: true
+                    title: "活动主题",
+                    field: "topic"
+                },
+                {
+                    title: "活动地址",
+                    field: "address"
+                },
+                {
+                    title: "开始时间",
+                    field: "beginTime"
+                },
+                {
+                    title: "结束时间",
+                    field: "endTime"
+                },
+                {
+                    title: "发布人",
+                    field: "publishUser"
+                },
+                {
+                    title: "发布时间",
+                    field: "publishTime"
+                },
+                {
+                    title: "状态",
+                    field: "status",
+                    format: function (i, d) {
+                        switch (d.status) {
+                            case 0 :
+                                return "未上线";
+                                break;
+                            case 1 :
+                                return "进行中";
+                                break;
+                            case 2 :
+                                return "已结束";
+                                break;
+                            default:
+                                return "未上线";
+                                break;
+                        }
+                    }
                 }
             ],
             actionColumnText: "操作",//操作列文本
@@ -69,14 +98,14 @@
                 cls: "btn-primary btn-sm",
                 handle: function (index, d) {
                     var modal = $.orangeModal({
-                        id: "houseInfoForm",
+                        id: "partyMembersActivityForm",
                         title: "编辑",
                         destroy: true
                     }).show();
                     $.ajax({
                         type: "GET",
                         dataType: "json",
-                        url: App.href + "/api/core/houseInfo/formItems",
+                        url: App.href + "/api/core/partyMembersActivity/formItems",
                         success: function (data) {
                             if (data.code === 200) {
                                 var formItems = data.data;
@@ -84,13 +113,12 @@
                                     id: "edit_form",
                                     name: "edit_form",
                                     method: "POST",
-                                    action: App.href + "/api/core/houseInfo/update",
+                                    action: App.href + "/api/core/partyMembersActivity/update",
                                     ajaxSubmit: true,
-                                    rowEleNum: 2,
+                                    rowEleNum: 1,
                                     ajaxSuccess: function () {
                                         modal.hide();
                                         grid.reload();
-                                        tree.reAsyncChildNodes(null, "refresh");
                                     },
                                     submitText: "保存",
                                     showReset: true,
@@ -106,7 +134,7 @@
                                     buttonsAlign: "center",
                                     items: formItems
                                 });
-                                form.loadRemote(App.href + "/api/core/houseInfo/load/" + d.id);
+                                form.loadRemote(App.href + "/api/core/partyMembersActivity/load/" + d.id);
                             } else {
                                 alert(data.message);
                             }
@@ -123,7 +151,7 @@
                 handle: function (index, data) {
                     bootbox.confirm("确定该操作?", function (result) {
                         if (result) {
-                            var requestUrl = App.href + "/api/core/houseInfo/delete";
+                            var requestUrl = App.href + "/api/core/partyMembersActivity/delete";
                             $.ajax({
                                 type: "GET",
                                 dataType: "json",
@@ -160,7 +188,7 @@
                         $.ajax({
                             type: "GET",
                             dataType: "json",
-                            url: App.href + "/api/core/houseInfo/formItems",
+                            url: App.href + "/api/core/partyMembersActivity/formItems",
                             success: function (data) {
                                 if (data.code === 200) {
                                     var formItems = data.data;
@@ -168,13 +196,12 @@
                                         id: "add_form",
                                         name: "add_form",
                                         method: "POST",
-                                        action: App.href + "/api/core/houseInfo/insert",
+                                        action: App.href + "/api/core/partyMembersActivity/insert",
                                         ajaxSubmit: true,
-                                        rowEleNum: 2,
+                                        rowEleNum: 1,
                                         ajaxSuccess: function () {
                                             modal.hide();
                                             grid.reload();
-                                            tree.reAsyncChildNodes(null, "refresh");
                                         },
                                         submitText: "保存",//保存按钮的文本
                                         showReset: true,//是否显示重置按钮
@@ -203,7 +230,7 @@
                 }
             ],
             search: {
-                rowEleNum: 2,
+                rowEleNum: 1,
                 //搜索栏元素
                 items: [
                     {
@@ -216,29 +243,6 @@
             }
         };
         grid = window.App.content.find("#grid").orangeGrid(options);
-
-        var setting = {
-            async: {
-                enable: true,
-                url: App.href + "/api/core/houseNode/treeNodes",
-                autoParam: ["id", "name", "pId"]
-            },
-            data: {
-                simpleData: {
-                    enable: true
-                }
-            },
-            callback: {
-                onAsyncSuccess: function (event, treeId, treeNode, msg) {
-                    var zTree = $.fn.zTree.getZTreeObj(treeId);
-                    zTree.expandAll(true);
-                }
-            }
-        };
-
-        $.fn.zTree.init($("#tree"), setting);
-        tree = $.fn.zTree.getZTreeObj("tree");
-
 
     }
 })(jQuery, window, document);

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topie.huaifang.database.core.dao.PartyMembersActivityMapper">
+  <resultMap id="BaseResultMap" type="com.topie.huaifang.database.core.model.PartyMembersActivity">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="topic" jdbcType="VARCHAR" property="topic" />
+    <result column="image" jdbcType="VARCHAR" property="image" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="begin_time" jdbcType="TIMESTAMP" property="beginTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="join_limit" jdbcType="INTEGER" property="joinLimit" />
+    <result column="activity_range" jdbcType="VARCHAR" property="activityRange" />
+    <result column="publish_user" jdbcType="VARCHAR" property="publishUser" />
+    <result column="publish_time" jdbcType="TIMESTAMP" property="publishTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+</mapper>
