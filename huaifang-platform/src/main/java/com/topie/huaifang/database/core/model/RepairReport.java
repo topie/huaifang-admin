@@ -1,10 +1,14 @@
 package com.topie.huaifang.database.core.model;
 
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import java.util.Date;
 
 @Table(name = "d_repair_report")
 public class RepairReport {
+
     /**
      * ID:hidden
      */
@@ -34,6 +38,7 @@ public class RepairReport {
      * 报修:datetime
      */
     @Column(name = "report_time")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date reportTime;
 
     /**
@@ -142,6 +147,7 @@ public class RepairReport {
      *
      * @return report_time - 报修:datetime
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
     public Date getReportTime() {
         return reportTime;
     }

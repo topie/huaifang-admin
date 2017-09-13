@@ -69,7 +69,7 @@ CREATE TABLE d_cunwu_info (
   DEFAULT CHARSET = utf8
   COMMENT '村务公开';
 
-INSERT INTO `d_function` VALUES ('22', '7', '村务公开管理', '1', '1', NULL, '/api/core/cunwu/list', '7', NULL, NULL);
+INSERT INTO `d_function` VALUES ('22', '7', '村务公开管理', '1', '1', NULL, '/api/core/cunwuInfo/list', '7', NULL, NULL);
 INSERT INTO `d_role_function` (role_id, function_id) VALUES ('1', '22');
 
 DROP TABLE IF EXISTS d_repair_report;
@@ -83,7 +83,7 @@ CREATE TABLE d_repair_report (
   room_number    VARCHAR(255)            DEFAULT ''
   COMMENT '房间号',
   report_time    TIMESTAMP NOT NULL      DEFAULT CURRENT_TIMESTAMP
-  COMMENT '报修:datetime',
+  COMMENT '报修时间:datetime',
   report_title   VARCHAR(255)            DEFAULT ''
   COMMENT '报修事项:textarea',
   report_content VARCHAR(1024)           DEFAULT ''

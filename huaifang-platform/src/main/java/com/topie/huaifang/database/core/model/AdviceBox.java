@@ -1,5 +1,8 @@
 package com.topie.huaifang.database.core.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 import javax.persistence.*;
 
@@ -40,6 +43,7 @@ public class AdviceBox {
      * 留言时间:datetime
      */
     @Column(name = "message_time")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date messageTime;
 
     /**
@@ -160,6 +164,7 @@ public class AdviceBox {
      *
      * @return message_time - 留言时间:datetime
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
     public Date getMessageTime() {
         return messageTime;
     }

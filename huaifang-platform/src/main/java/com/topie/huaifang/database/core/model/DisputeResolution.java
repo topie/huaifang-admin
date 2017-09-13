@@ -1,5 +1,8 @@
 package com.topie.huaifang.database.core.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 import javax.persistence.*;
 
@@ -38,6 +41,7 @@ public class DisputeResolution {
      * 更新时间:datetime
      */
     @Column(name = "update_time")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
     /**
@@ -135,6 +139,7 @@ public class DisputeResolution {
      *
      * @return update_time - 更新时间:datetime
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
     public Date getUpdateTime() {
         return updateTime;
     }

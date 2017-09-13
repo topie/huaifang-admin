@@ -4,10 +4,10 @@
 ;
 (function ($, window, document, undefined) {
     var uploadMapping = {
-        "/api/core/assetInfo/list": "coreAssetInfo"
+        "/api/core/adviceBox/list": "coreAdviceBox"
     };
     App.requestMapping = $.extend({}, window.App.requestMapping, uploadMapping);
-    App.coreAssetInfo = {
+    App.coreAdviceBox = {
         page: function (title) {
             window.App.content.empty();
             window.App.title(title);
@@ -15,7 +15,7 @@
                 '<div class="row">' +
                 '<div class="col-md-12" >' +
                 '<div class="panel panel-default" >' +
-                '<div class="panel-heading">资产列表</div>' +
+                '<div class="panel-heading">意见箱</div>' +
                 '<div class="panel-body" id="grid"></div>' +
                 '</div>' +
                 '</div>' +
@@ -29,7 +29,7 @@
         var grid;
         var tree;
         var options = {
-            url: App.href + "/api/core/assetInfo/list",
+            url: App.href + "/api/core/adviceBox/list",
             contentType: "table",
             contentTypeItems: "table,card,list",
             pageNum: 1,//当前页码
@@ -43,14 +43,27 @@
             pageSelect: [2, 15, 30, 50],
             columns: [
                 {
-                    title: "资产编号",
-                    field: "assetNo",
-                    sort: true
+                    title: "联系人",
+                    field: "contactPerson"
                 },
                 {
-                    title: "资产名称",
-                    field: "assetName",
-                    sort: true
+                    title: "联系电话",
+                    field: "contactPhone"
+                },
+                {
+                    title: "联系邮箱",
+                    field: "concatEmail"
+                },
+                {
+                    title: "留言内容",
+                    field: "messageContent",
+                    format: function (i, d) {
+                        return d.messageContent.length > 30 ? (d.messageContent.substring(0, 30) + "...") : d.messageContent;
+                    }
+                },
+                {
+                    title: "留言时间",
+                    field: "messageTime"
                 }
             ],
             actionColumnText: "操作",//操作列文本
@@ -60,14 +73,14 @@
                 cls: "btn-primary btn-sm",
                 handle: function (index, d) {
                     var modal = $.orangeModal({
-                        id: "assetInfoForm",
+                        id: "adviceBoxForm",
                         title: "编辑",
                         destroy: true
                     }).show();
                     $.ajax({
                         type: "GET",
                         dataType: "json",
-                        url: App.href + "/api/core/assetInfo/formItems",
+                        url: App.href + "/api/core/adviceBox/formItems",
                         success: function (data) {
                             if (data.code === 200) {
                                 var formItems = data.data;
@@ -75,9 +88,8 @@
                                     id: "edit_form",
                                     name: "edit_form",
                                     method: "POST",
-                                    action: App.href + "/api/core/assetInfo/update",
+                                    action: App.href + "/api/core/adviceBox/update",
                                     ajaxSubmit: true,
-                                    rowEleNum: 2,
                                     ajaxSuccess: function () {
                                         modal.hide();
                                         grid.reload();
@@ -96,7 +108,7 @@
                                     buttonsAlign: "center",
                                     items: formItems
                                 });
-                                form.loadRemote(App.href + "/api/core/assetInfo/load/" + d.id);
+                                form.loadRemote(App.href + "/api/core/adviceBox/load/" + d.id);
                             } else {
                                 alert(data.message);
                             }
@@ -113,7 +125,7 @@
                 handle: function (index, data) {
                     bootbox.confirm("确定该操作?", function (result) {
                         if (result) {
-                            var requestUrl = App.href + "/api/core/assetInfo/delete";
+                            var requestUrl = App.href + "/api/core/adviceBox/delete";
                             $.ajax({
                                 type: "GET",
                                 dataType: "json",
@@ -150,7 +162,7 @@
                         $.ajax({
                             type: "GET",
                             dataType: "json",
-                            url: App.href + "/api/core/assetInfo/formItems",
+                            url: App.href + "/api/core/adviceBox/formItems",
                             success: function (data) {
                                 if (data.code === 200) {
                                     var formItems = data.data;
@@ -158,9 +170,8 @@
                                         id: "add_form",
                                         name: "add_form",
                                         method: "POST",
-                                        action: App.href + "/api/core/assetInfo/insert",
+                                        action: App.href + "/api/core/adviceBox/insert",
                                         ajaxSubmit: true,
-                                        rowEleNum: 2,
                                         ajaxSuccess: function () {
                                             modal.hide();
                                             grid.reload();
@@ -197,9 +208,9 @@
                 items: [
                     {
                         type: "text",
-                        label: "资产名称",
-                        name: "assetName",
-                        placeholder: "输入要搜索的资产名称"
+                        label: "联系电话",
+                        name: "contactPhone",
+                        placeholder: "输入要搜索的联系电话"
                     }
                 ]
             }
