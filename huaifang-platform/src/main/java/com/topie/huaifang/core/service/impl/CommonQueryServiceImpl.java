@@ -108,7 +108,7 @@ public class CommonQueryServiceImpl extends BaseService<CommonQuery> implements 
                 } else if ("datetime".equals(cs[1])) {
                     formItem.setType("datepicker");
                     Map config = new HashMap();
-                    config.put("timePicker", false);
+                    config.put("timePicker", true);
                     config.put("singleDatePicker", true);
                     Map locale = new HashMap();
                     locale.put("format", "YYYY-MM-DD HH:mm:ss");

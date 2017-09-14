@@ -1587,7 +1587,7 @@
                         var button = $('<button type="button" class="btn ' + colum.cls + '">' + text + '</button>');
                         if (colum.handle != undefined) {
                             button.click(function (e) {
-                                colum.handle(num, current_data);
+                                colum.handle(num, current_data,that);
                                 e.stopPropagation();
                             });
                         }
@@ -1690,7 +1690,7 @@
                                 var button = $('<button type="button" class="btn btn-update btn-add-card ' + colum.cls + '">' + text + '</button>');
                                 if (colum.handle != undefined) {
                                     button.click(function (e) {
-                                        colum.handle(num, current_data);
+                                        colum.handle(num, current_data,that);
                                         e.stopPropagation();
                                     });
                                 }
@@ -1891,7 +1891,7 @@
                         });
                         if (colum.handle != undefined) {
                             button.click(function (e) {
-                                colum.handle(num, current_data);
+                                colum.handle(num, current_data,that);
                                 e.stopPropagation();
                             });
                         }
