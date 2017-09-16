@@ -67,9 +67,9 @@ CREATE TABLE d_cunwu_info (
   PRIMARY KEY (id)
 )
   DEFAULT CHARSET = utf8
-  COMMENT '村务公开';
+  COMMENT '居务公开';
 
-INSERT INTO `d_function` VALUES ('22', '7', '村务公开管理', '1', '1', NULL, '/api/core/cunwuInfo/list', '7', NULL, NULL);
+INSERT INTO `d_function` VALUES ('22', '7', '居务公开管理', '1', '1', NULL, '/api/core/cunwuInfo/list', '7', NULL, NULL);
 INSERT INTO `d_role_function` (role_id, function_id) VALUES ('1', '22');
 
 DROP TABLE IF EXISTS d_repair_report;

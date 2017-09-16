@@ -27,7 +27,6 @@
     };
     var initEvents = function () {
         var grid;
-        var tree;
         var options = {
             url: App.href + "/api/core/adviceBox/list",
             contentType: "table",

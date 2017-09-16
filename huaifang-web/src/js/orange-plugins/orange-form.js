@@ -170,7 +170,7 @@
             });
             this.$element.prepend(alertDiv);
             alertDiv.delay(seconds * 1000).fadeOut();
-            App.scrollTo(alertDiv, -200);
+            this.$element.animate({scrollTop: 0}, 'slow');
         },
         _setVariable: function (element, options) {
             this.$element = $(element);
@@ -486,25 +486,39 @@
                         : data.attribute)
                 });
                 var addBtn = $('<button class="btn btn-info" type="button">添加</button>');
-                ele.find('[role=action]').append(addBtn);
+                ele.children('[role=action]').append(addBtn);
                 addBtn.on("click", function () {
                     var itemWrapper = $('<div class="row">' +
-                        '<div role="s-ele" class="col-lg-12 form-group input-group"><span role="s-action" class="input-group-btn"></span></div>' +
+                        '<div role="s-ele" class="col-md-12 form-group input-group">' +
+                        '</div>' +
                         '</div>');
-                    var item = form._formEles[data.item.type](data.item, form);
-                    itemWrapper.find('[role=s-ele]').prepend(item);
-                    var deleteBtn = $('<button class="btn btn-danger" type="button"><i class="fa fa-times"></i></button>');
-                    itemWrapper.find('[role=s-action]').append(deleteBtn);
-                    deleteBtn.on("click", function () {
-                        itemWrapper.remove();
-                    });
-                    ele.find('[role=ele]').append(itemWrapper);
-                    form._uniform();
+                    if (data.items != undefined) {
+                        $.each(data.items, function (j, jd) {
+                            var item = form._formEles[jd.type](jd, form);
+                            var iWrapper;
+                            if (jd.label != undefined) {
+                                iWrapper = $('<div class="form-group"><label class="control-label col-md-offset-1 col-md-2">' + jd.label + '</label><div role="i-ele" class="col-md-9"></div></div>');
+                            } else {
+                                iWrapper = $('<div class="form-group"><div role="i-ele" class="col-md-offset-1 col-md-11"></div></div>');
+                            }
+                            iWrapper.children('[role=i-ele]').append(item);
+                            itemWrapper.children('[role=s-ele]').append(iWrapper);
+                        });
+                        itemWrapper.children('[role=s-ele]').append($('<span role="s-action" style="vertical-align: top;" class="input-group-btn"></span>'));
+                        var deleteBtn = $('<button class="btn btn-danger" type="button"><i class="fa fa-times"></i></button>');
+                        itemWrapper.children().children('[role=s-action]').append(deleteBtn);
+                        deleteBtn.on("click", function () {
+                            itemWrapper.remove();
+                        });
+                        ele.children('[role=ele]').append(itemWrapper);
+                        form._uniform();
+                    }
+
                 });
                 var cleanBtn = $('<button class="btn btn-danger" type="button">清除</button>');
-                ele.find('[role=action]').append(cleanBtn);
+                ele.children('[role=action]').append(cleanBtn);
                 cleanBtn.on("click", function () {
-                    ele.find('[role=ele]').empty();
+                    ele.children('[role=ele]').empty();
                 });
                 ele.data("data", data);
                 return ele;
@@ -528,6 +542,8 @@
                     "attribute_": (data.attribute === undefined ? ""
                         : data.attribute)
                 });
+                if (data.value != undefined)
+                    ele.val(data.value);
                 return ele;
             },
             'text': function (data, form) {
@@ -546,6 +562,8 @@
                     "attribute_": (data.attribute === undefined ? ""
                         : data.attribute)
                 });
+                if (data.value != undefined)
+                    ele.val(data.value);
                 return ele;
             },
             'password': function (data, form) {
@@ -1347,19 +1365,46 @@
             var data = $(div).data("data");
             var ele = $(div);
             var value_arr = isArray(values) ? values : values.split(',');
-            $.each(value_arr, function (i, d) {
+            $.each(value_arr, function (i, id) {
                 var itemWrapper = $('<div class="row">' +
-                    '<div role="s-ele" class="col-lg-12 form-group input-group"><span role="s-action" class="input-group-btn"></span></div>' +
+                    '<div role="s-ele" class="col-lg-12 form-group input-group"></div>' +
                     '</div>');
-                var item = that._formEles[data.item.type](data.item, form);
-                that._loadValue(data.item.name, d, item);
-                itemWrapper.find('[role=s-ele]').prepend(item);
-                var deleteBtn = $('<button class="btn btn-danger" type="button"><i class="fa fa-times"></i></button>');
-                itemWrapper.find('[role=s-action]').append(deleteBtn);
-                deleteBtn.on("click", function () {
-                    itemWrapper.remove();
-                });
-                ele.find('[role=ele]').append(itemWrapper);
+                if (data.items != undefined) {
+                    if (data.items.length == 1) {
+                        var it = data.items[0];
+                        var item = that._formEles[it.type](it, that);
+                        that._loadValue(it.name, id, item);
+                        var iWrapper;
+                        if (it.label != undefined) {
+                            iWrapper = $('<div class="form-group"><label class="control-label col-md-2">' + it.label + '</label><div role="i-ele" class="col-md-8"></div></div>');
+                        } else {
+                            iWrapper = $('<div class="form-group"><div role="i-ele" class="col-md-12"></div></div>');
+                        }
+                        iWrapper.find('[role=i-ele]').append(item);
+                        itemWrapper.find('[role=s-ele]').append(iWrapper);
+                    } else {
+                        $.each(data.items, function (j, jd) {
+                            var item = that._formEles[jd.type](jd, that);
+                            that._loadValue(jd.name, id[jd.name], item);
+                            var iWrapper;
+                            if (jd.label != undefined) {
+                                iWrapper = $('<div class="form-group"><label class="control-label col-md-offset-1 col-md-2">' + jd.label + '</label><div role="i-ele" class="col-md-9"></div></div>');
+                            } else {
+                                iWrapper = $('<div class="form-group"><div role="i-ele" class="col-md-offset-1 col-md-11"></div></div>');
+                            }
+                            iWrapper.find('[role=i-ele]').append(item);
+                            itemWrapper.find('[role=s-ele]').append(iWrapper);
+                        });
+                    }
+                    itemWrapper.find('[role=s-ele]').append($('<span role="s-action" style="vertical-align: top;" class="input-group-btn"></span>'));
+                    var deleteBtn = $('<button class="btn btn-danger" type="button"><i class="fa fa-times"></i></button>');
+                    itemWrapper.find('[role=s-action]').append(deleteBtn);
+                    deleteBtn.on("click", function () {
+                        itemWrapper.remove();
+                    });
+                    ele.find('[role=ele]').append(itemWrapper);
+                    that._uniform();
+                }
             });
         },
         _renderMultipleFiles: function (table, fieldName, fileIds) {

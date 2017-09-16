@@ -91,4 +91,3 @@ CREATE TABLE d_wuye_fee (
 
 INSERT INTO `d_function` VALUES ('26', '7', '物业费管理', '1', '1', NULL, '/api/core/wuyeFee/list', '4', NULL, NULL);
 INSERT INTO `d_role_function` (role_id, function_id) VALUES ('1', '26');
-

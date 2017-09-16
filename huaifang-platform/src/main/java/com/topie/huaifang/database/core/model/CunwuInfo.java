@@ -24,7 +24,7 @@ public class CunwuInfo {
      * 更新时间:datetime
      */
     @Column(name = "update_time")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date updateTime;
 
     /**
