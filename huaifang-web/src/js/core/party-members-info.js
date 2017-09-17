@@ -321,7 +321,7 @@
                         url: requestUrl,
                         success: function (data) {
                             if (data.code === 200) {
-                                grid.reload();
+                                tree.reAsyncChildNodes(null, "refresh");
                             } else {
                                 alert(data.message);
                             }
