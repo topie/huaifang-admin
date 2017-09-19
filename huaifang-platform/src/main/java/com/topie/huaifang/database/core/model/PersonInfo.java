@@ -17,12 +17,6 @@ public class PersonInfo {
     private Integer id;
 
     /**
-     * 人口ID:skip
-     */
-    @Column(name = "person_id")
-    private String personId;
-
-    /**
      * 人口身份:select:[租户,住户]
      */
     @Column(name = "person_type")
@@ -80,24 +74,6 @@ public class PersonInfo {
      */
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    /**
-     * 获取人口ID:skip
-     *
-     * @return person_id - 人口ID:skip
-     */
-    public String getPersonId() {
-        return personId;
-    }
-
-    /**
-     * 设置人口ID:skip
-     *
-     * @param personId 人口ID:skip
-     */
-    public void setPersonId(String personId) {
-        this.personId = personId;
     }
 
     /**

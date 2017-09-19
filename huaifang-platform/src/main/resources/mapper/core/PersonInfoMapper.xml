@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.topie.huaifang.database.core.dao.PersonInfoMapper">
-  <resultMap id="BaseResultMap" type="com.topie.huaifang.database.core.model.PersonInfo">
-    <!--
-      WARNING - @mbggenerated
-    -->
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="person_id" jdbcType="VARCHAR" property="personId" />
-    <result column="person_type" jdbcType="VARCHAR" property="personType" />
-    <result column="house_node_id" jdbcType="INTEGER" property="houseNodeId" />
-    <result column="house_info" jdbcType="VARCHAR" property="houseInfo" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="birth" jdbcType="DATE" property="birth" />
-    <result column="identify_number" jdbcType="VARCHAR" property="identifyNumber" />
-    <result column="import_time" jdbcType="TIMESTAMP" property="importTime" />
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.topie.huaifang.database.core.model.PersonInfo">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="person_type" jdbcType="VARCHAR" property="personType"/>
+        <result column="house_node_id" jdbcType="INTEGER" property="houseNodeId"/>
+        <result column="house_info" jdbcType="VARCHAR" property="houseInfo"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="birth" jdbcType="DATE" property="birth"/>
+        <result column="identify_number" jdbcType="VARCHAR" property="identifyNumber"/>
+        <result column="import_time" jdbcType="TIMESTAMP" property="importTime"/>
+    </resultMap>
 </mapper>

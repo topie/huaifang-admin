@@ -2,14 +2,12 @@ DROP TABLE IF EXISTS d_person_info;
 CREATE TABLE d_person_info (
   id              INT(11)     NOT NULL      AUTO_INCREMENT
   COMMENT 'ID:hidden',
-  person_id       VARCHAR(32) NOT NULL      DEFAULT ''
-  COMMENT '人口ID:skip',
   person_type     VARCHAR(8)                DEFAULT ''
   COMMENT '人口身份:select:[租户,住户]',
   house_node_id   INT(11)                   DEFAULT 0
   COMMENT '绑定架构id:hidden',
   house_info      VARCHAR(255)              DEFAULT ''
-  COMMENT '绑定房屋信息:skip',
+  COMMENT '绑定房屋信息',
   name            VARCHAR(64) NOT NULL      DEFAULT ''
   COMMENT '姓名',
   birth           DATE        NULL          DEFAULT NULL
@@ -94,13 +92,15 @@ CREATE TABLE d_person_info_rent (
   COMMENT '就业单位/学校',
   firm_address                VARCHAR(255)  NOT NULL  DEFAULT ''
   COMMENT '单位地址',
-  firm_industry               VARCHAR(64)   NOT NULL  DEFAULT '单位所属行业',
+  firm_industry               VARCHAR(64)   NOT NULL  DEFAULT '单位所属行业:select',
   main_job                    VARCHAR(128)  NOT NULL  DEFAULT ''
   COMMENT '主要从事工作',
   profession                  VARCHAR(32)   NOT NULL  DEFAULT ''
   COMMENT '职业',
-  social_security             VARCHAR(32)   NOT NULL  DEFAULT '社保',
-  has_contract                VARCHAR(8)    NOT NULL  DEFAULT '是否签订劳动合同',
+  social_security             VARCHAR(32)   NOT NULL  DEFAULT ''
+  COMMENT '社保:radioGroup:[无,工伤,医疗,失业,养老,生育]',
+  has_contract                VARCHAR(8)    NOT NULL  DEFAULT ''
+  COMMENT '是否签订劳动合同:radioGroup:[无,有]',
   PRIMARY KEY (id)
 )
   DEFAULT CHARSET = utf8
@@ -162,6 +162,6 @@ CREATE TABLE d_person_info_live (
   PRIMARY KEY (id)
 )
   DEFAULT CHARSET = utf8
-  COMMENT '人口信息-租户';
+  COMMENT '人口信息-住户';
 
 

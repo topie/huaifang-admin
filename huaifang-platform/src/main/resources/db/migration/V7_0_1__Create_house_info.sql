@@ -2,7 +2,7 @@ CREATE TABLE d_house_info (
   id                     INT(11) NOT NULL AUTO_INCREMENT
   COMMENT '房屋id:hidden',
   house_node_id          INT(11) NOT NULL DEFAULT 0
-  COMMENT '架构id:hidden',
+  COMMENT '架构id:tree',
   house_no               VARCHAR(32)      DEFAULT ''
   COMMENT '房屋编号',
   address                VARCHAR(255)     DEFAULT ''

@@ -7,6 +7,7 @@ import com.topie.huaifang.common.utils.ResponseUtil;
 import com.topie.huaifang.common.utils.Result;
 import com.topie.huaifang.core.service.ICommonQueryService;
 import com.topie.huaifang.core.service.IHouseInfoService;
+import com.topie.huaifang.core.service.IHouseNodeService;
 import com.topie.huaifang.database.core.model.HouseInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,9 @@ public class HouseInfoController {
 
     @Autowired
     private IHouseInfoService iHouseInfoService;
+
+    @Autowired
+    private IHouseNodeService iHouseNodeService;
 
     @Autowired
     private ICommonQueryService iCommonQueryService;

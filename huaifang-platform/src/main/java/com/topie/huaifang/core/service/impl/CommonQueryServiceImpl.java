@@ -122,7 +122,13 @@ public class CommonQueryServiceImpl extends BaseService<CommonQuery> implements 
                 String[] arr = cs[2].split("[,\\]\\[]");
                 for (String option : arr) {
                     if (StringUtils.isNotEmpty(option)) {
-                        options.add(new Option(option, option));
+                        if (option.contains("#")) {
+                            String[] sArr = option.split("#");
+                            options.add(new Option(sArr[1], sArr[0]));
+                        } else {
+                            options.add(new Option(option, option));
+                        }
+
                     }
                 }
                 formItem.setItems(options);

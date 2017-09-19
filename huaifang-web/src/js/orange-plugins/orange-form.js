@@ -158,6 +158,7 @@
             this._alert(alertText, "danger", 5);
         },
         _alert: function (alertText, type, seconds) {
+            var that = this;
             if (type === undefined) {
                 type = "danger";
             }
@@ -168,9 +169,8 @@
                 "type_": type,
                 "alert_": alertText
             });
-            this.$element.prepend(alertDiv);
+            this.$element.append(alertDiv);
             alertDiv.delay(seconds * 1000).fadeOut();
-            this.$element.animate({scrollTop: 0}, 'slow');
         },
         _setVariable: function (element, options) {
             this.$element = $(element);
@@ -531,6 +531,8 @@
                     "style_": (data.style === undefined ? ""
                         : data.style)
                 });
+                if (data.html != undefined)
+                    ele.html(data.html);
                 ele.data("format", data.format);
                 return ele;
             },
@@ -1097,7 +1099,9 @@
                         autoParam: data.autoParam
                     },
                     callback: {
-                        beforeCheck: beforeCheck,
+                        beforeCheck: function (treeId, treeNode) {
+                            beforeCheck(treeId, treeNode, form);
+                        },
                         onCheck: function (e, treeId, treeNode) {
                             var zTree = $.fn.zTree.getZTreeObj(treeId);
                             var nodes = zTree.getCheckedNodes(true);
@@ -1385,7 +1389,7 @@
                     } else {
                         $.each(data.items, function (j, jd) {
                             var item = that._formEles[jd.type](jd, that);
-                            that._loadValue(jd.name, id[jd.name], item);
+                            that._alue(jd.name, id[jd.name], item);
                             var iWrapper;
                             if (jd.label != undefined) {
                                 iWrapper = $('<div class="form-group"><label class="control-label col-md-offset-1 col-md-2">' + jd.label + '</label><div role="i-ele" class="col-md-9"></div></div>');

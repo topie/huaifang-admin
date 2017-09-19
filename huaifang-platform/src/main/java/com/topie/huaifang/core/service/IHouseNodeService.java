@@ -14,4 +14,6 @@ public interface IHouseNodeService extends IService<HouseNode> {
     PageInfo<HouseNode> selectByFilterAndPage(HouseNode houseNode, int pageNum, int pageSize);
 
     List<HouseNode> selectByFilter(HouseNode houseNode);
+
+
 }

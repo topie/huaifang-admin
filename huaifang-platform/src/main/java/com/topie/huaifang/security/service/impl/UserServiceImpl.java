@@ -1,5 +1,7 @@
 package com.topie.huaifang.security.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.topie.huaifang.common.baseservice.impl.BaseService;
 import com.topie.huaifang.database.core.dao.UserMapper;
 import com.topie.huaifang.database.core.model.User;
@@ -7,8 +9,6 @@ import com.topie.huaifang.security.dto.FunctionDTO;
 import com.topie.huaifang.security.security.UserCache;
 import com.topie.huaifang.security.service.UserService;
 import com.topie.huaifang.security.utils.SecurityUtil;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -156,5 +156,13 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
     @Override
     public void deleteUserCache(int userId) {
         userCache.removeUserFromCacheByUserId(userId);
+    }
+
+    @Override
+    public int updatePassword(Integer userId, String password) {
+        User user = selectByKey(userId);
+        if (user == null) return 0;
+        user.setPassword(password);
+        return updateUser(user);
     }
 }

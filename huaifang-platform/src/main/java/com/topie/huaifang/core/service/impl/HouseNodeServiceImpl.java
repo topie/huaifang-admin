@@ -32,4 +32,5 @@ public class HouseNodeServiceImpl extends BaseService<HouseNode> implements IHou
         return getMapper().selectByExample(example);
     }
 
+
 }

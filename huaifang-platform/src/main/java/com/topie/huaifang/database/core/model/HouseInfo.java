@@ -1,11 +1,15 @@
 package com.topie.huaifang.database.core.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
-import javax.persistence.*;
 
 @Table(name = "d_house_info")
 public class HouseInfo {
+
     /**
      * 房屋id
      */
@@ -279,12 +283,14 @@ public class HouseInfo {
      * 出租起始日期
      */
     @Column(name = "rent_begin")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date rentBegin;
 
     /**
      * 出租截止日期
      */
     @Column(name = "rent_end")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date rentEnd;
 
     /**
@@ -1126,6 +1132,7 @@ public class HouseInfo {
      *
      * @return rent_begin - 出租起始日期
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
     public Date getRentBegin() {
         return rentBegin;
     }
@@ -1144,6 +1151,7 @@ public class HouseInfo {
      *
      * @return rent_end - 出租截止日期
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
     public Date getRentEnd() {
         return rentEnd;
     }

@@ -46,4 +46,6 @@ public interface UserService extends IService<User> {
     void updateLastLoginInfoByUserName(String username, Date date, String remoteAddr);
 
     void deleteUserCache(int userId);
+
+    int updatePassword(Integer userId, String password);
 }
