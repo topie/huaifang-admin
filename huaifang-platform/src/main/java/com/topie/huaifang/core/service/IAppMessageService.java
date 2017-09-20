@@ -14,4 +14,9 @@ public interface IAppMessageService extends IService<AppMessage> {
     PageInfo<AppMessage> selectByFilterAndPage(AppMessage appMessage, int pageNum, int pageSize);
 
     List<AppMessage> selectByFilter(AppMessage appMessage);
+
+    void sendSystemAppMessage(Integer toUserId, String icon, String title, String content);
+
+    void sentUserAppMessage(Integer fromUserId, Integer toUserId, String title);
+
 }

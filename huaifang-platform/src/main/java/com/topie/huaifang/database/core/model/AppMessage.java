@@ -1,10 +1,14 @@
 package com.topie.huaifang.database.core.model;
 
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import java.util.Date;
 
 @Table(name = "d_app_message")
 public class AppMessage {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -45,7 +49,12 @@ public class AppMessage {
      * 添加时间
      */
     @Column(name = "create_time")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
+
+    @Column(name = "event_time")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date eventTime;
 
     /**
      * 内容
@@ -57,6 +66,15 @@ public class AppMessage {
      */
     @Column(name = "is_read")
     private Integer isRead;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
+    public Date getEventTime() {
+        return eventTime;
+    }
+
+    public void setEventTime(Date eventTime) {
+        this.eventTime = eventTime;
+    }
 
     /**
      * @return id
@@ -185,6 +203,7 @@ public class AppMessage {
      *
      * @return create_time - 添加时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
     public Date getCreateTime() {
         return createTime;
     }

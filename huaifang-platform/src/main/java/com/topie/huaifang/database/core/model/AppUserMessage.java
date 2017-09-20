@@ -1,5 +1,8 @@
 package com.topie.huaifang.database.core.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 import javax.persistence.*;
 
@@ -16,6 +19,18 @@ public class AppUserMessage {
     private Integer fromUserId;
 
     /**
+     * 发送用户名
+     */
+    @Column(name = "from_user_name")
+    private String fromUserName;
+
+    /**
+     * 发送用户头像
+     */
+    @Column(name = "head_image")
+    private String headImage;
+
+    /**
      * 接收用户ID
      */
     @Column(name = "to_user_id")
@@ -25,6 +40,7 @@ public class AppUserMessage {
      * 发送时间
      */
     @Column(name = "send_time")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date sendTime;
 
     /**
@@ -36,7 +52,7 @@ public class AppUserMessage {
      * 是否已读0未读1已读
      */
     @Column(name = "is_read")
-    private Byte isRead;
+    private Integer isRead;
 
     /**
      * @return id
@@ -71,6 +87,42 @@ public class AppUserMessage {
     }
 
     /**
+     * 获取发送用户名
+     *
+     * @return from_user_name - 发送用户名
+     */
+    public String getFromUserName() {
+        return fromUserName;
+    }
+
+    /**
+     * 设置发送用户名
+     *
+     * @param fromUserName 发送用户名
+     */
+    public void setFromUserName(String fromUserName) {
+        this.fromUserName = fromUserName;
+    }
+
+    /**
+     * 获取发送用户头像
+     *
+     * @return head_image - 发送用户头像
+     */
+    public String getHeadImage() {
+        return headImage;
+    }
+
+    /**
+     * 设置发送用户头像
+     *
+     * @param headImage 发送用户头像
+     */
+    public void setHeadImage(String headImage) {
+        this.headImage = headImage;
+    }
+
+    /**
      * 获取接收用户ID
      *
      * @return to_user_id - 接收用户ID
@@ -93,6 +145,7 @@ public class AppUserMessage {
      *
      * @return send_time - 发送时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
     public Date getSendTime() {
         return sendTime;
     }
@@ -129,7 +182,7 @@ public class AppUserMessage {
      *
      * @return is_read - 是否已读0未读1已读
      */
-    public Byte getIsRead() {
+    public Integer getIsRead() {
         return isRead;
     }
 
@@ -138,7 +191,7 @@ public class AppUserMessage {
      *
      * @param isRead 是否已读0未读1已读
      */
-    public void setIsRead(Byte isRead) {
+    public void setIsRead(Integer isRead) {
         this.isRead = isRead;
     }
 }

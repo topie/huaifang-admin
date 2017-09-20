@@ -1,15 +1,17 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.topie.huaifang.database.core.dao.AppUserMessageMapper" >
-  <resultMap id="BaseResultMap" type="com.topie.huaifang.database.core.model.AppUserMessage" >
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topie.huaifang.database.core.dao.AppUserMessageMapper">
+  <resultMap id="BaseResultMap" type="com.topie.huaifang.database.core.model.AppUserMessage">
     <!--
       WARNING - @mbggenerated
     -->
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="from_user_id" property="fromUserId" jdbcType="INTEGER" />
-    <result column="to_user_id" property="toUserId" jdbcType="INTEGER" />
-    <result column="send_time" property="sendTime" jdbcType="TIMESTAMP" />
-    <result column="content" property="content" jdbcType="VARCHAR" />
-    <result column="is_read" property="isRead" jdbcType="TINYINT" />
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="from_user_id" jdbcType="INTEGER" property="fromUserId" />
+    <result column="from_user_name" jdbcType="VARCHAR" property="fromUserName" />
+    <result column="head_image" jdbcType="VARCHAR" property="headImage" />
+    <result column="to_user_id" jdbcType="INTEGER" property="toUserId" />
+    <result column="send_time" jdbcType="TIMESTAMP" property="sendTime" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="is_read" jdbcType="TINYINT" property="isRead" />
   </resultMap>
 </mapper>

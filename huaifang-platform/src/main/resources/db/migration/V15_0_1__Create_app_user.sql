@@ -62,6 +62,8 @@ CREATE TABLE d_app_message (
   COMMENT '图标',
   create_time  TIMESTAMP NULL       DEFAULT CURRENT_TIMESTAMP
   COMMENT '添加时间',
+  event_time   TIMESTAMP NULL       DEFAULT CURRENT_TIMESTAMP
+  COMMENT '发送时间',
   content      VARCHAR(255)         DEFAULT ''
   COMMENT '内容',
   is_read      TINYINT              DEFAULT 0
@@ -74,16 +76,20 @@ CREATE TABLE d_app_message (
 
 DROP TABLE IF EXISTS d_app_user_message;
 CREATE TABLE d_app_user_message (
-  id           INT(11)   NOT NULL   AUTO_INCREMENT,
-  from_user_id INT(11)   NOT NULL   DEFAULT 0
+  id             INT(11)   NOT NULL   AUTO_INCREMENT,
+  from_user_id   INT(11)   NOT NULL   DEFAULT 0
   COMMENT '发送用户ID',
-  to_user_id   INT(11)   NOT NULL   DEFAULT 0
+  from_user_name VARCHAR(64)          DEFAULT ''
+  COMMENT '发送用户名',
+  head_image     VARCHAR(255)         DEFAULT '/upload/avatar.png'
+  COMMENT '发送用户头像',
+  to_user_id     INT(11)   NOT NULL   DEFAULT 0
   COMMENT '接收用户ID',
-  send_time    TIMESTAMP NULL       DEFAULT CURRENT_TIMESTAMP
+  send_time      TIMESTAMP NULL       DEFAULT CURRENT_TIMESTAMP
   COMMENT '发送时间',
-  content      VARCHAR(255)         DEFAULT ''
+  content        VARCHAR(255)         DEFAULT ''
   COMMENT '发送内容',
-  is_read      TINYINT              DEFAULT 0
+  is_read        TINYINT              DEFAULT 0
   COMMENT '是否已读0未读1已读',
   PRIMARY KEY (id)
 )
