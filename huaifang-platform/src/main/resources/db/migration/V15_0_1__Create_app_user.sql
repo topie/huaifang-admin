@@ -12,7 +12,7 @@ CREATE TABLE d_app_user (
   COMMENT '昵称',
   realname     VARCHAR(64)          DEFAULT ''
   COMMENT '姓名',
-  head_image   VARCHAR(255)         DEFAULT ''
+  head_image   VARCHAR(255)         DEFAULT '/upload/avatar.png'
   COMMENT '头像:image',
   reg_time     TIMESTAMP NULL       DEFAULT CURRENT_TIMESTAMP
   COMMENT '注册时间:datetime',
@@ -98,6 +98,8 @@ CREATE TABLE d_app_time_line (
   COMMENT '添加用户ID',
   add_user_name VARCHAR(32)          DEFAULT ''
   COMMENT '添加用户',
+  head_image    VARCHAR(255)         DEFAULT '/upload/avatar.png'
+  COMMENT '头像:image',
   add_time      TIMESTAMP NULL       DEFAULT CURRENT_TIMESTAMP
   COMMENT '添加时间',
   publish_time  TIMESTAMP NULL       DEFAULT CURRENT_TIMESTAMP

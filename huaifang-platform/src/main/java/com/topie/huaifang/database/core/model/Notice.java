@@ -80,6 +80,9 @@ public class Notice extends Sortable {
     @JsonIgnore
     private String periodP;
 
+    @Column(name = "read_count")
+    private Integer readCount;
+
     public String getPeriodC() {
         return periodC;
     }
@@ -276,5 +279,13 @@ public class Notice extends Sortable {
      */
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Integer getReadCount() {
+        return readCount;
+    }
+
+    public void setReadCount(Integer readCount) {
+        this.readCount = readCount;
     }
 }

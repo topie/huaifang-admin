@@ -1,12 +1,15 @@
 package com.topie.huaifang;
 
-import net.sf.json.JSONObject;
-import okhttp3.*;
+import com.alibaba.fastjson.JSONObject;
+import com.topie.huaifang.common.utils.PageConvertUtil;
+import com.topie.huaifang.common.utils.ResponseUtil;
+import com.topie.huaifang.database.core.model.*;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
 import java.net.URLDecoder;
-import java.util.concurrent.TimeUnit;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,10 +41,18 @@ public class AppTest {
 
     @Test
     public void test() throws Exception {
-        String[] singleFields = StringUtils.split("a,v,c",",");
+        String[] singleFields = StringUtils.split("a,v,c", ",");
         for (String singleField : singleFields) {
-            System.out.println(singleField+"---");
+            System.out.println(singleField + "---");
         }
+    }
+
+    @Test
+    public void json() {
+        MarketLine item  = new MarketLine();
+        List<MarketLine> list = new ArrayList<>();
+        list.add(item);
+        System.out.println(net.sf.json.JSONObject.fromObject(ResponseUtil.success(PageConvertUtil.grid(list))).toString());
     }
 
 }

@@ -5,14 +5,18 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
-@Table(name = "d_app_time_line")
-public class AppTimeLine {
+@Table(name = "d_market_line")
+public class MarketLine {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    /**
+     * 类型0跳蚤市场1车位共享
+     */
+    private Integer type;
 
     /**
      * 添加用户ID
@@ -26,8 +30,17 @@ public class AppTimeLine {
     @Column(name = "add_user_name")
     private String addUserName;
 
+    /**
+     * 用户头像
+     */
     @Column(name = "head_image")
     private String headImage;
+
+    /**
+     * 联系电话
+     */
+    @Column(name = "contact_phone")
+    private String contactPhone;
 
     /**
      * 添加时间
@@ -42,12 +55,6 @@ public class AppTimeLine {
     @Column(name = "publish_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date publishTime;
-
-    @Transient
-    private List<AppTimeLineComment> comments;
-
-    @Transient
-    private List<AppTimeLineLike> likes;
 
     /**
      * 发送内容
@@ -65,34 +72,10 @@ public class AppTimeLine {
     private Integer status;
 
     /**
-     * 是否删除0否1是
+     * 感兴趣人数
      */
-    @Column(name = "is_delete")
-    private Byte isDelete;
-
-    public String getHeadImage() {
-        return headImage;
-    }
-
-    public void setHeadImage(String headImage) {
-        this.headImage = headImage;
-    }
-
-    public List<AppTimeLineLike> getLikes() {
-        return likes;
-    }
-
-    public void setLikes(List<AppTimeLineLike> likes) {
-        this.likes = likes;
-    }
-
-    public List<AppTimeLineComment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<AppTimeLineComment> comments) {
-        this.comments = comments;
-    }
+    @Column(name = "i_count")
+    private Integer iCount;
 
     /**
      * @return id
@@ -106,6 +89,24 @@ public class AppTimeLine {
      */
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    /**
+     * 获取类型0跳蚤市场1车位共享
+     *
+     * @return type - 类型0跳蚤市场1车位共享
+     */
+    public Integer getType() {
+        return type;
+    }
+
+    /**
+     * 设置类型0跳蚤市场1车位共享
+     *
+     * @param type 类型0跳蚤市场1车位共享
+     */
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     /**
@@ -142,6 +143,42 @@ public class AppTimeLine {
      */
     public void setAddUserName(String addUserName) {
         this.addUserName = addUserName;
+    }
+
+    /**
+     * 获取用户头像
+     *
+     * @return head_image - 用户头像
+     */
+    public String getHeadImage() {
+        return headImage;
+    }
+
+    /**
+     * 设置用户头像
+     *
+     * @param headImage 用户头像
+     */
+    public void setHeadImage(String headImage) {
+        this.headImage = headImage;
+    }
+
+    /**
+     * 获取联系电话
+     *
+     * @return contact_phone - 联系电话
+     */
+    public String getContactPhone() {
+        return contactPhone;
+    }
+
+    /**
+     * 设置联系电话
+     *
+     * @param contactPhone 联系电话
+     */
+    public void setContactPhone(String contactPhone) {
+        this.contactPhone = contactPhone;
     }
 
     /**
@@ -237,20 +274,20 @@ public class AppTimeLine {
     }
 
     /**
-     * 获取是否删除0否1是
+     * 获取感兴趣人数
      *
-     * @return is_delete - 是否删除0否1是
+     * @return i_count - 感兴趣人数
      */
-    public Byte getIsDelete() {
-        return isDelete;
+    public Integer getiCount() {
+        return iCount;
     }
 
     /**
-     * 设置是否删除0否1是
+     * 设置感兴趣人数
      *
-     * @param isDelete 是否删除0否1是
+     * @param iCount 感兴趣人数
      */
-    public void setIsDelete(Byte isDelete) {
-        this.isDelete = isDelete;
+    public void setiCount(Integer iCount) {
+        this.iCount = iCount;
     }
 }

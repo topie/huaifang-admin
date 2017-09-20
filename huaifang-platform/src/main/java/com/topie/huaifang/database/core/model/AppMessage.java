@@ -12,12 +12,12 @@ public class AppMessage {
     /**
      * 类型0系统消息1好友消息
      */
-    private Short type;
+    private Integer type;
 
     /**
      * 分类
      */
-    private Short category;
+    private Integer category;
 
     /**
      * 标题
@@ -56,7 +56,7 @@ public class AppMessage {
      * 是否已读0否1是
      */
     @Column(name = "is_read")
-    private Byte isRead;
+    private Integer isRead;
 
     /**
      * @return id
@@ -77,7 +77,7 @@ public class AppMessage {
      *
      * @return type - 类型0系统消息1好友消息
      */
-    public Short getType() {
+    public Integer getType() {
         return type;
     }
 
@@ -86,7 +86,7 @@ public class AppMessage {
      *
      * @param type 类型0系统消息1好友消息
      */
-    public void setType(Short type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 
@@ -95,7 +95,7 @@ public class AppMessage {
      *
      * @return category - 分类
      */
-    public Short getCategory() {
+    public Integer getCategory() {
         return category;
     }
 
@@ -104,7 +104,7 @@ public class AppMessage {
      *
      * @param category 分类
      */
-    public void setCategory(Short category) {
+    public void setCategory(Integer category) {
         this.category = category;
     }
 
@@ -221,7 +221,7 @@ public class AppMessage {
      *
      * @return is_read - 是否已读0否1是
      */
-    public Byte getIsRead() {
+    public Integer getIsRead() {
         return isRead;
     }
 
@@ -230,7 +230,7 @@ public class AppMessage {
      *
      * @param isRead 是否已读0否1是
      */
-    public void setIsRead(Byte isRead) {
+    public void setIsRead(Integer isRead) {
         this.isRead = isRead;
     }
 }

@@ -24,7 +24,6 @@ public class Sortable implements Serializable {
 
     @Transient
     @JsonIgnore
-
     private Integer pageSize;
 
     public String getSort_() {
@@ -36,6 +35,7 @@ public class Sortable implements Serializable {
         this.sort_ = sort_;
     }
 
+    @JsonIgnore
     public String getSortWithOutOrderBy() {
         String sortStr = "";
         if (!StringUtils.isEmpty(sort_)) {

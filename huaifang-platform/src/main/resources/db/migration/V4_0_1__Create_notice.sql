@@ -20,6 +20,8 @@ CREATE TABLE `d_notice` (
   COMMENT '添加时间',
   `p_time`     TIMESTAMP    NULL
   COMMENT '发布时间',
+  read_count   INT(11)               DEFAULT 0
+  COMMENT '阅读次数',
   PRIMARY KEY (`id`)
 )
   DEFAULT CHARSET = utf8

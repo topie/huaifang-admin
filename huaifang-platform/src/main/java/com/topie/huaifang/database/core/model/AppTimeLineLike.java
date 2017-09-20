@@ -1,5 +1,8 @@
 package com.topie.huaifang.database.core.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 import javax.persistence.*;
 
@@ -31,6 +34,7 @@ public class AppTimeLineLike {
      * 评论时间
      */
     @Column(name = "like_time")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date likeTime;
 
     /**
@@ -106,6 +110,7 @@ public class AppTimeLineLike {
      *
      * @return like_time - 评论时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
     public Date getLikeTime() {
         return likeTime;
     }

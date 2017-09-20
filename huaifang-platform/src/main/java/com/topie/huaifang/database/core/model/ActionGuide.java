@@ -45,7 +45,7 @@ public class ActionGuide {
     private String actionMaterial;
 
     /**
-     * 办事材料:textarea
+     * 办事地址:textarea
      */
     @Column(name = "action_address")
     private String actionAddress;
