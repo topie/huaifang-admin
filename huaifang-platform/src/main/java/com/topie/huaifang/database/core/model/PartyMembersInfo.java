@@ -22,6 +22,9 @@ public class PartyMembersInfo {
     @Column(name = "node_id")
     private Integer nodeId;
 
+    @Column(name = "node_name")
+    private String nodeName;
+
     /**
      * 党员名称
      */
@@ -48,6 +51,14 @@ public class PartyMembersInfo {
      * 党员标签:checkboxGroup:[在职党员,离退休党员,大学生党员,流动党员,下岗失业、无业、个体党员,非公党员,社区工作者党员]
      */
     private String tag;
+
+    public String getNodeName() {
+        return nodeName;
+    }
+
+    public void setNodeName(String nodeName) {
+        this.nodeName = nodeName;
+    }
 
     /**
      * 获取ID

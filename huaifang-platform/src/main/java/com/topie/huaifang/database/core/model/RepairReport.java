@@ -16,6 +16,9 @@ public class RepairReport {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "contact_user_id")
+    private Integer contactUserId;
+
     /**
      * 联系人
      */
@@ -35,7 +38,7 @@ public class RepairReport {
     private String roomNumber;
 
     /**
-     * 报修:datetime
+     * 报修时间:datetime
      */
     @Column(name = "report_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -54,19 +57,12 @@ public class RepairReport {
     private String reportContent;
 
     /**
-     * 图片1:image
+     * 图片:files
      */
-    @Column(name = "image_one")
-    private String imageOne;
+    private String images;
 
     /**
-     * 图片2:image
-     */
-    @Column(name = "image_two")
-    private String imageTwo;
-
-    /**
-     * 处理状态:skip
+     * 处理状态:select:[未反馈,待维修,已完成]
      */
     private String status;
 
@@ -143,9 +139,9 @@ public class RepairReport {
     }
 
     /**
-     * 获取报修:datetime
+     * 获取报修时间:datetime
      *
-     * @return report_time - 报修:datetime
+     * @return report_time - 报修时间:datetime
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
     public Date getReportTime() {
@@ -153,9 +149,9 @@ public class RepairReport {
     }
 
     /**
-     * 设置报修:datetime
+     * 设置报修时间:datetime
      *
-     * @param reportTime 报修:datetime
+     * @param reportTime 报修时间:datetime
      */
     public void setReportTime(Date reportTime) {
         this.reportTime = reportTime;
@@ -198,56 +194,47 @@ public class RepairReport {
     }
 
     /**
-     * 获取图片1:image
+     * 获取图片:files
      *
-     * @return image_one - 图片1:image
+     * @return images - 图片:files
      */
-    public String getImageOne() {
-        return imageOne;
+    public String getImages() {
+        return images;
     }
 
     /**
-     * 设置图片1:image
+     * 设置图片:files
      *
-     * @param imageOne 图片1:image
+     * @param images 图片:files
      */
-    public void setImageOne(String imageOne) {
-        this.imageOne = imageOne;
+    public void setImages(String images) {
+        this.images = images;
     }
 
     /**
-     * 获取图片2:image
+     * 获取处理状态:select:[未反馈,待维修,已完成]
      *
-     * @return image_two - 图片2:image
-     */
-    public String getImageTwo() {
-        return imageTwo;
-    }
-
-    /**
-     * 设置图片2:image
-     *
-     * @param imageTwo 图片2:image
-     */
-    public void setImageTwo(String imageTwo) {
-        this.imageTwo = imageTwo;
-    }
-
-    /**
-     * 获取处理状态:skip
-     *
-     * @return status - 处理状态:skip
+     * @return status - 处理状态:select:[未反馈,待维修,已完成]
      */
     public String getStatus() {
         return status;
     }
 
     /**
-     * 设置处理状态:skip
+     * 设置处理状态:select:[未反馈,待维修,已完成]
      *
-     * @param status 处理状态:skip
+     * @param status 处理状态:select:[未反馈,待维修,已完成]
      */
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public Integer getContactUserId() {
+        return contactUserId;
+    }
+
+    public void setContactUserId(Integer contactUserId) {
+        this.contactUserId = contactUserId;
+    }
+
 }

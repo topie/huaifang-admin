@@ -25,6 +25,8 @@ public class RepairReportServiceImpl extends BaseService<RepairReport> implement
     public List<RepairReport> selectByFilter(RepairReport repairReport) {
         Example example = new Example(RepairReport.class);
         Example.Criteria criteria = example.createCriteria();
+        if(repairReport.getContactUserId()!=null)
+            criteria.andEqualTo("contactUserId",repairReport.getContactUserId());
         if (StringUtils.isNotEmpty(repairReport.getContactPerson()))
             criteria.andLike("contactPerson", "%" + repairReport.getContactPerson() + "%");
         if (StringUtils.isNotEmpty(repairReport.getContactPhone()))

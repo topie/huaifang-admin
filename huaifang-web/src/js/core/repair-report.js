@@ -27,7 +27,6 @@
     };
     var initEvents = function () {
         var grid;
-        var tree;
         var options = {
             url: App.href + "/api/core/repairReport/list",
             contentType: "table",
@@ -35,7 +34,8 @@
             pageNum: 1,//当前页码
             pageSize: 15,//每页显示条数
             idField: "id",//id域指定
-            headField: "name",
+            headField: "roomNumber",
+            timeField: "reportTime",
             showCheck: true,//是否显示checkbox
             checkboxWidth: "3%",
             showIndexNum: false,
@@ -51,100 +51,308 @@
                     field: "contactPhone"
                 },
                 {
-                    title: "联系邮箱",
-                    field: "concatEmail"
-                },
-                {
                     title: "房间号",
                     field: "roomNumber"
                 },
                 {
                     title: "报修时间",
                     field: "reportTime"
+                },
+                {
+                    title: "维修状态",
+                    field: "status"
                 }
             ],
             actionColumnText: "操作",//操作列文本
             actionColumnWidth: "20%",
-            actionColumns: [{
-                text: "编辑",
-                cls: "btn-primary btn-sm",
-                handle: function (index, d) {
-                    var modal = $.orangeModal({
-                        id: "repairReportForm",
-                        title: "编辑",
-                        destroy: true
-                    }).show();
-                    $.ajax({
-                        type: "GET",
-                        dataType: "json",
-                        url: App.href + "/api/core/repairReport/formItems",
-                        success: function (data) {
-                            if (data.code === 200) {
-                                var formItems = data.data;
-                                var form = modal.$body.orangeForm({
-                                    id: "edit_form",
-                                    name: "edit_form",
-                                    method: "POST",
-                                    action: App.href + "/api/core/repairReport/update",
-                                    ajaxSubmit: true,
-                                    ajaxSuccess: function () {
-                                        modal.hide();
-                                        grid.reload();
-                                    },
-                                    submitText: "保存",
-                                    showReset: true,
-                                    resetText: "重置",
-                                    isValidate: true,
-                                    buttons: [{
-                                        type: 'button',
-                                        text: '关闭',
-                                        handle: function () {
-                                            modal.hide();
-                                        }
-                                    }],
-                                    buttonsAlign: "center",
-                                    items: formItems
-                                });
-                                form.loadRemote(App.href + "/api/core/repairReport/load/" + d.id);
-                            } else {
-                                alert(data.message);
-                            }
-                        },
-                        error: function (e) {
-                            alert("请求异常。");
-                        }
-                    });
-
-                }
-            }, {
-                text: "删除",
-                cls: "btn-danger btn-sm",
-                handle: function (index, data) {
-                    bootbox.confirm("确定该操作?", function (result) {
-                        if (result) {
-                            var requestUrl = App.href + "/api/core/repairReport/delete";
-                            $.ajax({
-                                type: "GET",
-                                dataType: "json",
-                                data: {
-                                    id: data.id
+            actionColumns: [
+                {
+                    text: "维修进度",
+                    cls: "btn-info btn-sm",
+                    handle: function (i, d,g) {
+                        var modal = $.orangeModal({
+                            id: "questionnaireItemGrid",
+                            title: "维修进度-" + d.roomNumber,
+                            destroy: true,
+                            width: $(window).width()
+                        }).show();
+                        var reportId = d.id;
+                        var requestUrl = App.href + "/api/core/repairReportProcess/list?reportId=" + reportId;
+                        modal.$body.orangeGrid({
+                            url: requestUrl,
+                            contentType: "timeline",
+                            contentTypeItems: "table,timeline",
+                            pageNum: 1,//当前页码
+                            pageSize: 15,//每页显示条数
+                            idField: "id",//id域指定
+                            headField: "processStatus",
+                            timeField: "processTime",
+                            showCheck: true,//是否显示checkbox
+                            checkboxWidth: "3%",
+                            showIndexNum: false,
+                            indexNumWidth: "5%",
+                            pageSelect: [2, 15, 30, 50],
+                            sort: "processTime_desc",
+                            columns: [
+                                {
+                                    title: "进度情况",
+                                    field: "processStatus"
+                                }, {
+                                    title: "联系人",
+                                    field: "contactPerson",
+                                    sort: true
                                 },
-                                url: requestUrl,
-                                success: function (data) {
-                                    if (data.code === 200) {
-                                        grid.reload();
-                                    } else {
-                                        alert(data.message);
+                                {
+                                    title: "联系人电话",
+                                    field: "contactPhone"
+                                },
+                                {
+                                    title: "进度时间",
+                                    field: "processTime"
+                                },
+                                {
+                                    title: "进度内容",
+                                    field: "processContent"
+                                },
+                                {
+                                    title: "进度状态",
+                                    field: "status",
+                                    check: true,
+                                    checkFormat: function (i, d) {
+                                        return d.status == '已完成';
+                                    }
+                                }
+                            ],
+                            actionColumnText: "操作",//操作列文本
+                            actionColumnWidth: "20%",
+                            actionColumns: [
+                                {
+                                    text: "编辑",
+                                    cls: "btn-primary btn-sm",
+                                    handle: function (ii, dd, grid) {
+                                        var modal = $.orangeModal({
+                                            id: "process_edit",
+                                            title: "编辑",
+                                            destroy: true
+                                        }).show();
+                                        $.ajax({
+                                            type: "GET",
+                                            dataType: "json",
+                                            url: App.href + "/api/core/repairReportProcess/formItems",
+                                            success: function (data) {
+                                                if (data.code === 200) {
+                                                    var formItems = data.data;
+                                                    var form = modal.$body.orangeForm({
+                                                        id: "edit_form",
+                                                        name: "edit_form",
+                                                        method: "POST",
+                                                        action: App.href + "/api/core/repairReportProcess/update",
+                                                        ajaxSubmit: true,
+                                                        ajaxSuccess: function () {
+                                                            modal.hide();
+                                                            grid.reload();
+                                                            g.reload();
+                                                        },
+                                                        submitText: "保存",
+                                                        showReset: true,
+                                                        resetText: "重置",
+                                                        isValidate: true,
+                                                        buttons: [{
+                                                            type: 'button',
+                                                            text: '关闭',
+                                                            handle: function () {
+                                                                modal.hide();
+                                                            }
+                                                        }],
+                                                        buttonsAlign: "center",
+                                                        items: formItems
+                                                    });
+                                                    form.loadRemote(App.href + "/api/core/repairReportProcess/load/" + dd.id);
+                                                } else {
+                                                    alert(data.message);
+                                                }
+                                            },
+                                            error: function (e) {
+                                                alert("请求异常。");
+                                            }
+                                        });
                                     }
                                 },
-                                error: function (e) {
-                                    alert("请求异常。");
+                                {
+                                    text: "删除",
+                                    cls: "btn-danger btn-sm",
+                                    handle: function (ii, dd, grid) {
+                                        bootbox.confirm("确定该操作?", function (result) {
+                                            if (result) {
+                                                var requestUrl = App.href + "/api/core/repairReportProcess/delete";
+                                                $.ajax({
+                                                    type: "GET",
+                                                    dataType: "json",
+                                                    data: {
+                                                        id: dd.id
+                                                    },
+                                                    url: requestUrl,
+                                                    success: function (data) {
+                                                        if (data.code === 200) {
+                                                            grid.reload();
+                                                        } else {
+                                                            alert(data.message);
+                                                        }
+                                                    },
+                                                    error: function (e) {
+                                                        alert("请求异常。");
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    }
                                 }
-                            });
-                        }
-                    });
-                }
-            }],
+                            ],
+                            tools: [
+                                {
+                                    text: "添加进度",
+                                    cls: "btn btn-primary",
+                                    icon: "fa fa-plus",
+                                    handle: function (grid) {
+                                        var modal2 = $.orangeModal({
+                                            id: "add_sub_modal",
+                                            title: "添加进度",
+                                            destroy: true
+                                        }).show();
+                                        $.ajax({
+                                            type: "GET",
+                                            dataType: "json",
+                                            url: App.href + "/api/core/repairReportProcess/formItems",
+                                            success: function (data) {
+                                                if (data.code === 200) {
+                                                    var formItems = data.data;
+                                                    var items = [];
+                                                    $.each(formItems, function (jj, jd) {
+                                                        if (jd.name == 'reportId') {
+                                                            jd.value = reportId;
+                                                        }
+                                                        items.push(jd);
+                                                    });
+                                                    modal2.$body.orangeForm({
+                                                        id: "add_form",
+                                                        name: "add_form",
+                                                        method: "POST",
+                                                        action: App.href + "/api/core/repairReportProcess/insert",
+                                                        ajaxSubmit: true,
+                                                        ajaxSuccess: function () {
+                                                            modal2.hide();
+                                                            grid.reload();
+                                                        },
+                                                        submitText: "保存",//保存按钮的文本
+                                                        showReset: true,//是否显示重置按钮
+                                                        resetText: "重置",//重置按钮文本
+                                                        isValidate: true,//开启验证
+                                                        buttons: [{
+                                                            type: 'button',
+                                                            text: '关闭',
+                                                            handle: function () {
+                                                                modal2.hide();
+                                                                grid.reload();
+                                                                g.reload();
+                                                            }
+                                                        }],
+                                                        buttonsAlign: "center",
+                                                        items: items
+                                                    });
+                                                } else {
+                                                    alert(data.message);
+                                                }
+                                            },
+                                            error: function (e) {
+                                                alert("请求异常。");
+                                            }
+                                        });
+                                    }
+                                }
+                            ]
+                        })
+                    }
+                },
+                {
+                    text: "编辑",
+                    cls: "btn-primary btn-sm",
+                    handle: function (index, d) {
+                        var modal = $.orangeModal({
+                            id: "repairReportForm",
+                            title: "编辑",
+                            destroy: true
+                        }).show();
+                        $.ajax({
+                            type: "GET",
+                            dataType: "json",
+                            url: App.href + "/api/core/repairReport/formItems",
+                            success: function (data) {
+                                if (data.code === 200) {
+                                    var formItems = data.data;
+                                    var form = modal.$body.orangeForm({
+                                        id: "edit_form",
+                                        name: "edit_form",
+                                        method: "POST",
+                                        action: App.href + "/api/core/repairReport/update",
+                                        ajaxSubmit: true,
+                                        ajaxSuccess: function () {
+                                            modal.hide();
+                                            grid.reload();
+                                        },
+                                        submitText: "保存",
+                                        showReset: true,
+                                        resetText: "重置",
+                                        isValidate: true,
+                                        buttons: [{
+                                            type: 'button',
+                                            text: '关闭',
+                                            handle: function () {
+                                                modal.hide();
+                                            }
+                                        }],
+                                        buttonsAlign: "center",
+                                        items: formItems
+                                    });
+                                    form.loadRemote(App.href + "/api/core/repairReport/load/" + d.id);
+                                } else {
+                                    alert(data.message);
+                                }
+                            },
+                            error: function (e) {
+                                alert("请求异常。");
+                            }
+                        });
+
+                    }
+                }, {
+                    text: "删除",
+                    cls: "btn-danger btn-sm",
+                    handle: function (index, data) {
+                        bootbox.confirm("确定该操作?", function (result) {
+                            if (result) {
+                                var requestUrl = App.href + "/api/core/repairReport/delete";
+                                $.ajax({
+                                    type: "GET",
+                                    dataType: "json",
+                                    data: {
+                                        id: data.id
+                                    },
+                                    url: requestUrl,
+                                    success: function (data) {
+                                        if (data.code === 200) {
+                                            grid.reload();
+                                        } else {
+                                            alert(data.message);
+                                        }
+                                    },
+                                    error: function (e) {
+                                        alert("请求异常。");
+                                    }
+                                });
+                            }
+                        });
+                    }
+                }],
             tools: [
                 {
                     text: " 添 加",

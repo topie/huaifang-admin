@@ -14,4 +14,7 @@ public interface ILibraryBookService extends IService<LibraryBook> {
     PageInfo<LibraryBook> selectByFilterAndPage(LibraryBook libraryBook, int pageNum, int pageSize);
 
     List<LibraryBook> selectByFilter(LibraryBook libraryBook);
+
+    List<String> selectBookTags();
+
 }

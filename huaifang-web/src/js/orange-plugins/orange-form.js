@@ -1254,7 +1254,7 @@
         _initMultiFileUpload: function () {
             var template = '<tr class="template-upload fade in">'
                 + '<td style="width: 20%; border-bottom: 1px solid #ddd;border-left: 1px solid #ddd;">'
-                + '<span class="preview"><img alt="${alt_}" width="99%" height="99%"></span>'
+                + '<span class="preview"><img alt="${alt_}" style="width: 32px;height: 32px;"></span>'
                 + '</td>'
                 + '<td style="width: 50%;vertical-align: middle;border-bottom: 1px solid #ddd;">'
                 + '<p class="name">${fileName_}</p>'
@@ -1415,7 +1415,7 @@
             var elementData = $(table).data("data");
             var template = '<tr class="template-upload fade in">'
                 + '<td style="width: 20%;">'
-                + '<span class="preview"><img alt="${alt_}" width="46" height="40"></span>'
+                + '<span class="preview"><img alt="${alt_}" width="32" height="32"></span>'
                 + '</td>'
                 + '<td style="width: 50%;vertical-align: middle;border-bottom: 1px solid #ddd;">'
                 + '<p class="name">${fileName_}</p>'

@@ -392,7 +392,7 @@ table.dataTable thead .sorting:after {
 .timeline > li > .timeline-panel {
     float: left;
     position: relative;
-    width: 46%;
+    width: 45%;
     padding: 20px;
     border: 1px solid #d4d4d4;
     border-radius: 2px;
@@ -442,6 +442,11 @@ table.dataTable thead .sorting:after {
 
 .timeline > li.timeline-inverted > .timeline-panel {
     float: right;
+    margin-right: 20px;
+}
+
+.timeline > li > .timeline-panel {
+    margin-left: 20px;
 }
 
 .timeline > li.timeline-inverted > .timeline-panel:before {

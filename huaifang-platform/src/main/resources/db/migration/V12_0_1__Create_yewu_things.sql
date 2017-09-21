@@ -6,8 +6,10 @@ CREATE TABLE d_advice_box (
   COMMENT '联系人',
   contact_phone   VARCHAR(32)             DEFAULT ''
   COMMENT '联系电话',
-  concat_email    VARCHAR(64)             DEFAULT ''
+  contact_email   VARCHAR(64)             DEFAULT ''
   COMMENT '联系邮箱',
+  contact_user_id INT(11)                 DEFAULT 0
+  COMMENT '联系人ID',
   message_content VARCHAR(1024)           DEFAULT ''
   COMMENT '留言内容:textare',
   message_time    TIMESTAMP NOT NULL      DEFAULT CURRENT_TIMESTAMP
@@ -48,7 +50,8 @@ CREATE TABLE d_dispute_resolution (
   DEFAULT CHARSET = utf8
   COMMENT '调解纠纷';
 
-INSERT INTO `d_function` VALUES ('21', '7', '纠纷调解管理', '1', '1', NULL, '/api/core/disputeResolution/list', '8', NULL, NULL);
+INSERT INTO `d_function`
+VALUES ('21', '7', '纠纷调解管理', '1', '1', NULL, '/api/core/disputeResolution/list', '8', NULL, NULL);
 INSERT INTO `d_role_function` (role_id, function_id) VALUES ('1', '21');
 
 
@@ -80,6 +83,8 @@ CREATE TABLE d_repair_report (
   COMMENT '联系人',
   contact_phone  VARCHAR(32)             DEFAULT ''
   COMMENT '联系人电话',
+  contact_user_id INT(11)                 DEFAULT 0
+  COMMENT '联系人ID',
   room_number    VARCHAR(255)            DEFAULT ''
   COMMENT '房间号',
   report_time    TIMESTAMP NOT NULL      DEFAULT CURRENT_TIMESTAMP
@@ -88,16 +93,39 @@ CREATE TABLE d_repair_report (
   COMMENT '报修事项:textarea',
   report_content VARCHAR(1024)           DEFAULT ''
   COMMENT '报修内容:textarea',
-  image_one      VARCHAR(255)            DEFAULT ''
-  COMMENT '图片1:image',
-  image_two      VARCHAR(255)            DEFAULT ''
-  COMMENT '图片2:image',
+  images         VARCHAR(2048)           DEFAULT ''
+  COMMENT '图片:files',
   status         VARCHAR(16)             DEFAULT ''
-  COMMENT '处理状态:skip',
+  COMMENT '处理状态:select:[未反馈,待维修,已完成]',
   PRIMARY KEY (id)
 )
   DEFAULT CHARSET = utf8
   COMMENT '物业维修管理';
+
+DROP TABLE IF EXISTS d_repair_report_process;
+CREATE TABLE d_repair_report_process (
+  id              INT(11)   NOT NULL      AUTO_INCREMENT
+  COMMENT 'ID:hidden',
+  report_id       INT(11)   NOT NULL
+  COMMENT '报修ID:hidden',
+  contact_person  VARCHAR(32)             DEFAULT ''
+  COMMENT '联系人',
+  contact_phone   VARCHAR(32)             DEFAULT ''
+  COMMENT '联系人电话',
+  contact_user_id INT(11)                 DEFAULT 0
+  COMMENT '联系人ID',
+  process_time    TIMESTAMP NOT NULL      DEFAULT CURRENT_TIMESTAMP
+  COMMENT '进度时间:datetime',
+  process_content VARCHAR(1024)           DEFAULT ''
+  COMMENT '进度内容:textarea',
+  process_status  VARCHAR(64)             DEFAULT ''
+  COMMENT '进度情况简介',
+  status          VARCHAR(16)                DEFAULT ''
+  COMMENT '状态:select:[维修中,已完成]',
+  PRIMARY KEY (id)
+)
+  DEFAULT CHARSET = utf8
+  COMMENT '物业维修进度';
 
 INSERT INTO `d_function` VALUES ('23', '7', '物业维修管理', '1', '1', NULL, '/api/core/repairReport/list', '3', NULL, NULL);
 INSERT INTO `d_role_function` (role_id, function_id) VALUES ('1', '23');
@@ -117,7 +145,7 @@ CREATE TABLE d_library_book (
   content   LONGTEXT              DEFAULT NULL
   COMMENT '简介:textarea',
   status    VARCHAR(16)           DEFAULT ''
-  COMMENT '状态:skip',
+  COMMENT '状态:select:[已借出,未借出]',
   PRIMARY KEY (id)
 )
   DEFAULT CHARSET = utf8

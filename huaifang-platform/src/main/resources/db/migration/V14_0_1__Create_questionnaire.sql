@@ -61,7 +61,7 @@ CREATE TABLE d_questionnaire_result (
   COMMENT '题目ID',
   option_id INT(11)          DEFAULT 0
   COMMENT '选项ID',
-  user_id   VARCHAR(64)      DEFAULT ''
+  user_id   INT(11)          DEFAULT 0
   COMMENT '用户唯一标示',
   PRIMARY KEY (id),
   UNIQUE KEY (info_id, item_id, option_id, user_id)
@@ -70,7 +70,8 @@ CREATE TABLE d_questionnaire_result (
   COMMENT '问卷调查统计信息';
 
 
-INSERT INTO `d_function` VALUES ('27', '7', '问卷调查管理', '1', '1', NULL, '/api/core/questionnaireInfo/list', '9', NULL, NULL);
+INSERT INTO `d_function`
+VALUES ('27', '7', '问卷调查管理', '1', '1', NULL, '/api/core/questionnaireInfo/list', '9', NULL, NULL);
 INSERT INTO `d_role_function` (role_id, function_id) VALUES ('1', '27');
 
 

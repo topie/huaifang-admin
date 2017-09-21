@@ -14,4 +14,7 @@ public interface ICunwuInfoService extends IService<CunwuInfo> {
     PageInfo<CunwuInfo> selectByFilterAndPage(CunwuInfo cunwuInfo, int pageNum, int pageSize);
 
     List<CunwuInfo> selectByFilter(CunwuInfo cunwuInfo);
+
+    List<CunwuInfo> selectTitles();
+
 }

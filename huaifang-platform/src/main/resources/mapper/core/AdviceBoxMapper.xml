@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.topie.huaifang.database.core.dao.AdviceBoxMapper" >
-  <resultMap id="BaseResultMap" type="com.topie.huaifang.database.core.model.AdviceBox" >
-    <!--
-      WARNING - @mbggenerated
-    -->
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="contact_person" property="contactPerson" jdbcType="VARCHAR" />
-    <result column="contact_phone" property="contactPhone" jdbcType="VARCHAR" />
-    <result column="concat_email" property="concatEmail" jdbcType="VARCHAR" />
-    <result column="message_content" property="messageContent" jdbcType="VARCHAR" />
-    <result column="message_time" property="messageTime" jdbcType="TIMESTAMP" />
-    <result column="handle_person" property="handlePerson" jdbcType="VARCHAR" />
-    <result column="handle_type" property="handleType" jdbcType="VARCHAR" />
-    <result column="handle_desc" property="handleDesc" jdbcType="VARCHAR" />
-    <result column="status" property="status" jdbcType="VARCHAR" />
-  </resultMap>
+<mapper namespace="com.topie.huaifang.database.core.dao.AdviceBoxMapper">
+    <resultMap id="BaseResultMap" type="com.topie.huaifang.database.core.model.AdviceBox">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="contact_user_id" property="contactUserId" jdbcType="INTEGER"/>
+        <result column="contact_person" property="contactPerson" jdbcType="VARCHAR"/>
+        <result column="contact_phone" property="contactPhone" jdbcType="VARCHAR"/>
+        <result column="contact_email" property="contactEmail" jdbcType="VARCHAR"/>
+        <result column="message_content" property="messageContent" jdbcType="VARCHAR"/>
+        <result column="message_time" property="messageTime" jdbcType="TIMESTAMP"/>
+        <result column="handle_person" property="handlePerson" jdbcType="VARCHAR"/>
+        <result column="handle_type" property="handleType" jdbcType="VARCHAR"/>
+        <result column="handle_desc" property="handleDesc" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+    </resultMap>
 </mapper>

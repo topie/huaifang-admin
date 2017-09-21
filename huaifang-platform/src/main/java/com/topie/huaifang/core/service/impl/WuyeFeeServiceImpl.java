@@ -28,6 +28,7 @@ public class WuyeFeeServiceImpl extends BaseService<WuyeFee> implements IWuyeFee
         if (StringUtils.isNotEmpty(wuyeFee.getAccountDate()))
             criteria.andEqualTo("accountDate", wuyeFee.getAccountDate());
         if (StringUtils.isNotEmpty(wuyeFee.getAccount())) criteria.andLike("account", "%" + wuyeFee.getAccount() + "%");
+        example.setOrderByClause(" accountDate desc");
         return getMapper().selectByExample(example);
     }
 

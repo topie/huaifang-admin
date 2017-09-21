@@ -302,7 +302,7 @@
                             ],
                             tools: [
                                 {
-                                    text: " 添加题目",
+                                    text: "添加题目",
                                     cls: "btn btn-primary",
                                     icon: "fa fa-plus",
                                     handle: function (grid) {

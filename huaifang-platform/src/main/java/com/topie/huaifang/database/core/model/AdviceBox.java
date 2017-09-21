@@ -3,17 +3,21 @@ package com.topie.huaifang.database.core.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
 import javax.persistence.*;
+import java.util.Date;
 
 @Table(name = "d_advice_box")
 public class AdviceBox {
+
     /**
      * ID:hidden
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(name = "contact_user_id")
+    private String contactUserId;
 
     /**
      * 联系人
@@ -30,8 +34,8 @@ public class AdviceBox {
     /**
      * 联系邮箱
      */
-    @Column(name = "concat_email")
-    private String concatEmail;
+    @Column(name = "contact_email")
+    private String contactEmail;
 
     /**
      * 留言内容:textare
@@ -68,6 +72,22 @@ public class AdviceBox {
      * 状态:skip
      */
     private String status;
+
+    public String getContactEmail() {
+        return contactEmail;
+    }
+
+    public void setContactEmail(String contactEmail) {
+        this.contactEmail = contactEmail;
+    }
+
+    public String getContactUserId() {
+        return contactUserId;
+    }
+
+    public void setContactUserId(String contactUserId) {
+        this.contactUserId = contactUserId;
+    }
 
     /**
      * 获取ID:hidden
@@ -121,24 +141,6 @@ public class AdviceBox {
      */
     public void setContactPhone(String contactPhone) {
         this.contactPhone = contactPhone;
-    }
-
-    /**
-     * 获取联系邮箱
-     *
-     * @return concat_email - 联系邮箱
-     */
-    public String getConcatEmail() {
-        return concatEmail;
-    }
-
-    /**
-     * 设置联系邮箱
-     *
-     * @param concatEmail 联系邮箱
-     */
-    public void setConcatEmail(String concatEmail) {
-        this.concatEmail = concatEmail;
     }
 
     /**

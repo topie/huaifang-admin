@@ -57,86 +57,87 @@
             ],
             actionColumnText: "操作",//操作列文本
             actionColumnWidth: "20%",
-            actionColumns: [{
-                text: "编辑",
-                cls: "btn-primary btn-sm",
-                handle: function (index, d) {
-                    var modal = $.orangeModal({
-                        id: "cunwuInfoForm",
-                        title: "编辑",
-                        destroy: true
-                    }).show();
-                    $.ajax({
-                        type: "GET",
-                        dataType: "json",
-                        url: App.href + "/api/core/cunwuInfo/formItems",
-                        success: function (data) {
-                            if (data.code === 200) {
-                                var formItems = data.data;
-                                var form = modal.$body.orangeForm({
-                                    id: "edit_form",
-                                    name: "edit_form",
-                                    method: "POST",
-                                    action: App.href + "/api/core/cunwuInfo/update",
-                                    ajaxSubmit: true,
-                                    ajaxSuccess: function () {
-                                        modal.hide();
-                                        grid.reload();
-                                    },
-                                    submitText: "保存",
-                                    showReset: true,
-                                    resetText: "重置",
-                                    isValidate: true,
-                                    buttons: [{
-                                        type: 'button',
-                                        text: '关闭',
-                                        handle: function () {
+            actionColumns: [
+                {
+                    text: "编辑",
+                    cls: "btn-primary btn-sm",
+                    handle: function (index, d) {
+                        var modal = $.orangeModal({
+                            id: "cunwuInfoForm",
+                            title: "编辑",
+                            destroy: true
+                        }).show();
+                        $.ajax({
+                            type: "GET",
+                            dataType: "json",
+                            url: App.href + "/api/core/cunwuInfo/formItems",
+                            success: function (data) {
+                                if (data.code === 200) {
+                                    var formItems = data.data;
+                                    var form = modal.$body.orangeForm({
+                                        id: "edit_form",
+                                        name: "edit_form",
+                                        method: "POST",
+                                        action: App.href + "/api/core/cunwuInfo/update",
+                                        ajaxSubmit: true,
+                                        ajaxSuccess: function () {
                                             modal.hide();
-                                        }
-                                    }],
-                                    buttonsAlign: "center",
-                                    items: formItems
-                                });
-                                form.loadRemote(App.href + "/api/core/cunwuInfo/load/" + d.id);
-                            } else {
-                                alert(data.message);
-                            }
-                        },
-                        error: function (e) {
-                            alert("请求异常。");
-                        }
-                    });
-
-                }
-            }, {
-                text: "删除",
-                cls: "btn-danger btn-sm",
-                handle: function (index, data) {
-                    bootbox.confirm("确定该操作?", function (result) {
-                        if (result) {
-                            var requestUrl = App.href + "/api/core/cunwuInfo/delete";
-                            $.ajax({
-                                type: "GET",
-                                dataType: "json",
-                                data: {
-                                    id: data.id
-                                },
-                                url: requestUrl,
-                                success: function (data) {
-                                    if (data.code === 200) {
-                                        grid.reload();
-                                    } else {
-                                        alert(data.message);
-                                    }
-                                },
-                                error: function (e) {
-                                    alert("请求异常。");
+                                            grid.reload();
+                                        },
+                                        submitText: "保存",
+                                        showReset: true,
+                                        resetText: "重置",
+                                        isValidate: true,
+                                        buttons: [{
+                                            type: 'button',
+                                            text: '关闭',
+                                            handle: function () {
+                                                modal.hide();
+                                            }
+                                        }],
+                                        buttonsAlign: "center",
+                                        items: formItems
+                                    });
+                                    form.loadRemote(App.href + "/api/core/cunwuInfo/load/" + d.id);
+                                } else {
+                                    alert(data.message);
                                 }
-                            });
-                        }
-                    });
-                }
-            }],
+                            },
+                            error: function (e) {
+                                alert("请求异常。");
+                            }
+                        });
+
+                    }
+                }, {
+                    text: "删除",
+                    cls: "btn-danger btn-sm",
+                    handle: function (index, data) {
+                        bootbox.confirm("确定该操作?", function (result) {
+                            if (result) {
+                                var requestUrl = App.href + "/api/core/cunwuInfo/delete";
+                                $.ajax({
+                                    type: "GET",
+                                    dataType: "json",
+                                    data: {
+                                        id: data.id
+                                    },
+                                    url: requestUrl,
+                                    success: function (data) {
+                                        if (data.code === 200) {
+                                            grid.reload();
+                                        } else {
+                                            alert(data.message);
+                                        }
+                                    },
+                                    error: function (e) {
+                                        alert("请求异常。");
+                                    }
+                                });
+                            }
+                        });
+                    }
+                }],
             tools: [
                 {
                     text: " 添 加",

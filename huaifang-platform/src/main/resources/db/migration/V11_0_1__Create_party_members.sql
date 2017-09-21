@@ -18,8 +18,10 @@ DROP TABLE IF EXISTS d_party_members_info;
 CREATE TABLE d_party_members_info (
   id         INT(11)      NOT NULL      AUTO_INCREMENT
   COMMENT 'ID:hidden',
-  node_id     INT(11)      NOT NULL
+  node_id    INT(11)      NOT NULL
   COMMENT '节点ID:hidden',
+  nodeName   VARCHAR(128)               DEFAULT ''
+  COMMENT '党节点名称',
   name       VARCHAR(64)  NOT NULL      DEFAULT ''
   COMMENT '党员名称',
   code       VARCHAR(64)  NOT NULL      DEFAULT ''
