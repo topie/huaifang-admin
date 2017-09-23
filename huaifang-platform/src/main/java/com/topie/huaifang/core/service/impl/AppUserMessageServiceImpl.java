@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -35,6 +36,21 @@ public class AppUserMessageServiceImpl extends BaseService<AppUserMessage> imple
         if (appUserMessage.getSendTime() != null)
             criteria.andGreaterThanOrEqualTo("sendTime", appUserMessage.getSendTime());
         return getMapper().selectByExample(example);
+    }
+
+    @Override
+    public int insertToSendUserAppMessage(Integer fromUserId, String nickname, String headImage, Integer toUserId,
+            String content) {
+        AppUserMessage appUserMessage = new AppUserMessage();
+        appUserMessage.setFromUserId(fromUserId);
+        appUserMessage.setToUserId(toUserId);
+        appUserMessage.setFromUserName(nickname);
+        appUserMessage.setHeadImage(headImage);
+        appUserMessage.setSendTime(new Date());
+        appUserMessage.setIsRead(0);
+        appUserMessage.setContent(content);
+        saveNotNull(appUserMessage);
+        return 1;
     }
 
 }

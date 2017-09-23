@@ -4,12 +4,10 @@ import com.github.pagehelper.PageInfo;
 import com.topie.huaifang.common.utils.PageConvertUtil;
 import com.topie.huaifang.common.utils.ResponseUtil;
 import com.topie.huaifang.common.utils.Result;
+import com.topie.huaifang.core.service.IAppMessageService;
+import com.topie.huaifang.core.service.IAppUserMessageService;
 import com.topie.huaifang.core.service.IAppUserService;
-import com.topie.huaifang.core.service.ICommonQueryService;
 import com.topie.huaifang.database.core.model.AppUser;
-import com.topie.huaifang.database.core.model.User;
-import com.topie.huaifang.security.exception.AuBzConstant;
-import com.topie.huaifang.security.exception.AuthBusinessException;
 import com.topie.huaifang.security.service.UserService;
 import com.topie.huaifang.security.utils.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +30,12 @@ public class MoAppUserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private IAppMessageService iAppMessageService;
+
+    @Autowired
+    private IAppUserMessageService iAppUserMessageService;
+
     @RequestMapping(value = "/friends", method = RequestMethod.GET)
     @ResponseBody
     public Result friends(@RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum,
@@ -39,6 +43,50 @@ public class MoAppUserController {
         Integer userId = SecurityUtil.getCurrentUserId();
         PageInfo<AppUser> pageInfo = iAppUserService.selectAppUserFriends(userId, pageNum, pageSize);
         return ResponseUtil.success(PageConvertUtil.grid(pageInfo));
+    }
+
+    @RequestMapping(value = "/maybeKnown", method = RequestMethod.GET)
+    @ResponseBody
+    public Result maybeKnown(AppUser appUser,
+            @RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum,
+            @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize) {
+        appUser.setStatus(2);
+        PageInfo<AppUser> pageInfo = iAppUserService.selectByFilterAndPage(appUser, pageNum, pageSize);
+        return ResponseUtil.success(PageConvertUtil.grid(pageInfo));
+    }
+
+    @RequestMapping(value = "/detail", method = RequestMethod.GET)
+    @ResponseBody
+    public Result detail(@RequestParam(value = "id") Integer id) {
+        AppUser appUser = iAppUserService.selectByKey(id);
+        return ResponseUtil.success(appUser);
+    }
+
+    @RequestMapping(value = "/addFriend", method = RequestMethod.GET)
+    @ResponseBody
+    public Result addFriend(@RequestParam(value = "id") Integer id) {
+        Integer userId = SecurityUtil.getCurrentUserId();
+        if (userId == null) return ResponseUtil.error("未登录");
+        AppUser appUser = iAppUserService.selectByKey(id);
+        if (appUser == null) return ResponseUtil.error("用户不存在");
+        iAppUserService.insertToAddFriend(userId, id);
+        iAppMessageService.sendSystemAppMessage(id, appUser.getHeadImage(), appUser.getNickname() + "添加好友",
+                appUser.getNickname() + "添加您为好友");
+        return ResponseUtil.success();
+    }
+
+    @RequestMapping(value = "/sendMessage", method = RequestMethod.POST)
+    @ResponseBody
+    public Result sendMessage(@RequestParam(value = "userId") Integer userId,
+            @RequestParam(value = "content") String content) {
+        Integer cUserId = SecurityUtil.getCurrentUserId();
+        if (userId == null) return ResponseUtil.error("未登录");
+        AppUser appUser = iAppUserService.selectByKey(cUserId);
+        if (appUser == null) return ResponseUtil.error("用户不存在");
+        iAppUserMessageService
+                .insertToSendUserAppMessage(cUserId, appUser.getNickname(), appUser.getHeadImage(), userId, content);
+        iAppMessageService.sentUserAppMessage(cUserId, userId, appUser.getNickname() + "发来新的消息");
+        return ResponseUtil.success();
     }
 
     @RequestMapping(value = "/updatePassword", method = RequestMethod.POST)

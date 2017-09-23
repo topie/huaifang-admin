@@ -9,4 +9,6 @@ import java.util.List;
 public interface AppUserMapper extends Mapper<AppUser> {
 
     List<AppUser> selectAppUserFriends(@Param("userId") Integer userId);
+
+    int insertToAddFriend(@Param("userId") Integer userId, @Param("addUserId") Integer addUserId);
 }

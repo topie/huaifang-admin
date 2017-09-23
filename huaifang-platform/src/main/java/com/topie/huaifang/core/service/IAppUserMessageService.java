@@ -14,4 +14,6 @@ public interface IAppUserMessageService extends IService<AppUserMessage> {
     PageInfo<AppUserMessage> selectByFilterAndPage(AppUserMessage appUserMessage, int pageNum, int pageSize);
 
     List<AppUserMessage> selectByFilter(AppUserMessage appUserMessage);
+
+    int insertToSendUserAppMessage(Integer fromUserId, String nickname, String headImage, Integer toUserId, String content);
 }

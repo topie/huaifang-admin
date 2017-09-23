@@ -49,4 +49,9 @@ public class AppUserServiceImpl extends BaseService<AppUser> implements IAppUser
         return new PageInfo<>(list);
     }
 
+    @Override
+    public void insertToAddFriend(Integer userId, Integer addUserId) {
+        appUserMapper.insertToAddFriend(userId,addUserId);
+    }
+
 }

@@ -49,10 +49,10 @@ public class AppTest {
 
     @Test
     public void json() {
-        MarketLine item  = new MarketLine();
-        List<MarketLine> list = new ArrayList<>();
+        PartyMembersBusiness item  = new PartyMembersBusiness();
+        List<PartyMembersBusiness> list = new ArrayList<>();
         list.add(item);
-        System.out.println(net.sf.json.JSONObject.fromObject(ResponseUtil.success(PageConvertUtil.grid(list))).toString());
+        System.out.println(net.sf.json.JSONObject.fromObject(ResponseUtil.success(list)).toString());
     }
 
 }

@@ -18,4 +18,7 @@ public interface IAppUserService extends IService<AppUser> {
     AppUser selectByPlatformId(Integer currentUserId);
 
     PageInfo<AppUser> selectAppUserFriends(Integer userId, Integer pageNum, Integer pageSize);
+
+    void insertToAddFriend(Integer userId, Integer id);
+
 }

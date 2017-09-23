@@ -17,6 +17,9 @@
         <result column="status" jdbcType="SMALLINT" property="status"/>
         <result column="login_status" jdbcType="TINYINT" property="loginStatus"/>
     </resultMap>
+    <insert id="insertToAddFriend">
+        insert ignore into d_app_user_friend(user_id,friend_id) values(#{userId},#{addUserId})
+    </insert>
     <select id="selectAppUserFriends" resultMap="BaseResultMap">
         select u.*
         from d_app_user_friend uf
