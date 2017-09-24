@@ -26,9 +26,6 @@ public class MoJuwuInfoController {
     @Autowired
     private ICunwuInfoService iCunwuInfoService;
 
-    @Autowired
-    private ICommonQueryService iCommonQueryService;
-
     @RequestMapping(value = "/navs", method = RequestMethod.GET)
     @ResponseBody
     public Result navs() {
