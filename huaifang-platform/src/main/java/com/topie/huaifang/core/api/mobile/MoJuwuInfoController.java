@@ -1,10 +1,7 @@
 package com.topie.huaifang.core.api.mobile;
 
-import com.github.pagehelper.PageInfo;
-import com.topie.huaifang.common.utils.PageConvertUtil;
 import com.topie.huaifang.common.utils.ResponseUtil;
 import com.topie.huaifang.common.utils.Result;
-import com.topie.huaifang.core.service.ICommonQueryService;
 import com.topie.huaifang.core.service.ICunwuInfoService;
 import com.topie.huaifang.database.core.model.CunwuInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +22,14 @@ public class MoJuwuInfoController {
 
     @Autowired
     private ICunwuInfoService iCunwuInfoService;
+
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @ResponseBody
+    public Result list(CunwuInfo cunwuInfo) {
+        cunwuInfo.setStatus("上线");
+        List<CunwuInfo> list = iCunwuInfoService.selectByFilter(cunwuInfo);
+        return ResponseUtil.success(list);
+    }
 
     @RequestMapping(value = "/navs", method = RequestMethod.GET)
     @ResponseBody
