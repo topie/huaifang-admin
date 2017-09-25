@@ -35,7 +35,7 @@ public class MoActionGuideController {
     public Result navs(ActionGuideCat actionGuideCat) {
         actionGuideCat.setStatus("已上线");
         List<ActionGuideCat> list = iActionGuideCatService.selectByFilter(actionGuideCat);
-        return ResponseUtil.success(list);
+        return ResponseUtil.success(PageConvertUtil.grid(list));
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)

@@ -67,7 +67,7 @@ public class MoQuestionController {
             }
             item.setOptions(options);
         }
-        return ResponseUtil.success(list);
+        return ResponseUtil.success(PageConvertUtil.grid(list));
     }
 
     @RequestMapping(value = "/post", method = RequestMethod.POST)

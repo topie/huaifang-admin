@@ -1,5 +1,6 @@
 package com.topie.huaifang.core.api.mobile;
 
+import com.topie.huaifang.common.utils.PageConvertUtil;
 import com.topie.huaifang.common.utils.ResponseUtil;
 import com.topie.huaifang.common.utils.Result;
 import com.topie.huaifang.core.service.ICunwuInfoService;
@@ -28,14 +29,14 @@ public class MoJuwuInfoController {
     public Result list(CunwuInfo cunwuInfo) {
         cunwuInfo.setStatus("上线");
         List<CunwuInfo> list = iCunwuInfoService.selectByFilter(cunwuInfo);
-        return ResponseUtil.success(list);
+        return ResponseUtil.success(PageConvertUtil.grid(list));
     }
 
     @RequestMapping(value = "/navs", method = RequestMethod.GET)
     @ResponseBody
     public Result navs() {
         List<CunwuInfo> list = iCunwuInfoService.selectTitles();
-        return ResponseUtil.success(list);
+        return ResponseUtil.success(PageConvertUtil.grid(list));
     }
 
     @RequestMapping(value = "/detail", method = RequestMethod.GET)

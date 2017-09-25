@@ -1,6 +1,7 @@
 package com.topie.huaifang.core.api.mobile;
 
 import com.topie.huaifang.common.utils.Option;
+import com.topie.huaifang.common.utils.PageConvertUtil;
 import com.topie.huaifang.common.utils.ResponseUtil;
 import com.topie.huaifang.common.utils.Result;
 import com.topie.huaifang.core.enums.YellowPageType;
@@ -29,7 +30,7 @@ public class MoYellowPageController {
     @ResponseBody
     public Result list(YellowPage yellowPage) {
         List<YellowPage> list = iYellowPageService.selectByFilter(yellowPage);
-        return ResponseUtil.success(list);
+        return ResponseUtil.success(PageConvertUtil.grid(list));
     }
 
     @RequestMapping(value = "/navs", method = RequestMethod.GET)

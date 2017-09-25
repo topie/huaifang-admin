@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 /**
  * Created by chenguojun on 2017/4/19.
  */
@@ -38,11 +40,10 @@ public class MoAppUserController {
 
     @RequestMapping(value = "/friends", method = RequestMethod.GET)
     @ResponseBody
-    public Result friends(@RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum,
-            @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize) {
+    public Result friends() {
         Integer userId = SecurityUtil.getCurrentUserId();
-        PageInfo<AppUser> pageInfo = iAppUserService.selectAppUserFriends(userId, pageNum, pageSize);
-        return ResponseUtil.success(PageConvertUtil.grid(pageInfo));
+        List<AppUser> friends = iAppUserService.selectAllAppUserFriends(userId);
+        return ResponseUtil.success(PageConvertUtil.grid(friends));
     }
 
     @RequestMapping(value = "/maybeKnown", method = RequestMethod.GET)

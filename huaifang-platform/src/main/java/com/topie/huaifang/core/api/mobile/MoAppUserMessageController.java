@@ -29,6 +29,7 @@ public class MoAppUserMessageController {
     @Autowired
     private IAppUserMessageService iAppUserMessageService;
 
+    @Autowired
     private IAppMessageService iAppMessageService;
 
     @Autowired

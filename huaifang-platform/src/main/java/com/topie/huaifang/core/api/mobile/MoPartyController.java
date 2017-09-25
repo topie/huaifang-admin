@@ -55,7 +55,7 @@ public class MoPartyController {
     @ResponseBody
     public Result infoList(PartyMembersInfo partyMembersInfo) {
         List<PartyMembersInfo> list = iPartyMembersInfoService.selectByFilter(partyMembersInfo);
-        return ResponseUtil.success(list);
+        return ResponseUtil.success(PageConvertUtil.grid(list));
     }
 
     @RequestMapping(value = "/business/list", method = RequestMethod.GET)

@@ -62,7 +62,7 @@ public class MoRepairReportController {
         RepairReportProcess rrp = new RepairReportProcess();
         rrp.setReportId(id);
         List<RepairReportProcess> list = iRepairReportProcessService.selectByFilter(rrp);
-        return ResponseUtil.success(list);
+        return ResponseUtil.success(PageConvertUtil.grid(list));
     }
 
     @RequestMapping(value = "/process/post", method = RequestMethod.GET)

@@ -21,4 +21,5 @@ public interface IAppUserService extends IService<AppUser> {
 
     void insertToAddFriend(Integer userId, Integer id);
 
+    List<AppUser> selectAllAppUserFriends(Integer userId);
 }

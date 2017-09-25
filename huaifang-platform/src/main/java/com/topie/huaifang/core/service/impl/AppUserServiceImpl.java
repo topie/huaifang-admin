@@ -15,8 +15,10 @@ import java.util.List;
 
 @Service
 public class AppUserServiceImpl extends BaseService<AppUser> implements IAppUserService {
+
     @Autowired
     private AppUserMapper appUserMapper;
+
     @Override
     public PageInfo<AppUser> selectByFilterAndPage(AppUser appUser, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
@@ -51,7 +53,12 @@ public class AppUserServiceImpl extends BaseService<AppUser> implements IAppUser
 
     @Override
     public void insertToAddFriend(Integer userId, Integer addUserId) {
-        appUserMapper.insertToAddFriend(userId,addUserId);
+        appUserMapper.insertToAddFriend(userId, addUserId);
+    }
+
+    @Override
+    public List<AppUser> selectAllAppUserFriends(Integer userId) {
+        return appUserMapper.selectAppUserFriends(userId);
     }
 
 }
