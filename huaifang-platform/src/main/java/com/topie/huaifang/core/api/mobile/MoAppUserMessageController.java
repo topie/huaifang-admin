@@ -12,10 +12,7 @@ import com.topie.huaifang.database.core.model.AppUserMessage;
 import com.topie.huaifang.security.utils.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
@@ -40,6 +37,9 @@ public class MoAppUserMessageController {
     public Result list(AppUserMessage appUserMessage,
             @RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum,
             @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize) {
+        AppUser appUser = iAppUserService.selectByPlatformId(SecurityUtil.getCurrentUserId());
+        if (appUser == null) return ResponseUtil.error("未登录");
+        appUserMessage.setToUserId(appUser.getId());
         PageInfo<AppUserMessage> pageInfo = iAppUserMessageService
                 .selectByFilterAndPage(appUserMessage, pageNum, pageSize);
         return ResponseUtil.success(PageConvertUtil.grid(pageInfo));
@@ -47,7 +47,7 @@ public class MoAppUserMessageController {
 
     @RequestMapping(value = "/send", method = RequestMethod.POST)
     @ResponseBody
-    public Result insert(AppUserMessage appUserMessage) {
+    public Result insert(@RequestBody AppUserMessage appUserMessage) {
         AppUser appUser = iAppUserService.selectByPlatformId(SecurityUtil.getCurrentUserId());
         appUserMessage.setSendTime(new Date());
         appUserMessage.setIsRead(0);

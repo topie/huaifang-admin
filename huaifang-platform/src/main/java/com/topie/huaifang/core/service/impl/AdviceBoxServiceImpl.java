@@ -25,6 +25,7 @@ public class AdviceBoxServiceImpl extends BaseService<AdviceBox> implements IAdv
     public List<AdviceBox> selectByFilter(AdviceBox adviceBox) {
         Example example = new Example(AdviceBox.class);
         Example.Criteria criteria = example.createCriteria();
+        if (adviceBox.getContactUserId() != null) criteria.andEqualTo("contactUserId", adviceBox.getContactUserId());
         if (StringUtils.isNotEmpty(adviceBox.getContactPerson()))
             criteria.andLike("contactPerson", "%" + adviceBox.getContactPerson() + "%");
         if (StringUtils.isNotEmpty(adviceBox.getContactPhone()))

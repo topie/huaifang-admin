@@ -49,6 +49,7 @@ public class MoAppMessageController {
     public Result detail(@RequestParam(value = "id") Integer id) {
         AppMessage appMessage = iAppMessageService.selectByKey(id);
         appMessage.setIsRead(1);
+        iAppMessageService.updateNotNull(appMessage);
         return ResponseUtil.success(appMessage);
     }
 

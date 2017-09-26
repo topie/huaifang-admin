@@ -3,11 +3,13 @@ package com.topie.huaifang.database.core.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.Date;
 
 @Table(name = "d_wuye_fee")
 public class WuyeFee {
+
     /**
      * ID:hidden
      */
@@ -25,6 +27,8 @@ public class WuyeFee {
      * 账号
      */
     private String account;
+
+    private BigDecimal money;
 
     /**
      * 缴费房间
@@ -55,6 +59,14 @@ public class WuyeFee {
      */
     @Column(name = "action_user")
     private String actionUser;
+
+    public BigDecimal getMoney() {
+        return money;
+    }
+
+    public void setMoney(BigDecimal money) {
+        this.money = money;
+    }
 
     /**
      * 获取ID:hidden

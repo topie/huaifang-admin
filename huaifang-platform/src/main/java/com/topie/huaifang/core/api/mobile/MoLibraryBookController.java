@@ -38,7 +38,7 @@ public class MoLibraryBookController {
     @ResponseBody
     public Result category() {
         List<String> tags = iLibraryBookService.selectBookTags();
-        return ResponseUtil.success(tags);
+        return ResponseUtil.success(PageConvertUtil.grid(tags));
     }
 
 }

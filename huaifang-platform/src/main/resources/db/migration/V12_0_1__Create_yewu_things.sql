@@ -12,7 +12,7 @@ CREATE TABLE d_advice_box (
   COMMENT '联系人ID',
   message_content VARCHAR(1024)           DEFAULT ''
   COMMENT '留言内容:textare',
-  message_time    TIMESTAMP NOT NULL      DEFAULT CURRENT_TIMESTAMP
+  message_time    TIMESTAMP NULL
   COMMENT '留言时间:datetime',
   handle_person   VARCHAR(32)             DEFAULT ''
   COMMENT '处理人',
@@ -20,8 +20,10 @@ CREATE TABLE d_advice_box (
   COMMENT '处理方式:select:[电话回访,直接回复,其它]',
   handle_desc     VARCHAR(1024)           DEFAULT ''
   COMMENT '处理描述:textare',
+  handle_time     TIMESTAMP NULL
+  COMMENT '处理时间:datetime',
   status          VARCHAR(16)             DEFAULT ''
-  COMMENT '状态:skip',
+  COMMENT '状态:select:[未处理,已处理]',
   PRIMARY KEY (id)
 )
   DEFAULT CHARSET = utf8
@@ -77,25 +79,25 @@ INSERT INTO `d_role_function` (role_id, function_id) VALUES ('1', '22');
 
 DROP TABLE IF EXISTS d_repair_report;
 CREATE TABLE d_repair_report (
-  id             INT(11)   NOT NULL      AUTO_INCREMENT
+  id              INT(11)   NOT NULL      AUTO_INCREMENT
   COMMENT 'ID:hidden',
-  contact_person VARCHAR(32)             DEFAULT ''
+  contact_person  VARCHAR(32)             DEFAULT ''
   COMMENT '联系人',
-  contact_phone  VARCHAR(32)             DEFAULT ''
+  contact_phone   VARCHAR(32)             DEFAULT ''
   COMMENT '联系人电话',
   contact_user_id INT(11)                 DEFAULT 0
   COMMENT '联系人ID',
-  room_number    VARCHAR(255)            DEFAULT ''
+  room_number     VARCHAR(255)            DEFAULT ''
   COMMENT '房间号',
-  report_time    TIMESTAMP NOT NULL      DEFAULT CURRENT_TIMESTAMP
+  report_time     TIMESTAMP NOT NULL      DEFAULT CURRENT_TIMESTAMP
   COMMENT '报修时间:datetime',
-  report_title   VARCHAR(255)            DEFAULT ''
+  report_title    VARCHAR(255)            DEFAULT ''
   COMMENT '报修事项:textarea',
-  report_content VARCHAR(1024)           DEFAULT ''
+  report_content  VARCHAR(1024)           DEFAULT ''
   COMMENT '报修内容:textarea',
-  images         VARCHAR(2048)           DEFAULT ''
+  images          VARCHAR(2048)           DEFAULT ''
   COMMENT '图片:files',
-  status         VARCHAR(16)             DEFAULT ''
+  status          VARCHAR(16)             DEFAULT ''
   COMMENT '处理状态:select:[未反馈,待维修,已完成]',
   PRIMARY KEY (id)
 )
@@ -120,7 +122,7 @@ CREATE TABLE d_repair_report_process (
   COMMENT '进度内容:textarea',
   process_status  VARCHAR(64)             DEFAULT ''
   COMMENT '进度情况简介',
-  status          VARCHAR(16)                DEFAULT ''
+  status          VARCHAR(16)             DEFAULT ''
   COMMENT '状态:select:[维修中,已完成]',
   PRIMARY KEY (id)
 )

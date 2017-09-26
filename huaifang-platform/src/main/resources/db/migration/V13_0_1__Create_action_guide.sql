@@ -76,6 +76,8 @@ CREATE TABLE d_wuye_fee (
   COMMENT '账号',
   room_number  VARCHAR(255)       DEFAULT ''
   COMMENT '缴费房间',
+  money        DECIMAL(10, 2)     DEFAULT 0.00
+  COMMENT '缴费金额',
   status       VARCHAR(16)        DEFAULT '未缴费'
   COMMENT '缴费状态:select:[未缴费,已缴费]',
   pay_time     TIMESTAMP NULL

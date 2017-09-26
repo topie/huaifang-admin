@@ -17,7 +17,7 @@ public class AdviceBox {
     private Integer id;
 
     @Column(name = "contact_user_id")
-    private String contactUserId;
+    private Integer contactUserId;
 
     /**
      * 联系人
@@ -69,6 +69,13 @@ public class AdviceBox {
     private String handleDesc;
 
     /**
+     * 处理时间:datetime
+     */
+    @Column(name = "message_time")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date handleTime;
+
+    /**
      * 状态:skip
      */
     private String status;
@@ -81,11 +88,11 @@ public class AdviceBox {
         this.contactEmail = contactEmail;
     }
 
-    public String getContactUserId() {
+    public Integer getContactUserId() {
         return contactUserId;
     }
 
-    public void setContactUserId(String contactUserId) {
+    public void setContactUserId(Integer contactUserId) {
         this.contactUserId = contactUserId;
     }
 
@@ -250,5 +257,14 @@ public class AdviceBox {
      */
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
+    public Date getHandleTime() {
+        return handleTime;
+    }
+
+    public void setHandleTime(Date handleTime) {
+        this.handleTime = handleTime;
     }
 }
