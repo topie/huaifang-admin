@@ -47,7 +47,9 @@ public class AppUserServiceImpl extends BaseService<AppUser> implements IAppUser
     public AppUser selectByPlatformId(Integer currentUserId) {
         AppUser appUser = new AppUser();
         appUser.setPlatformId(currentUserId);
-        return getMapper().selectOne(appUser);
+        List<AppUser> list = getMapper().select(appUser);
+        if (list.size() > 0) return list.get(0);
+        else return null;
     }
 
     @Override

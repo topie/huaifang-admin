@@ -34,8 +34,10 @@ public class MoAppMessageController {
     public Result list(AppMessage appMessage,
             @RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum,
             @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize) {
-        AppUser appUser = iAppUserService.selectByPlatformId(SecurityUtil.getCurrentUserId());
-        if (appUser == null) return ResponseUtil.error("未登录");
+        Integer currentUserId = SecurityUtil.getCurrentUserId();
+        if (currentUserId == null) return ResponseUtil.error("未登录");
+        AppUser appUser = iAppUserService.selectByPlatformId(currentUserId);
+        if (appUser == null) return ResponseUtil.error("用户信息不存在");
         appMessage.setToUserId(appUser.getId());
         PageInfo<AppMessage> pageInfo = iAppMessageService.selectByFilterAndPage(appMessage, pageNum, pageSize);
         for (AppMessage item : pageInfo.getList()) {

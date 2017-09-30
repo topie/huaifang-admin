@@ -53,6 +53,7 @@ public class MoNoneAuthController {
         }
         userService.insertUser(user);
         appUser.setPlatformId(user.getId());
+        appUser.setNickname(appUser.getMobilePhone() + "手机用户");
         int result = iAppUserService.saveNotNull(appUser);
         AuthUser authUser = new AuthUser();
         authUser.setUserId(appUser.getId());
