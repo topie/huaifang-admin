@@ -20,7 +20,7 @@ CREATE TABLE d_party_members_info (
   COMMENT 'ID:hidden',
   node_id    INT(11)      NOT NULL
   COMMENT '节点ID:hidden',
-  node_name   VARCHAR(128)               DEFAULT ''
+  node_name  VARCHAR(128)               DEFAULT ''
   COMMENT '党节点名称',
   name       VARCHAR(64)  NOT NULL      DEFAULT ''
   COMMENT '党员名称',
@@ -96,6 +96,17 @@ CREATE TABLE d_party_members_activity (
 )
   DEFAULT CHARSET = utf8
   COMMENT '党员活动信息';
+
+DROP TABLE IF EXISTS d_party_activity_join;
+CREATE TABLE d_party_activity_join (
+  activity_id INT(11) NOT NULL  DEFAULT 0
+  COMMENT '活动ID',
+  user_id     INT(11) NOT NULL  DEFAULT 0
+  COMMENT '用户ID',
+  PRIMARY KEY (activity_id, user_id)
+)
+  DEFAULT CHARSET = utf8
+  COMMENT '党员活动参加信息';
 
 INSERT INTO d_function
 VALUES ('19', '16', '党活动管理', '1', '1', NULL, '/api/core/partyMembersActivity/list', '3', NULL, NULL);

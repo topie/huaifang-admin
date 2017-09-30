@@ -6,9 +6,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Table(name = "d_app_user")
 public class AppUser {
+
+    @Transient
+    List<Integer> notInUserIds;
 
     /**
      * ID:hidden
@@ -75,6 +79,25 @@ public class AppUser {
      */
     @Column(name = "login_status")
     private Integer loginStatus;
+
+    @Transient
+    private List<Integer> userIds;
+
+    public List<Integer> getNotInUserIds() {
+        return notInUserIds;
+    }
+
+    public void setNotInUserIds(List<Integer> notInUserIds) {
+        this.notInUserIds = notInUserIds;
+    }
+
+    public List<Integer> getUserIds() {
+        return userIds;
+    }
+
+    public void setUserIds(List<Integer> userIds) {
+        this.userIds = userIds;
+    }
 
     /**
      * 获取ID:hidden

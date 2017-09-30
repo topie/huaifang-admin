@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topie.huaifang.database.core.dao.AuthUserMapper">
+  <resultMap id="BaseResultMap" type="com.topie.huaifang.database.core.model.AuthUser">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="person_id" jdbcType="INTEGER" property="personId" />
+    <result column="house_id" jdbcType="INTEGER" property="houseId" />
+    <result column="company_id" jdbcType="INTEGER" property="companyId" />
+    <result column="party_member_id" jdbcType="INTEGER" property="partyMemberId" />
+  </resultMap>
+</mapper>

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,7 +43,9 @@ public class MoAppUserController {
     @ResponseBody
     public Result friends() {
         Integer userId = SecurityUtil.getCurrentUserId();
-        List<AppUser> friends = iAppUserService.selectAllAppUserFriends(userId);
+        AppUser appUser = iAppUserService.selectByKey(userId);
+        if (appUser == null) return ResponseUtil.error("用户不存在");
+        List<AppUser> friends = iAppUserService.selectAllAppUserFriends(appUser.getId());
         return ResponseUtil.success(PageConvertUtil.grid(friends));
     }
 
@@ -52,6 +55,15 @@ public class MoAppUserController {
             @RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum,
             @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize) {
         appUser.setStatus(2);
+        Integer userId = SecurityUtil.getCurrentUserId();
+        AppUser app = iAppUserService.selectByKey(userId);
+        if (appUser == null) return ResponseUtil.error("用户不存在");
+        List<AppUser> friends = iAppUserService.selectAllAppUserFriends(app.getId());
+        List<Integer> notInUserList = new ArrayList<>();
+        for (AppUser friend : friends) {
+            notInUserList.add(friend.getId());
+        }
+        appUser.setNotInUserIds(notInUserList);
         PageInfo<AppUser> pageInfo = iAppUserService.selectByFilterAndPage(appUser, pageNum, pageSize);
         return ResponseUtil.success(PageConvertUtil.grid(pageInfo));
     }

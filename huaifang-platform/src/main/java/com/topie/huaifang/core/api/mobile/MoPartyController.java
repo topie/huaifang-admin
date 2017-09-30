@@ -4,12 +4,9 @@ import com.github.pagehelper.PageInfo;
 import com.topie.huaifang.common.utils.PageConvertUtil;
 import com.topie.huaifang.common.utils.ResponseUtil;
 import com.topie.huaifang.common.utils.Result;
-import com.topie.huaifang.core.service.IPartyMembersActivityService;
-import com.topie.huaifang.core.service.IPartyMembersBusinessService;
-import com.topie.huaifang.core.service.IPartyMembersInfoService;
-import com.topie.huaifang.database.core.model.PartyMembersActivity;
-import com.topie.huaifang.database.core.model.PartyMembersBusiness;
-import com.topie.huaifang.database.core.model.PartyMembersInfo;
+import com.topie.huaifang.core.service.*;
+import com.topie.huaifang.database.core.model.*;
+import com.topie.huaifang.security.utils.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +32,12 @@ public class MoPartyController {
     @Autowired
     private IPartyMembersBusinessService iPartyMembersBusinessService;
 
+    @Autowired
+    private IAppUserService iAppUserService;
+
+    @Autowired
+    private IPartyActivityJoinService iPartyActivityJoinService;
+
     @RequestMapping(value = "/activity/list", method = RequestMethod.GET)
     @ResponseBody
     public Result activityList(PartyMembersActivity partyMembersActivity,
@@ -48,6 +51,36 @@ public class MoPartyController {
     @RequestMapping(value = "/activity/join", method = RequestMethod.GET)
     @ResponseBody
     public Result activityJoin(@RequestParam(value = "id") Integer id) {
+        Integer userId = SecurityUtil.getCurrentUserId();
+        if (userId == null) return ResponseUtil.error("未登录");
+        AppUser appUser = iAppUserService.selectByKey(userId);
+        if (appUser == null) return ResponseUtil.error("用户不存在");
+        PartyActivityJoin partyActivityJoin = new PartyActivityJoin();
+        partyActivityJoin.setActivityId(id);
+        partyActivityJoin.setUserId(appUser.getId());
+        if (iPartyActivityJoinService.selectByFilter(partyActivityJoin).size() > 0) {
+            return ResponseUtil.success();
+        }
+        iPartyActivityJoinService.saveNotNull(partyActivityJoin);
+        return ResponseUtil.success();
+    }
+
+    @RequestMapping(value = "/activity/cancelJoin", method = RequestMethod.GET)
+    @ResponseBody
+    public Result cancelJoin(@RequestParam(value = "id") Integer id) {
+        Integer userId = SecurityUtil.getCurrentUserId();
+        if (userId == null) return ResponseUtil.error("未登录");
+        AppUser appUser = iAppUserService.selectByKey(userId);
+        if (appUser == null) return ResponseUtil.error("用户不存在");
+        PartyActivityJoin partyActivityJoin = new PartyActivityJoin();
+        partyActivityJoin.setActivityId(id);
+        partyActivityJoin.setUserId(appUser.getId());
+        List<PartyActivityJoin> list = iPartyActivityJoinService.selectByFilter(partyActivityJoin);
+        if (list.size() > 0) {
+            for (PartyActivityJoin activityJoin : list) {
+                iPartyActivityJoinService.delete(activityJoin);
+            }
+        }
         return ResponseUtil.success();
     }
 

@@ -5,9 +5,11 @@ import com.topie.huaifang.common.tools.plugins.FormItem;
 import com.topie.huaifang.common.utils.PageConvertUtil;
 import com.topie.huaifang.common.utils.ResponseUtil;
 import com.topie.huaifang.common.utils.Result;
+import com.topie.huaifang.core.service.IAppUserService;
 import com.topie.huaifang.core.service.ICommonQueryService;
 import com.topie.huaifang.core.service.IPersonInfoService;
 import com.topie.huaifang.database.core.model.PersonInfo;
+import com.topie.huaifang.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +29,12 @@ public class PersonInfoController {
 
     @Autowired
     private ICommonQueryService iCommonQueryService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private IAppUserService iAppUserService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody

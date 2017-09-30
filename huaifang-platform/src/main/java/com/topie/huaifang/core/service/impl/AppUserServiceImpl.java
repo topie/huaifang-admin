@@ -30,6 +30,12 @@ public class AppUserServiceImpl extends BaseService<AppUser> implements IAppUser
     public List<AppUser> selectByFilter(AppUser appUser) {
         Example example = new Example(AppUser.class);
         Example.Criteria criteria = example.createCriteria();
+        if (appUser.getUserIds() != null) {
+            criteria.andIn("id", appUser.getUserIds());
+        }
+        if (appUser.getNotInUserIds() != null) {
+            criteria.andNotIn("id", appUser.getNotInUserIds());
+        }
         if (StringUtils.isNotEmpty(appUser.getNickname()))
             criteria.andLike("nickname", "%" + appUser.getNickname() + "%");
         if (StringUtils.isNotEmpty(appUser.getRealname()))

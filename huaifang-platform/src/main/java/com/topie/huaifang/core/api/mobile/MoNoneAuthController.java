@@ -3,7 +3,9 @@ package com.topie.huaifang.core.api.mobile;
 import com.topie.huaifang.common.utils.ResponseUtil;
 import com.topie.huaifang.common.utils.Result;
 import com.topie.huaifang.core.service.IAppUserService;
+import com.topie.huaifang.core.service.IAuthUserService;
 import com.topie.huaifang.database.core.model.AppUser;
+import com.topie.huaifang.database.core.model.AuthUser;
 import com.topie.huaifang.database.core.model.User;
 import com.topie.huaifang.security.exception.AuBzConstant;
 import com.topie.huaifang.security.exception.AuthBusinessException;
@@ -28,6 +30,9 @@ public class MoNoneAuthController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private IAuthUserService iAuthUserService;
+
     @RequestMapping("/unique")
     @ResponseBody
     public Result unique(@RequestParam(value = "mobile") String mobile) {
@@ -49,6 +54,9 @@ public class MoNoneAuthController {
         userService.insertUser(user);
         appUser.setPlatformId(user.getId());
         int result = iAppUserService.saveNotNull(appUser);
+        AuthUser authUser = new AuthUser();
+        authUser.setUserId(appUser.getId());
+        iAuthUserService.saveNotNull(authUser);
         return result > 0 ? ResponseUtil.success() : ResponseUtil.error();
     }
 }
