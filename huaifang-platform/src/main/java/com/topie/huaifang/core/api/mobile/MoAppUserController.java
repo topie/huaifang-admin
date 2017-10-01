@@ -61,6 +61,7 @@ public class MoAppUserController {
         if (app == null) return ResponseUtil.error("用户不存在");
         List<AppUser> friends = iAppUserService.selectAllAppUserFriends(app.getId());
         List<Integer> notInUserList = new ArrayList<>();
+        notInUserList.add(app.getId());
         for (AppUser friend : friends) {
             notInUserList.add(friend.getId());
         }
@@ -83,7 +84,7 @@ public class MoAppUserController {
     public Result addFriend(@RequestParam(value = "id") Integer id) {
         Integer userId = SecurityUtil.getCurrentUserId();
         if (userId == null) return ResponseUtil.error("未登录");
-        AppUser appUser = iAppUserService.selectByPlatformId(id);
+        AppUser appUser = iAppUserService.selectByPlatformId(userId);
         if (appUser == null) return ResponseUtil.error("用户不存在");
         iAppUserService.insertToAddFriend(userId, id);
         iAppMessageService.sendSystemAppMessage(id, appUser.getHeadImage(), appUser.getNickname() + "添加好友",
