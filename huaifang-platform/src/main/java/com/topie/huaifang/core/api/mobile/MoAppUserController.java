@@ -56,8 +56,8 @@ public class MoAppUserController {
             @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize) {
         appUser.setStatus(2);
         Integer userId = SecurityUtil.getCurrentUserId();
-        AppUser app = iAppUserService.selectByKey(userId);
-        if (appUser == null) return ResponseUtil.error("用户不存在");
+        AppUser app = iAppUserService.selectByPlatformId(userId);
+        if (app == null) return ResponseUtil.error("用户不存在");
         List<AppUser> friends = iAppUserService.selectAllAppUserFriends(app.getId());
         List<Integer> notInUserList = new ArrayList<>();
         for (AppUser friend : friends) {
