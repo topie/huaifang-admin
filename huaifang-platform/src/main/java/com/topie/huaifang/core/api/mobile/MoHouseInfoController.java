@@ -71,7 +71,7 @@ public class MoHouseInfoController {
     public Result auth(@RequestParam("houseId") Integer houseId, PersonInfo personInfo) {
         Integer userId = SecurityUtil.getCurrentUserId();
         if (userId == null) return ResponseUtil.error("未登录");
-        AppUser appUser = iAppUserService.selectByKey(userId);
+         AppUser appUser = iAppUserService.selectByPlatformId(userId);
         if (appUser == null) return ResponseUtil.error("用户不存在");
         personInfo.setImportTime(new Date());
         iPersonInfoService.saveNotNull(personInfo);//人口信息
@@ -87,7 +87,7 @@ public class MoHouseInfoController {
     public Result myHouse() {
         Integer userId = SecurityUtil.getCurrentUserId();
         if (userId == null) return ResponseUtil.error("未登录");
-        AppUser appUser = iAppUserService.selectByKey(userId);
+         AppUser appUser = iAppUserService.selectByPlatformId(userId);
         if (appUser == null) return ResponseUtil.error("用户不存在");
         AuthUser authUser = iAuthUserService.selectByKey(appUser.getId());
         if (authUser == null || authUser.getHouseId() == 0) {
