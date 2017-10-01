@@ -10,6 +10,7 @@ import com.topie.huaifang.core.service.IAppUserService;
 import com.topie.huaifang.database.core.model.AppUser;
 import com.topie.huaifang.security.service.UserService;
 import com.topie.huaifang.security.utils.SecurityUtil;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,7 +55,7 @@ public class MoAppUserController {
     public Result maybeKnown(AppUser appUser,
             @RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum,
             @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize) {
-        appUser.setStatus(2);
+        //appUser.setStatus(2);
         Integer userId = SecurityUtil.getCurrentUserId();
         AppUser app = iAppUserService.selectByPlatformId(userId);
         if (app == null) return ResponseUtil.error("用户不存在");
@@ -63,7 +64,9 @@ public class MoAppUserController {
         for (AppUser friend : friends) {
             notInUserList.add(friend.getId());
         }
-        appUser.setNotInUserIds(notInUserList);
+        if (CollectionUtils.isNotEmpty(notInUserList)) {
+            appUser.setNotInUserIds(notInUserList);
+        }
         PageInfo<AppUser> pageInfo = iAppUserService.selectByFilterAndPage(appUser, pageNum, pageSize);
         return ResponseUtil.success(PageConvertUtil.grid(pageInfo));
     }
