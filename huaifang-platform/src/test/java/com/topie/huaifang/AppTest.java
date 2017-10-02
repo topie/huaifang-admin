@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.topie.huaifang.common.utils.PageConvertUtil;
 import com.topie.huaifang.common.utils.ResponseUtil;
 import com.topie.huaifang.database.core.model.*;
+import com.topie.huaifang.security.utils.SecurityUtil;
+import com.topie.huaifang.security.utils.TokenUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
@@ -41,10 +43,10 @@ public class AppTest {
 
     @Test
     public void test() throws Exception {
-        String[] singleFields = StringUtils.split("a,v,c", ",");
-        for (String singleField : singleFields) {
-            System.out.println(singleField + "---");
-        }
+        String token = "eyJhbGciOiJIUzUxMiJ9.eyJjcmVhdGVkIjoxNTA2ODQyNjgyNzgwLCJleHAiOjE1MDY5MjkwODIsInVzZXIiOiIxMzEyNjY1ODEwMCJ9.QvT-n5XyKjmlHfJC8gVkaR4bW42Dkt9wNpXMAfZpV2JPZ6WO6BvEHeAGZ_pxkji0iQUwjApiDcFz8wNVoEAVmA";
+        TokenUtils tokenUtils = new TokenUtils();
+        tokenUtils.setSecret("huaifangplatform!@#$");
+        System.out.println(tokenUtils.getUsernameFromToken(token));
     }
 
     @Test

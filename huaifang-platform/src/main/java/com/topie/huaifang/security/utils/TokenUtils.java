@@ -16,6 +16,10 @@ public class TokenUtils {
 
     private final Logger logger = Logger.getLogger(this.getClass());
 
+    public void setSecret(String secret) {
+        this.secret = secret;
+    }
+
     @Value("${security.token.secret}")
     private String secret;
 

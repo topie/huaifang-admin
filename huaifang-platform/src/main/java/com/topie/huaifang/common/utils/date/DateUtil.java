@@ -824,4 +824,9 @@ public class DateUtil {
         Date d = new Date(regTime * 1000L);
         return d;
     }
+
+    public static Date getDateByMillionSecond(Long time) {
+        Date d = new Date(time);
+        return d;
+    }
 }
