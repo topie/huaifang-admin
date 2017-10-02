@@ -15,8 +15,8 @@
     }
 
     window.App = {
-        href: "http://huaifang.topie.com",//测试环境
-        //href: "http://huaifang.zt647.com",//正式环境
+        //href: "http://huaifang.topie.com",//测试环境
+        href: "http://huaifang.zt647.com",//正式环境
         requestMapping: {}
     };
 
