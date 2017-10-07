@@ -3,204 +3,206 @@ package com.topie.huaifang.database.core.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
 import java.util.Date;
+import javax.persistence.*;
 
 @Table(name = "d_person_info")
 public class PersonInfo {
-
     /**
      * ID:hidden
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "p_id")
+    private Integer pId;
 
     /**
      * 人口身份:select:[租户,住户]
      */
-    @Column(name = "person_type")
-    private String personType;
+    @Column(name = "p_person_type")
+    private String pPersonType;
 
     /**
      * 绑定架构id:hidden
      */
-    @Column(name = "house_node_id")
-    private Integer houseNodeId;
+    @Column(name = "p_house_node_id")
+    private Integer pHouseNodeId;
 
     /**
-     * 绑定房屋信息:skip
+     * 绑定房屋信息
      */
-    @Column(name = "house_info")
-    private String houseInfo;
+    @Column(name = "p_house_info")
+    private String pHouseInfo;
 
     /**
      * 姓名
      */
-    private String name;
+    @Column(name = "p_name")
+    private String pName;
 
     /**
      * 出生年月:date
      */
+    @Column(name = "p_birth")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date birth;
+    private Date pBirth;
 
     /**
      * 身份证号
      */
-    @Column(name = "identify_number")
-    private String identifyNumber;
+    @Column(name = "p_identify_number")
+    private String pIdentifyNumber;
 
     /**
-     * 入库时间
+     * 入库时间:datetime
      */
-    @Column(name = "import_time")
+    @Column(name = "p_import_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date importTime;
+    private Date pImportTime;
 
     /**
      * 获取ID:hidden
      *
-     * @return id - ID:hidden
+     * @return p_id - ID:hidden
      */
-    public Integer getId() {
-        return id;
+    public Integer getpId() {
+        return pId;
     }
 
     /**
      * 设置ID:hidden
      *
-     * @param id ID:hidden
+     * @param pId ID:hidden
      */
-    public void setId(Integer id) {
-        this.id = id;
+    public void setpId(Integer pId) {
+        this.pId = pId;
     }
 
     /**
      * 获取人口身份:select:[租户,住户]
      *
-     * @return person_type - 人口身份:select:[租户,住户]
+     * @return p_person_type - 人口身份:select:[租户,住户]
      */
-    public String getPersonType() {
-        return personType;
+    public String getpPersonType() {
+        return pPersonType;
     }
 
     /**
      * 设置人口身份:select:[租户,住户]
      *
-     * @param personType 人口身份:select:[租户,住户]
+     * @param pPersonType 人口身份:select:[租户,住户]
      */
-    public void setPersonType(String personType) {
-        this.personType = personType;
+    public void setpPersonType(String pPersonType) {
+        this.pPersonType = pPersonType;
     }
 
     /**
      * 获取绑定架构id:hidden
      *
-     * @return house_node_id - 绑定架构id:hidden
+     * @return p_house_node_id - 绑定架构id:hidden
      */
-    public Integer getHouseNodeId() {
-        return houseNodeId;
+    public Integer getpHouseNodeId() {
+        return pHouseNodeId;
     }
 
     /**
      * 设置绑定架构id:hidden
      *
-     * @param houseNodeId 绑定架构id:hidden
+     * @param pHouseNodeId 绑定架构id:hidden
      */
-    public void setHouseNodeId(Integer houseNodeId) {
-        this.houseNodeId = houseNodeId;
+    public void setpHouseNodeId(Integer pHouseNodeId) {
+        this.pHouseNodeId = pHouseNodeId;
     }
 
     /**
-     * 获取绑定房屋信息:skip
+     * 获取绑定房屋信息
      *
-     * @return house_info - 绑定房屋信息:skip
+     * @return p_house_info - 绑定房屋信息
      */
-    public String getHouseInfo() {
-        return houseInfo;
+    public String getpHouseInfo() {
+        return pHouseInfo;
     }
 
     /**
-     * 设置绑定房屋信息:skip
+     * 设置绑定房屋信息
      *
-     * @param houseInfo 绑定房屋信息:skip
+     * @param pHouseInfo 绑定房屋信息
      */
-    public void setHouseInfo(String houseInfo) {
-        this.houseInfo = houseInfo;
+    public void setpHouseInfo(String pHouseInfo) {
+        this.pHouseInfo = pHouseInfo;
     }
 
     /**
      * 获取姓名
      *
-     * @return name - 姓名
+     * @return p_name - 姓名
      */
-    public String getName() {
-        return name;
+    public String getpName() {
+        return pName;
     }
 
     /**
      * 设置姓名
      *
-     * @param name 姓名
+     * @param pName 姓名
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setpName(String pName) {
+        this.pName = pName;
     }
 
     /**
      * 获取出生年月:date
      *
-     * @return birth - 出生年月:date
+     * @return p_birth - 出生年月:date
      */
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")
-    public Date getBirth() {
-        return birth;
+    public Date getpBirth() {
+        return pBirth;
     }
 
     /**
      * 设置出生年月:date
      *
-     * @param birth 出生年月:date
+     * @param pBirth 出生年月:date
      */
-    public void setBirth(Date birth) {
-        this.birth = birth;
+    public void setpBirth(Date pBirth) {
+        this.pBirth = pBirth;
     }
 
     /**
      * 获取身份证号
      *
-     * @return identify_number - 身份证号
+     * @return p_identify_number - 身份证号
      */
-    public String getIdentifyNumber() {
-        return identifyNumber;
+    public String getpIdentifyNumber() {
+        return pIdentifyNumber;
     }
 
     /**
      * 设置身份证号
      *
-     * @param identifyNumber 身份证号
+     * @param pIdentifyNumber 身份证号
      */
-    public void setIdentifyNumber(String identifyNumber) {
-        this.identifyNumber = identifyNumber;
+    public void setpIdentifyNumber(String pIdentifyNumber) {
+        this.pIdentifyNumber = pIdentifyNumber;
     }
 
     /**
-     * 获取入库时间
+     * 获取入库时间:datetime
      *
-     * @return import_time - 入库时间
+     * @return p_import_time - 入库时间:datetime
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
-    public Date getImportTime() {
-        return importTime;
+    public Date getpImportTime() {
+        return pImportTime;
     }
 
     /**
-     * 设置入库时间
+     * 设置入库时间:datetime
      *
-     * @param importTime 入库时间
+     * @param pImportTime 入库时间:datetime
      */
-    public void setImportTime(Date importTime) {
-        this.importTime = importTime;
+    public void setpImportTime(Date pImportTime) {
+        this.pImportTime = pImportTime;
     }
 }

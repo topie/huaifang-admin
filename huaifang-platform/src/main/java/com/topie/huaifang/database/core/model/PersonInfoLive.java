@@ -1,601 +1,607 @@
 package com.topie.huaifang.database.core.model;
 
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import java.util.Date;
 
 @Table(name = "d_person_info_live")
 public class PersonInfoLive {
+
     /**
      * ID:hidden
      */
     @Id
+    @Column(name = "l_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer lId;
 
     /**
      * 人口ID:hidden
      */
-    @Column(name = "person_id")
-    private String personId;
+    @Column(name = "l_person_id")
+    private Integer lPersonId;
 
     /**
      * 姓名
      */
-    private String name;
+    @Column(name = "l_name")
+    private String lName;
 
     /**
      * 性别:radioGroup:[男,女]
      */
-    private String gender;
+    @Column(name = "l_gender")
+    private String lGender;
 
     /**
      * 出生年月:date
      */
-    private Date birth;
+    @Column(name = "l_birth")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date lBirth;
 
     /**
      * 身份证号
      */
-    @Column(name = "identify_number")
-    private String identifyNumber;
+    @Column(name = "l_identify_number")
+    private String lIdentifyNumber;
 
     /**
      * 民族
      */
-    private String nation;
+    @Column(name = "l_nation")
+    private String lNation;
 
     /**
      * 政治面貌
      */
-    @Column(name = "political_status")
-    private String politicalStatus;
+    @Column(name = "l_political_status")
+    private String lPoliticalStatus;
 
     /**
      * 户籍类别
      */
-    @Column(name = "census_type")
-    private String censusType;
+    @Column(name = "l_census_type")
+    private String lCensusType;
 
     /**
      * 户籍地址
      */
-    @Column(name = "census_address")
-    private String censusAddress;
+    @Column(name = "l_census_address")
+    private String lCensusAddress;
 
     /**
      * 出生地
      */
-    @Column(name = "born_place")
-    private String bornPlace;
+    @Column(name = "l_born_place")
+    private String lBornPlace;
 
     /**
      * 居住地
      */
-    @Column(name = "residence_place")
-    private String residencePlace;
+    @Column(name = "l_residence_place")
+    private String lResidencePlace;
 
     /**
      * 婚姻状况
      */
-    @Column(name = "marriage_status")
-    private String marriageStatus;
+    @Column(name = "l_marriage_status")
+    private String lMarriageStatus;
 
     /**
      * 联系电话
      */
-    private String contact;
+    @Column(name = "l_contact")
+    private String lContact;
 
     /**
      * 是否户主:radioGroup:[是,否]
      */
-    @Column(name = "is_owner")
-    private String isOwner;
+    @Column(name = "l_is_owner")
+    private String lIsOwner;
 
     /**
      * 与户主关系
      */
-    @Column(name = "owner_relate")
-    private String ownerRelate;
+    @Column(name = "l_owner_relate")
+    private String lOwnerRelate;
 
     /**
      * 槐房工作单位
      */
-    @Column(name = "company_huaifang")
-    private String companyHuaifang;
+    @Column(name = "l_company_huaifang")
+    private String lCompanyHuaifang;
 
     /**
      * 其它工作单位
      */
-    @Column(name = "company_other")
-    private String companyOther;
+    @Column(name = "l_company_other")
+    private String lCompanyOther;
 
     /**
      * 职位
      */
-    @Column(name = "job_position")
-    private String jobPosition;
+    @Column(name = "l_job_position")
+    private String lJobPosition;
 
     /**
      * 是否槐房村民:radioGroup:[是,否]
      */
-    @Column(name = "is_huaifang_pepole")
-    private String isHuaifangPepole;
+    @Column(name = "l_is_huaifang_pepole")
+    private String lIsHuaifangPepole;
 
     /**
      * 人口属性:checkboxGroup:[独生子女,待岗职工,优抚对象,居民代表,村民代表,人大代表,股东代表,党代表,现役军人,复转军人,军属]
      */
-    private String rksx;
+    @Column(name = "l_rksx")
+    private String lRksx;
 
     /**
      * 是否残疾人员:select:[正常,是]
      */
-    @Column(name = "is_canji")
-    private String isCanji;
+    @Column(name = "l_is_canji")
+    private String lIsCanji;
 
     /**
      * 是否死亡人员:select:[否,是]
      */
-    @Column(name = "is_dead")
-    private String isDead;
+    @Column(name = "l_is_dead")
+    private String lIsDead;
 
     /**
      * 死亡日期:date
      */
-    @Column(name = "dead_date")
-    private Date deadDate;
+    @Column(name = "l_dead_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date lDeadDate;
 
     /**
      * 备注:textarea
      */
-    private String memo;
+    @Column(name = "l_memo")
+    private String lMemo;
 
     /**
      * 获取ID:hidden
      *
-     * @return id - ID:hidden
+     * @return l_id - ID:hidden
      */
-    public Integer getId() {
-        return id;
+    public Integer getlId() {
+        return lId;
     }
 
     /**
      * 设置ID:hidden
      *
-     * @param id ID:hidden
+     * @param lId ID:hidden
      */
-    public void setId(Integer id) {
-        this.id = id;
+    public void setlId(Integer lId) {
+        this.lId = lId;
     }
 
-    /**
-     * 获取人口ID:hidden
-     *
-     * @return person_id - 人口ID:hidden
-     */
-    public String getPersonId() {
-        return personId;
+    public Integer getlPersonId() {
+        return lPersonId;
     }
 
-    /**
-     * 设置人口ID:hidden
-     *
-     * @param personId 人口ID:hidden
-     */
-    public void setPersonId(String personId) {
-        this.personId = personId;
+    public void setlPersonId(Integer lPersonId) {
+        this.lPersonId = lPersonId;
     }
 
     /**
      * 获取姓名
      *
-     * @return name - 姓名
+     * @return l_name - 姓名
      */
-    public String getName() {
-        return name;
+    public String getlName() {
+        return lName;
     }
 
     /**
      * 设置姓名
      *
-     * @param name 姓名
+     * @param lName 姓名
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setlName(String lName) {
+        this.lName = lName;
     }
 
     /**
      * 获取性别:radioGroup:[男,女]
      *
-     * @return gender - 性别:radioGroup:[男,女]
+     * @return l_gender - 性别:radioGroup:[男,女]
      */
-    public String getGender() {
-        return gender;
+    public String getlGender() {
+        return lGender;
     }
 
     /**
      * 设置性别:radioGroup:[男,女]
      *
-     * @param gender 性别:radioGroup:[男,女]
+     * @param lGender 性别:radioGroup:[男,女]
      */
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setlGender(String lGender) {
+        this.lGender = lGender;
     }
 
     /**
      * 获取出生年月:date
      *
-     * @return birth - 出生年月:date
+     * @return l_birth - 出生年月:date
      */
-    public Date getBirth() {
-        return birth;
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")
+    public Date getlBirth() {
+        return lBirth;
     }
 
     /**
      * 设置出生年月:date
      *
-     * @param birth 出生年月:date
+     * @param lBirth 出生年月:date
      */
-    public void setBirth(Date birth) {
-        this.birth = birth;
+    public void setlBirth(Date lBirth) {
+        this.lBirth = lBirth;
     }
 
     /**
      * 获取身份证号
      *
-     * @return identify_number - 身份证号
+     * @return l_identify_number - 身份证号
      */
-    public String getIdentifyNumber() {
-        return identifyNumber;
+    public String getlIdentifyNumber() {
+        return lIdentifyNumber;
     }
 
     /**
      * 设置身份证号
      *
-     * @param identifyNumber 身份证号
+     * @param lIdentifyNumber 身份证号
      */
-    public void setIdentifyNumber(String identifyNumber) {
-        this.identifyNumber = identifyNumber;
+    public void setlIdentifyNumber(String lIdentifyNumber) {
+        this.lIdentifyNumber = lIdentifyNumber;
     }
 
     /**
      * 获取民族
      *
-     * @return nation - 民族
+     * @return l_nation - 民族
      */
-    public String getNation() {
-        return nation;
+    public String getlNation() {
+        return lNation;
     }
 
     /**
      * 设置民族
      *
-     * @param nation 民族
+     * @param lNation 民族
      */
-    public void setNation(String nation) {
-        this.nation = nation;
+    public void setlNation(String lNation) {
+        this.lNation = lNation;
     }
 
     /**
      * 获取政治面貌
      *
-     * @return political_status - 政治面貌
+     * @return l_political_status - 政治面貌
      */
-    public String getPoliticalStatus() {
-        return politicalStatus;
+    public String getlPoliticalStatus() {
+        return lPoliticalStatus;
     }
 
     /**
      * 设置政治面貌
      *
-     * @param politicalStatus 政治面貌
+     * @param lPoliticalStatus 政治面貌
      */
-    public void setPoliticalStatus(String politicalStatus) {
-        this.politicalStatus = politicalStatus;
+    public void setlPoliticalStatus(String lPoliticalStatus) {
+        this.lPoliticalStatus = lPoliticalStatus;
     }
 
     /**
      * 获取户籍类别
      *
-     * @return census_type - 户籍类别
+     * @return l_census_type - 户籍类别
      */
-    public String getCensusType() {
-        return censusType;
+    public String getlCensusType() {
+        return lCensusType;
     }
 
     /**
      * 设置户籍类别
      *
-     * @param censusType 户籍类别
+     * @param lCensusType 户籍类别
      */
-    public void setCensusType(String censusType) {
-        this.censusType = censusType;
+    public void setlCensusType(String lCensusType) {
+        this.lCensusType = lCensusType;
     }
 
     /**
      * 获取户籍地址
      *
-     * @return census_address - 户籍地址
+     * @return l_census_address - 户籍地址
      */
-    public String getCensusAddress() {
-        return censusAddress;
+    public String getlCensusAddress() {
+        return lCensusAddress;
     }
 
     /**
      * 设置户籍地址
      *
-     * @param censusAddress 户籍地址
+     * @param lCensusAddress 户籍地址
      */
-    public void setCensusAddress(String censusAddress) {
-        this.censusAddress = censusAddress;
+    public void setlCensusAddress(String lCensusAddress) {
+        this.lCensusAddress = lCensusAddress;
     }
 
     /**
      * 获取出生地
      *
-     * @return born_place - 出生地
+     * @return l_born_place - 出生地
      */
-    public String getBornPlace() {
-        return bornPlace;
+    public String getlBornPlace() {
+        return lBornPlace;
     }
 
     /**
      * 设置出生地
      *
-     * @param bornPlace 出生地
+     * @param lBornPlace 出生地
      */
-    public void setBornPlace(String bornPlace) {
-        this.bornPlace = bornPlace;
+    public void setlBornPlace(String lBornPlace) {
+        this.lBornPlace = lBornPlace;
     }
 
     /**
      * 获取居住地
      *
-     * @return residence_place - 居住地
+     * @return l_residence_place - 居住地
      */
-    public String getResidencePlace() {
-        return residencePlace;
+    public String getlResidencePlace() {
+        return lResidencePlace;
     }
 
     /**
      * 设置居住地
      *
-     * @param residencePlace 居住地
+     * @param lResidencePlace 居住地
      */
-    public void setResidencePlace(String residencePlace) {
-        this.residencePlace = residencePlace;
+    public void setlResidencePlace(String lResidencePlace) {
+        this.lResidencePlace = lResidencePlace;
     }
 
     /**
      * 获取婚姻状况
      *
-     * @return marriage_status - 婚姻状况
+     * @return l_marriage_status - 婚姻状况
      */
-    public String getMarriageStatus() {
-        return marriageStatus;
+    public String getlMarriageStatus() {
+        return lMarriageStatus;
     }
 
     /**
      * 设置婚姻状况
      *
-     * @param marriageStatus 婚姻状况
+     * @param lMarriageStatus 婚姻状况
      */
-    public void setMarriageStatus(String marriageStatus) {
-        this.marriageStatus = marriageStatus;
+    public void setlMarriageStatus(String lMarriageStatus) {
+        this.lMarriageStatus = lMarriageStatus;
     }
 
     /**
      * 获取联系电话
      *
-     * @return contact - 联系电话
+     * @return l_contact - 联系电话
      */
-    public String getContact() {
-        return contact;
+    public String getlContact() {
+        return lContact;
     }
 
     /**
      * 设置联系电话
      *
-     * @param contact 联系电话
+     * @param lContact 联系电话
      */
-    public void setContact(String contact) {
-        this.contact = contact;
+    public void setlContact(String lContact) {
+        this.lContact = lContact;
     }
 
     /**
      * 获取是否户主:radioGroup:[是,否]
      *
-     * @return is_owner - 是否户主:radioGroup:[是,否]
+     * @return l_is_owner - 是否户主:radioGroup:[是,否]
      */
-    public String getIsOwner() {
-        return isOwner;
+    public String getlIsOwner() {
+        return lIsOwner;
     }
 
     /**
      * 设置是否户主:radioGroup:[是,否]
      *
-     * @param isOwner 是否户主:radioGroup:[是,否]
+     * @param lIsOwner 是否户主:radioGroup:[是,否]
      */
-    public void setIsOwner(String isOwner) {
-        this.isOwner = isOwner;
+    public void setlIsOwner(String lIsOwner) {
+        this.lIsOwner = lIsOwner;
     }
 
     /**
      * 获取与户主关系
      *
-     * @return owner_relate - 与户主关系
+     * @return l_owner_relate - 与户主关系
      */
-    public String getOwnerRelate() {
-        return ownerRelate;
+    public String getlOwnerRelate() {
+        return lOwnerRelate;
     }
 
     /**
      * 设置与户主关系
      *
-     * @param ownerRelate 与户主关系
+     * @param lOwnerRelate 与户主关系
      */
-    public void setOwnerRelate(String ownerRelate) {
-        this.ownerRelate = ownerRelate;
+    public void setlOwnerRelate(String lOwnerRelate) {
+        this.lOwnerRelate = lOwnerRelate;
     }
 
     /**
      * 获取槐房工作单位
      *
-     * @return company_huaifang - 槐房工作单位
+     * @return l_company_huaifang - 槐房工作单位
      */
-    public String getCompanyHuaifang() {
-        return companyHuaifang;
+    public String getlCompanyHuaifang() {
+        return lCompanyHuaifang;
     }
 
     /**
      * 设置槐房工作单位
      *
-     * @param companyHuaifang 槐房工作单位
+     * @param lCompanyHuaifang 槐房工作单位
      */
-    public void setCompanyHuaifang(String companyHuaifang) {
-        this.companyHuaifang = companyHuaifang;
+    public void setlCompanyHuaifang(String lCompanyHuaifang) {
+        this.lCompanyHuaifang = lCompanyHuaifang;
     }
 
     /**
      * 获取其它工作单位
      *
-     * @return company_other - 其它工作单位
+     * @return l_company_other - 其它工作单位
      */
-    public String getCompanyOther() {
-        return companyOther;
+    public String getlCompanyOther() {
+        return lCompanyOther;
     }
 
     /**
      * 设置其它工作单位
      *
-     * @param companyOther 其它工作单位
+     * @param lCompanyOther 其它工作单位
      */
-    public void setCompanyOther(String companyOther) {
-        this.companyOther = companyOther;
+    public void setlCompanyOther(String lCompanyOther) {
+        this.lCompanyOther = lCompanyOther;
     }
 
     /**
      * 获取职位
      *
-     * @return job_position - 职位
+     * @return l_job_position - 职位
      */
-    public String getJobPosition() {
-        return jobPosition;
+    public String getlJobPosition() {
+        return lJobPosition;
     }
 
     /**
      * 设置职位
      *
-     * @param jobPosition 职位
+     * @param lJobPosition 职位
      */
-    public void setJobPosition(String jobPosition) {
-        this.jobPosition = jobPosition;
+    public void setlJobPosition(String lJobPosition) {
+        this.lJobPosition = lJobPosition;
     }
 
     /**
      * 获取是否槐房村民:radioGroup:[是,否]
      *
-     * @return is_huaifang_pepole - 是否槐房村民:radioGroup:[是,否]
+     * @return l_is_huaifang_pepole - 是否槐房村民:radioGroup:[是,否]
      */
-    public String getIsHuaifangPepole() {
-        return isHuaifangPepole;
+    public String getlIsHuaifangPepole() {
+        return lIsHuaifangPepole;
     }
 
     /**
      * 设置是否槐房村民:radioGroup:[是,否]
      *
-     * @param isHuaifangPepole 是否槐房村民:radioGroup:[是,否]
+     * @param lIsHuaifangPepole 是否槐房村民:radioGroup:[是,否]
      */
-    public void setIsHuaifangPepole(String isHuaifangPepole) {
-        this.isHuaifangPepole = isHuaifangPepole;
+    public void setlIsHuaifangPepole(String lIsHuaifangPepole) {
+        this.lIsHuaifangPepole = lIsHuaifangPepole;
     }
 
     /**
      * 获取人口属性:checkboxGroup:[独生子女,待岗职工,优抚对象,居民代表,村民代表,人大代表,股东代表,党代表,现役军人,复转军人,军属]
      *
-     * @return rksx - 人口属性:checkboxGroup:[独生子女,待岗职工,优抚对象,居民代表,村民代表,人大代表,股东代表,党代表,现役军人,复转军人,军属]
+     * @return l_rksx - 人口属性:checkboxGroup:[独生子女,待岗职工,优抚对象,居民代表,村民代表,人大代表,股东代表,党代表,现役军人,复转军人,军属]
      */
-    public String getRksx() {
-        return rksx;
+    public String getlRksx() {
+        return lRksx;
     }
 
     /**
      * 设置人口属性:checkboxGroup:[独生子女,待岗职工,优抚对象,居民代表,村民代表,人大代表,股东代表,党代表,现役军人,复转军人,军属]
      *
-     * @param rksx 人口属性:checkboxGroup:[独生子女,待岗职工,优抚对象,居民代表,村民代表,人大代表,股东代表,党代表,现役军人,复转军人,军属]
+     * @param lRksx 人口属性:checkboxGroup:[独生子女,待岗职工,优抚对象,居民代表,村民代表,人大代表,股东代表,党代表,现役军人,复转军人,军属]
      */
-    public void setRksx(String rksx) {
-        this.rksx = rksx;
+    public void setlRksx(String lRksx) {
+        this.lRksx = lRksx;
     }
 
     /**
      * 获取是否残疾人员:select:[正常,是]
      *
-     * @return is_canji - 是否残疾人员:select:[正常,是]
+     * @return l_is_canji - 是否残疾人员:select:[正常,是]
      */
-    public String getIsCanji() {
-        return isCanji;
+    public String getlIsCanji() {
+        return lIsCanji;
     }
 
     /**
      * 设置是否残疾人员:select:[正常,是]
      *
-     * @param isCanji 是否残疾人员:select:[正常,是]
+     * @param lIsCanji 是否残疾人员:select:[正常,是]
      */
-    public void setIsCanji(String isCanji) {
-        this.isCanji = isCanji;
+    public void setlIsCanji(String lIsCanji) {
+        this.lIsCanji = lIsCanji;
     }
 
     /**
      * 获取是否死亡人员:select:[否,是]
      *
-     * @return is_dead - 是否死亡人员:select:[否,是]
+     * @return l_is_dead - 是否死亡人员:select:[否,是]
      */
-    public String getIsDead() {
-        return isDead;
+    public String getlIsDead() {
+        return lIsDead;
     }
 
     /**
      * 设置是否死亡人员:select:[否,是]
      *
-     * @param isDead 是否死亡人员:select:[否,是]
+     * @param lIsDead 是否死亡人员:select:[否,是]
      */
-    public void setIsDead(String isDead) {
-        this.isDead = isDead;
+    public void setlIsDead(String lIsDead) {
+        this.lIsDead = lIsDead;
     }
 
     /**
      * 获取死亡日期:date
      *
-     * @return dead_date - 死亡日期:date
+     * @return l_dead_date - 死亡日期:date
      */
-    public Date getDeadDate() {
-        return deadDate;
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")
+    public Date getlDeadDate() {
+        return lDeadDate;
     }
 
     /**
      * 设置死亡日期:date
      *
-     * @param deadDate 死亡日期:date
+     * @param lDeadDate 死亡日期:date
      */
-    public void setDeadDate(Date deadDate) {
-        this.deadDate = deadDate;
+    public void setlDeadDate(Date lDeadDate) {
+        this.lDeadDate = lDeadDate;
     }
 
     /**
      * 获取备注:textarea
      *
-     * @return memo - 备注:textarea
+     * @return l_memo - 备注:textarea
      */
-    public String getMemo() {
-        return memo;
+    public String getlMemo() {
+        return lMemo;
     }
 
     /**
      * 设置备注:textarea
      *
-     * @param memo 备注:textarea
+     * @param lMemo 备注:textarea
      */
-    public void setMemo(String memo) {
-        this.memo = memo;
+    public void setlMemo(String lMemo) {
+        this.lMemo = lMemo;
     }
 }

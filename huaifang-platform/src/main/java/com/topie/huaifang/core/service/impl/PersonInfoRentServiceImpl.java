@@ -25,11 +25,17 @@ public class PersonInfoRentServiceImpl extends BaseService<PersonInfoRent> imple
     public List<PersonInfoRent> selectByFilter(PersonInfoRent personInfoRent) {
         Example example = new Example(PersonInfoRent.class);
         Example.Criteria criteria = example.createCriteria();
-        if (StringUtils.isNotEmpty(personInfoRent.getIdentifyNumber()))
-            criteria.andEqualTo("identifyNumber", personInfoRent.getIdentifyNumber());
-        if (StringUtils.isNotEmpty(personInfoRent.getName()))
-            criteria.andEqualTo("name", personInfoRent.getName());
+        if (StringUtils.isNotEmpty(personInfoRent.getrIdentifyNumber()))
+            criteria.andEqualTo("rIdentifyNumber", personInfoRent.getrIdentifyNumber());
+        if (StringUtils.isNotEmpty(personInfoRent.getrName())) criteria.andEqualTo("rName", personInfoRent.getrName());
         return getMapper().selectByExample(example);
+    }
+
+    @Override
+    public PersonInfoRent selectByPersonId(Integer id) {
+        PersonInfoRent personInfoRent = new PersonInfoRent();
+        personInfoRent.setrPersonId(id);
+        return getMapper().selectOne(personInfoRent);
     }
 
 }

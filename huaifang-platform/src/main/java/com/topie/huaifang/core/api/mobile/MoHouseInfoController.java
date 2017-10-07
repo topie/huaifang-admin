@@ -73,11 +73,11 @@ public class MoHouseInfoController {
         if (userId == null) return ResponseUtil.error("未登录");
          AppUser appUser = iAppUserService.selectByPlatformId(userId);
         if (appUser == null) return ResponseUtil.error("用户不存在");
-        personInfo.setImportTime(new Date());
+        personInfo.setpImportTime(new Date());
         iPersonInfoService.saveNotNull(personInfo);//人口信息
         AuthUser authUser = iAuthUserService.selectByKey(appUser.getId());
         authUser.setHouseId(houseId);
-        authUser.setPersonId(personInfo.getId());
+        authUser.setPersonId(personInfo.getpId());
         iAuthUserService.updateNotNull(authUser);//认证关系
         return ResponseUtil.success();
     }

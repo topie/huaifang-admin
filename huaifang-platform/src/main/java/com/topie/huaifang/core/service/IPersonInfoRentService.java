@@ -14,4 +14,6 @@ public interface IPersonInfoRentService extends IService<PersonInfoRent> {
     PageInfo<PersonInfoRent> selectByFilterAndPage(PersonInfoRent personInfoRent, int pageNum, int pageSize);
 
     List<PersonInfoRent> selectByFilter(PersonInfoRent personInfoRent);
+
+    PersonInfoRent selectByPersonId(Integer id);
 }

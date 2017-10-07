@@ -25,11 +25,10 @@ public class PersonInfoServiceImpl extends BaseService<PersonInfo> implements IP
     public List<PersonInfo> selectByFilter(PersonInfo personInfo) {
         Example example = new Example(PersonInfo.class);
         Example.Criteria criteria = example.createCriteria();
-        if (StringUtils.isNotEmpty(personInfo.getIdentifyNumber()))
-            criteria.andEqualTo("identifyNumber", personInfo.getIdentifyNumber());
-        if (StringUtils.isNotEmpty(personInfo.getName()))
-            criteria.andEqualTo("name", personInfo.getName());
-        if (personInfo.getHouseNodeId() != null) criteria.andEqualTo("houseNodeId", personInfo.getHouseNodeId());
+        if (StringUtils.isNotEmpty(personInfo.getpIdentifyNumber()))
+            criteria.andEqualTo("pIdentifyNumber", personInfo.getpIdentifyNumber());
+        if (StringUtils.isNotEmpty(personInfo.getpName())) criteria.andEqualTo("pName", personInfo.getpName());
+        if (personInfo.getpHouseNodeId() != null) criteria.andEqualTo("pHouseNodeId", personInfo.getpHouseNodeId());
         return getMapper().selectByExample(example);
     }
 

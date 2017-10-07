@@ -43,17 +43,21 @@
             columns: [
                 {
                     title: "人口ID",
-                    field: "personId",
+                    field: "pId",
                     width: "5%"
                 },
                 {
+                    title: "用户类型",
+                    field: "pPersonType"
+                },
+                {
                     title: "姓名",
-                    field: "name",
+                    field: "pName",
                     width: "5%"
                 },
                 {
                     title: "身份证号",
-                    field: "identifyNumber",
+                    field: "pIdentifyNumber",
                     sort: true
                 }
             ],
@@ -63,9 +67,17 @@
                 text: "编辑",
                 cls: "btn-primary btn-sm",
                 handle: function (index, d) {
+                    var type = '';
+                    if (d.pPersonType == '租户') {
+                        type = 'Rent';
+                    } else if (d.pPersonType == '住户') {
+                        type = 'Live';
+                    }
+                    if (type == '')
+                        return;
                     var modal = $.orangeModal({
                         id: "personInfoForm",
-                        title: "编辑",
+                        title: "编辑" + d.pPersonType,
                         destroy: true
                     }).show();
                     $.ajax({
@@ -75,32 +87,108 @@
                         success: function (data) {
                             if (data.code === 200) {
                                 var formItems = data.data;
+                                var items = [];
+                                var getFullName = function (name, node) {
+                                    if (node.getParentNode() != null) {
+                                        name = node.getParentNode().name + ' ' + name;
+                                        name = getFullName(name, node.getParentNode());
+                                    }
+                                    return name;
+                                };
+                                items.push(
+                                    {
+                                        type: 'display',
+                                        html: '<h3>基本信息</h3>'
+                                    }
+                                );
+                                $.each(formItems, function (ii, dd) {
+                                    if (dd.name == 'pHouseNodeId') {
+                                        dd.type = 'tree';
+                                        dd.expandAll = true;
+                                        dd.url = App.href + "/api/core/houseNode/treeNodes";
+                                        dd.chkStyle = 'radio';
+                                        dd.beforeCheck = function (treeId, treeNode, form) {
+                                            var fullName = '';
+                                            if (treeNode.getParentNode() != null) {
+                                                fullName = getFullName(treeNode.name, treeNode);
+                                            } else {
+                                                fullName = treeNode.name;
+                                            }
+                                            form.$element.find("#pHouseInfo").val(fullName);
+                                        };
+                                    }
+                                    if (dd.name == 'pPersonType') {
+                                        dd.items = [{
+                                            text: d.pPersonType,
+                                            value: d.pPersonType
+                                        }];
+                                    }
+                                    items.push(dd);
+                                });
+                                items.push(
+                                    {
+                                        type: 'display',
+                                        html: '<h3>详细信息</h3>'
+                                    }
+                                );
+                                $.ajax(
+                                    {
+                                        type: "GET",
+                                        dataType: "json",
+                                        url: App.href + "/api/core/personInfo" + type + "/formItems",
+                                        async: false,
+                                        success: function (data) {
+                                            if (data.code === 200) {
+                                                var formItems = data.data;
+                                                $.each(formItems, function (ii, dd) {
+                                                    if (dd.name == 'rFirmIndustry') {
+                                                        dd.items = [
+                                                            {
+                                                                text: '请选择',
+                                                                value: ''
+                                                            },
+                                                            {
+                                                                text: '农、林、牧、渔业',
+                                                                value: '农、林、牧、渔业'
+                                                            },
+                                                            {
+                                                                text: '采矿业',
+                                                                value: '采矿业'
+                                                            }
+                                                        ]
+                                                    }
+                                                    items.push(dd);
+                                                });
+                                            }
+                                        }
+                                    }
+                                );
                                 var form = modal.$body.orangeForm({
-                                    id: "edit_form",
-                                    name: "edit_form",
+                                    id: "add_form",
+                                    name: "add_form",
                                     method: "POST",
-                                    action: App.href + "/api/core/personInfo/update",
+                                    action: App.href + "/api/core/personInfo/update" + type,
                                     ajaxSubmit: true,
-                                    rowEleNum: 2,
                                     ajaxSuccess: function () {
                                         modal.hide();
                                         grid.reload();
                                     },
-                                    submitText: "保存",
-                                    showReset: true,
-                                    resetText: "重置",
-                                    isValidate: true,
+                                    submitText: "保存",//保存按钮的文本
+                                    showReset: true,//是否显示重置按钮
+                                    resetText: "重置",//重置按钮文本
+                                    isValidate: true,//开启验证
                                     buttons: [{
                                         type: 'button',
                                         text: '关闭',
                                         handle: function () {
                                             modal.hide();
+                                            grid.reload();
                                         }
                                     }],
                                     buttonsAlign: "center",
-                                    items: formItems
+                                    items: items
                                 });
-                                form.loadRemote(App.href + "/api/core/personInfo/load/" + d.id);
+                                form.loadRemote(App.href + "/api/core/personInfo/load" + type + "/" + d.pId);
                             } else {
                                 alert(data.message);
                             }
@@ -122,7 +210,7 @@
                                 type: "GET",
                                 dataType: "json",
                                 data: {
-                                    id: data.id
+                                    id: data.pId
                                 },
                                 url: requestUrl,
                                 success: function (data) {
@@ -142,13 +230,13 @@
             }],
             tools: [
                 {
-                    text: " 添 加",
+                    text: "添加租户",
                     cls: "btn btn-primary",
                     icon: "fa fa-plus",
                     handle: function (grid) {
                         var modal = $.orangeModal({
                             id: "add_modal",
-                            title: "添加",
+                            title: "添加租户",
                             destroy: true
                         }).show();
                         $.ajax({
@@ -188,6 +276,14 @@
                                                 form.$element.find("#houseInfo").val(fullName);
                                             };
                                         }
+                                        if (dd.name == 'pPersonType') {
+                                            dd.items = [
+                                                {
+                                                    text: '租户',
+                                                    value: '租户'
+                                                }
+                                            ];
+                                        }
                                         items.push(dd);
                                     });
                                     items.push(
@@ -206,6 +302,136 @@
                                                 if (data.code === 200) {
                                                     var formItems = data.data;
                                                     $.each(formItems, function (ii, dd) {
+                                                        if (dd.name == 'rFirmIndustry') {
+                                                            dd.items = [
+                                                                {
+                                                                    text: '请选择',
+                                                                    value: ''
+                                                                },
+                                                                {
+                                                                    text: '农、林、牧、渔业',
+                                                                    value: '农、林、牧、渔业'
+                                                                },
+                                                                {
+                                                                    text: '采矿业',
+                                                                    value: '采矿业'
+                                                                }
+                                                            ]
+                                                        }
+                                                        items.push(dd);
+                                                    });
+                                                }
+                                            }
+                                        }
+                                    );
+                                    var form = modal.$body.orangeForm({
+                                        id: "add_form",
+                                        name: "add_form",
+                                        method: "POST",
+                                        action: App.href + "/api/core/personInfo/insertRent",
+                                        ajaxSubmit: true,
+                                        ajaxSuccess: function () {
+                                            modal.hide();
+                                            grid.reload();
+                                        },
+                                        submitText: "保存",//保存按钮的文本
+                                        showReset: true,//是否显示重置按钮
+                                        resetText: "重置",//重置按钮文本
+                                        isValidate: true,//开启验证
+                                        buttons: [{
+                                            type: 'button',
+                                            text: '关闭',
+                                            handle: function () {
+                                                modal.hide();
+                                                grid.reload();
+                                            }
+                                        }],
+                                        buttonsAlign: "center",
+                                        items: items
+                                    });
+
+                                } else {
+                                    alert(data.message);
+                                }
+                            }
+                            ,
+                            error: function (e) {
+                                alert("请求异常。");
+                            }
+                        });
+                    }
+                },
+                {
+                    text: "添加住户",
+                    cls: "btn btn-primary",
+                    icon: "fa fa-plus",
+                    handle: function (grid) {
+                        var modal = $.orangeModal({
+                            id: "add_modal",
+                            title: "添加住户",
+                            destroy: true
+                        }).show();
+                        $.ajax({
+                            type: "GET",
+                            dataType: "json",
+                            url: App.href + "/api/core/personInfo/formItems",
+                            success: function (data) {
+                                if (data.code === 200) {
+                                    var formItems = data.data;
+                                    var items = [];
+                                    var getFullName = function (name, node) {
+                                        if (node.getParentNode() != null) {
+                                            name = node.getParentNode().name + ' ' + name;
+                                            name = getFullName(name, node.getParentNode());
+                                        }
+                                        return name;
+                                    };
+                                    items.push(
+                                        {
+                                            type: 'display',
+                                            html: '<h3>基本信息</h3>'
+                                        }
+                                    );
+                                    $.each(formItems, function (ii, dd) {
+                                        if (dd.name == 'houseNodeId') {
+                                            dd.type = 'tree';
+                                            dd.expandAll = true;
+                                            dd.url = App.href + "/api/core/houseNode/treeNodes";
+                                            dd.chkStyle = 'radio';
+                                            dd.beforeCheck = function (treeId, treeNode, form) {
+                                                var fullName = '';
+                                                if (treeNode.getParentNode() != null) {
+                                                    fullName = getFullName(treeNode.name, treeNode);
+                                                } else {
+                                                    fullName = treeNode.name;
+                                                }
+                                                form.$element.find("#houseInfo").val(fullName);
+                                            };
+                                        }
+                                        if (dd.name == 'pPersonType') {
+                                            dd.items = [{
+                                                text: '住户',
+                                                value: '住户'
+                                            }];
+                                        }
+                                        items.push(dd);
+                                    });
+                                    items.push(
+                                        {
+                                            type: 'display',
+                                            html: '<h3>详细信息</h3>'
+                                        }
+                                    );
+                                    $.ajax(
+                                        {
+                                            type: "GET",
+                                            dataType: "json",
+                                            url: App.href + "/api/core/personInfoLive/formItems",
+                                            async: false,
+                                            success: function (data) {
+                                                if (data.code === 200) {
+                                                    var formItems = data.data;
+                                                    $.each(formItems, function (ii, dd) {
                                                         if (dd.name != 'name' && dd.name != 'birth' && dd.name != 'identifyNumber') {
                                                             items.push(dd);
                                                         }
@@ -218,7 +444,7 @@
                                         id: "add_form",
                                         name: "add_form",
                                         method: "POST",
-                                        action: App.href + "/api/core/personInfo/insert",
+                                        action: App.href + "/api/core/personInfo/insertLive",
                                         ajaxSubmit: true,
                                         ajaxSuccess: function () {
                                             modal.hide();

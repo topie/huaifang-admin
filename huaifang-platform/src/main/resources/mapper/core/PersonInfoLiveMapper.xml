@@ -5,30 +5,30 @@
     <!--
       WARNING - @mbggenerated
     -->
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="person_id" jdbcType="VARCHAR" property="personId" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="gender" jdbcType="VARCHAR" property="gender" />
-    <result column="birth" jdbcType="DATE" property="birth" />
-    <result column="identify_number" jdbcType="VARCHAR" property="identifyNumber" />
-    <result column="nation" jdbcType="VARCHAR" property="nation" />
-    <result column="political_status" jdbcType="VARCHAR" property="politicalStatus" />
-    <result column="census_type" jdbcType="VARCHAR" property="censusType" />
-    <result column="census_address" jdbcType="VARCHAR" property="censusAddress" />
-    <result column="born_place" jdbcType="VARCHAR" property="bornPlace" />
-    <result column="residence_place" jdbcType="VARCHAR" property="residencePlace" />
-    <result column="marriage_status" jdbcType="VARCHAR" property="marriageStatus" />
-    <result column="contact" jdbcType="VARCHAR" property="contact" />
-    <result column="is_owner" jdbcType="VARCHAR" property="isOwner" />
-    <result column="owner_relate" jdbcType="VARCHAR" property="ownerRelate" />
-    <result column="company_huaifang" jdbcType="VARCHAR" property="companyHuaifang" />
-    <result column="company_other" jdbcType="VARCHAR" property="companyOther" />
-    <result column="job_position" jdbcType="VARCHAR" property="jobPosition" />
-    <result column="is_huaifang_pepole" jdbcType="VARCHAR" property="isHuaifangPepole" />
-    <result column="rksx" jdbcType="VARCHAR" property="rksx" />
-    <result column="is_canji" jdbcType="VARCHAR" property="isCanji" />
-    <result column="is_dead" jdbcType="VARCHAR" property="isDead" />
-    <result column="dead_date" jdbcType="DATE" property="deadDate" />
-    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <id column="l_id" jdbcType="INTEGER" property="lId" />
+    <result column="l_person_id" jdbcType="VARCHAR" property="lPersonId" />
+    <result column="l_name" jdbcType="VARCHAR" property="lName" />
+    <result column="l_gender" jdbcType="VARCHAR" property="lGender" />
+    <result column="l_birth" jdbcType="DATE" property="lBirth" />
+    <result column="l_identify_number" jdbcType="VARCHAR" property="lIdentifyNumber" />
+    <result column="l_nation" jdbcType="VARCHAR" property="lNation" />
+    <result column="l_political_status" jdbcType="VARCHAR" property="lPoliticalStatus" />
+    <result column="l_census_type" jdbcType="VARCHAR" property="lCensusType" />
+    <result column="l_census_address" jdbcType="VARCHAR" property="lCensusAddress" />
+    <result column="l_born_place" jdbcType="VARCHAR" property="lBornPlace" />
+    <result column="l_residence_place" jdbcType="VARCHAR" property="lResidencePlace" />
+    <result column="l_marriage_status" jdbcType="VARCHAR" property="lMarriageStatus" />
+    <result column="l_contact" jdbcType="VARCHAR" property="lContact" />
+    <result column="l_is_owner" jdbcType="VARCHAR" property="lIsOwner" />
+    <result column="l_owner_relate" jdbcType="VARCHAR" property="lOwnerRelate" />
+    <result column="l_company_huaifang" jdbcType="VARCHAR" property="lCompanyHuaifang" />
+    <result column="l_company_other" jdbcType="VARCHAR" property="lCompanyOther" />
+    <result column="l_job_position" jdbcType="VARCHAR" property="lJobPosition" />
+    <result column="l_is_huaifang_pepole" jdbcType="VARCHAR" property="lIsHuaifangPepole" />
+    <result column="l_rksx" jdbcType="VARCHAR" property="lRksx" />
+    <result column="l_is_canji" jdbcType="VARCHAR" property="lIsCanji" />
+    <result column="l_is_dead" jdbcType="VARCHAR" property="lIsDead" />
+    <result column="l_dead_date" jdbcType="DATE" property="lDeadDate" />
+    <result column="l_memo" jdbcType="VARCHAR" property="lMemo" />
   </resultMap>
 </mapper>
