@@ -52,6 +52,7 @@ public class MoRepairReportController {
         AppUser appUser = iAppUserService.selectByPlatformId(SecurityUtil.getCurrentUserId());
         if (appUser == null) return ResponseUtil.error("未登录");
         repairReport.setContactUserId(appUser.getId());
+        repairReport.setStatus("未处理");
         int result = iRepairReportService.saveNotNull(repairReport);
         return result > 0 ? ResponseUtil.success() : ResponseUtil.error();
     }

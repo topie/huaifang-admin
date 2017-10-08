@@ -135,10 +135,19 @@
                 },
                 success: function (data) {
                     if (data.code === 200) {
-                        this._data = data.data;
-                        $.each(this._data, function (i, item) {
-                            that._loadValue(i, item);
-                        });
+                        if (isArray(data.data)) {
+                            that._data = {};
+                            $.each(data.data, function (i, d) {
+                                $.each(d, function (ii, id) {
+                                    that._loadValue(ii, id);
+                                });
+                            });
+                        } else {
+                            $.each(data.data, function (i, item) {
+                                that._loadValue(i, item);
+                            });
+                            that._data = data.data;
+                        }
                         if (callback !== undefined) {
                             callback();
                         }
@@ -1730,7 +1739,7 @@
             var that = this;
             if (this._data !== undefined) {
                 $.each(this._data, function (i, value) {
-                    that._alue(i, value);
+                    that._loadValue(i, value);
                 });
             } else {
                 if (this.$form !== undefined)
