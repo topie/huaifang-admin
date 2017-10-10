@@ -193,88 +193,50 @@
                             buttonsAlign: "center",
                             items: [
                                 {
+                                    type: 'hidden',
+                                    name: 'id',
+                                    id: 'id'
+                                }, {
                                     type: 'text',
                                     name: 'name',
                                     id: 'name',
-                                    label: '标题',
+                                    label: '名称',
                                     cls: 'input-large',
                                     rule: {
                                         required: true
                                     },
                                     message: {
-                                        required: "请输入标题"
+                                        required: "请输入名称"
+                                    }
+                                }, {
+                                    type: 'text',
+                                    name: 'mobilePhone',
+                                    id: 'mobilePhone',
+                                    label: '手机',
+                                    cls: 'input-large',
+                                    rule: {
+                                        required: true
+                                    },
+                                    message: {
+                                        required: "请输入手机"
                                     }
                                 }, {
                                     type: 'select',
                                     name: 'type',
                                     id: 'type',
-                                    label: '公告类型',
-                                    items: [
-                                        {
-                                            text: '社区公告',
-                                            value: 0
-                                        },
-                                        {
-                                            text: '物业公告',
-                                            value: 1
-                                        }
-                                    ],
+                                    label: '类型',
+                                    itemsUrl: App.href + "/api/core/yellowPage/options",
                                     rule: {
                                         required: true
                                     },
                                     message: {
-                                        required: "请选择公告类型"
+                                        required: "请选择类型"
                                     }
                                 }, {
-                                    type: 'select',
-                                    name: 'position',
-                                    id: 'position',
-                                    label: '公告位置',
-                                    items: [
-                                        {
-                                            text: '普通',
-                                            value: 0
-                                        },
-                                        {
-                                            text: '轮播',
-                                            value: 1
-                                        }
-                                    ],
-                                    rule: {
-                                        required: true
-                                    },
-                                    message: {
-                                        required: "请选择公告位置"
-                                    }
-                                }, {
-                                    type: 'image',
-                                    id: 'bannerUri',
-                                    name: 'bannerUri',
-                                    label: '轮播图Uri',
-                                    isAjaxUpload: true,
-                                    onSuccess: function (data) {
-                                        $("#bannerUri").attr("value", data.attachmentUrl);
-                                    },
-                                    deleteHandle: function () {
-                                        $("#bannerUri").attr("value", "");
-                                    }
-                                }, {
-                                    type: 'kindEditor',
-                                    name: 'content',
-                                    id: 'content',
-                                    label: '正文',
-                                    height: "300px",
-                                    rule: {
-                                        required: true
-                                    },
-                                    message: {
-                                        required: "正文"
-                                    }
-                                }, {
-                                    type: 'text',
-                                    name: 'cUser',
-                                    id: 'cUser',
-                                    label: '发布者'
+                                    type: 'textarea',
+                                    name: 'note',
+                                    id: 'note',
+                                    label: '备注'
                                 }
                             ]
                         })
@@ -286,42 +248,9 @@
                 //搜索栏元素
                 items: [
                     {
-                        type: "select",
-                        label: "公告类型",
-                        name: "type",
-                        items: [
-                            {
-                                text: '全部',
-                                value: ''
-                            },
-                            {
-                                text: '社区公告',
-                                value: 0
-                            },
-                            {
-                                text: '物业公告',
-                                value: 1
-                            }
-                        ]
-                    },
-                    {
-                        type: "select",
-                        label: "状态",
-                        name: "isOnline",
-                        items: [
-                            {
-                                text: '全部',
-                                value: ''
-                            },
-                            {
-                                text: '已上线',
-                                value: 1
-                            },
-                            {
-                                text: '已下线',
-                                value: 0
-                            }
-                        ]
+                        type: "text",
+                        label: "名称",
+                        name: "name"
                     }
                 ]
             }

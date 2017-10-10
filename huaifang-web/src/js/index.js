@@ -18,9 +18,9 @@
         page: function (title) {
             App.content.empty();
             App.title(title);
-            var content = $('<div id="main"></div>');
+            var content = $('<div id="main"><p>欢迎使用!</p></div>');
             App.content.append(content);
-            initEvents();
+            //initEvents();
         }
     };
     var initEvents = function () {

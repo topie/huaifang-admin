@@ -13,7 +13,28 @@
             window.App.title(title);
             var content = $('<div class="panel-body" >' +
                 '<div class="row">' +
-                '<div class="col-md-12" >' +
+                '<div class="col-md-3" >' +
+                '<div class="panel panel-default" >' +
+                '<div class="panel-heading">房屋管理' +
+                '<div class="pull-right">' +
+                '<div class="btn-group">' +
+                '<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">' +
+                '操作' +
+                '<span class="caret"></span>' +
+                '</button>' +
+                '<ul class="dropdown-menu pull-right" role="menu">' +
+                '<li><a id="add_node" href="javascript:void(0);">添加</a>' +
+                '</li>' +
+                '</ul>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '<div class="panel-body">' +
+                '<ul id="tree" class="ztree"></ul>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '<div class="col-md-9" >' +
                 '<div class="panel panel-default" >' +
                 '<div class="panel-heading">房屋列表</div>' +
                 '<div class="panel-body" id="grid"></div>' +
@@ -267,6 +288,153 @@
             }
         };
         grid = window.App.content.find("#grid").orangeGrid(options);
+
+        var setting = {
+            async: {
+                enable: true,
+                url: App.href + "/api/core/houseNode/treeNodes",
+                autoParam: ["id", "name", "pId"]
+            },
+            edit: {
+                enable: true
+            },
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            },
+            callback: {
+                onAsyncSuccess: function (event, treeId, treeNode, msg) {
+                    var zTree = $.fn.zTree.getZTreeObj(treeId);
+                    zTree.expandAll(true);
+                },
+                onRename: function (e, treeId, treeNode, isCancel) {
+                    var zTree = $.fn.zTree.getZTreeObj(treeId);
+                    zTree.refresh();
+                },
+                beforeRename: beforeRename,
+                beforeRemove: beforeRemove
+            }
+        };
+
+        $.fn.zTree.init($("#tree"), setting);
+        var tree = $.fn.zTree.getZTreeObj("tree");
+
+        function beforeRename(treeId, treeNode, newName, isCancel) {
+            if (newName.length == 0) {
+                return false;
+            }
+            if (!isCancel) {
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        id: treeNode.id,
+                        pid: treeNode.getParentNode() == undefined ? 0 : treeNode.getParentNode().id,
+                        name: newName
+                    },
+                    url: App.href + "/api/core/houseNode/update",
+                    success: function (data) {
+                        if (data.code === 200) {
+                            tree.reAsyncChildNodes(null, "refresh");
+                        } else {
+                            alert(data.message);
+                        }
+                    },
+                    error: function (e) {
+                        alert("请求异常。");
+                    }
+                });
+            }
+            return true;
+        }
+
+        function beforeRemove(treeId, treeNode) {
+            var requestUrl = App.href + "/api/core/houseNode/delete";
+            bootbox.confirm("确定该操作?", function (result) {
+                if (result) {
+                    $.ajax({
+                        type: "GET",
+                        dataType: "json",
+                        data: {
+                            id: treeNode.id
+                        },
+                        url: requestUrl,
+                        success: function (data) {
+                            if (data.code === 200) {
+                                grid.reload();
+                            } else {
+                                alert(data.message);
+                            }
+                        },
+                        error: function (e) {
+                            alert("请求异常。");
+                        }
+                    });
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+
+        }
+
+
+        $("#add_node").on("click", function (e) {
+            var modal = $.orangeModal({
+                id: "add_modal",
+                title: "添加节点",
+                destroy: true
+            }).show();
+            modal.$body.orangeForm({
+                id: "add_form",
+                name: "add_form",
+                method: "POST",
+                action: App.href + "/api/core/houseNode/insert",
+                ajaxSubmit: true,
+                rowEleNum: 1,
+                ajaxSuccess: function () {
+                    modal.hide();
+                    tree.reAsyncChildNodes(null, "refresh");
+                },
+                submitText: "保存",//保存按钮的文本
+                showReset: true,//是否显示重置按钮
+                resetText: "重置",//重置按钮文本
+                isValidate: true,//开启验证
+                buttons: [{
+                    type: 'button',
+                    text: '关闭',
+                    handle: function () {
+                        modal.hide();
+                    }
+                }],
+                buttonsAlign: "center",
+                items: [
+                    {
+                        type: 'tree',
+                        name: 'pid',
+                        id: 'pid',
+                        label: '父节点',
+                        url: App.href + "/api/core/houseNode/treeNodes",
+                        expandAll: true,
+                        autoParam: ["id", "name", "pId"],
+                        chkStyle: "radio"
+                    }, {
+                        type: 'text',
+                        name: 'name',
+                        id: 'name',
+                        label: '节点名称',
+                        cls: 'input-large',
+                        rule: {
+                            required: true
+                        },
+                        message: {
+                            required: "请输入节点名称"
+                        }
+                    }
+                ]
+            });
+        });
 
     }
 })(jQuery, window, document);
