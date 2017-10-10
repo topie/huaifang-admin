@@ -25,7 +25,7 @@ public class MarketLineServiceImpl extends BaseService<MarketLine> implements IM
         Example example = new Example(MarketLine.class);
         Example.Criteria criteria = example.createCriteria();
         if (marketLine.getType() != null) criteria.andEqualTo("type", marketLine.getType());
-        example.setOrderByClause(" publishTime desc");
+        example.setOrderByClause(" publish_time desc");
         return getMapper().selectByExample(example);
     }
 

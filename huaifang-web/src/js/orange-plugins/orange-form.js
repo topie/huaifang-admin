@@ -97,7 +97,7 @@
         formActionTmpl: '<div class="form-actions" style="padding-bottom:20px;text-align:${align_};"></div>',
         rowTmpl: '<div data-row=${row_} class="row"></div>',
         eleTmpl: '<div class="col-md-${span_}"><div class="form-group"></div></div>',
-        sectionTmpl: '<div class="col-md-12"><h3 class="form-section">${title_}</h3></div>',
+        sectionTmpl: '<div class="col-md-12"><h3 class="form-section">${title_}</h3><hr></div>',
         labelTmpl: '<label style="text-align: left;font-size: 18px;" class="control-label ${cls_}">${label_}</label>',
         blockSpanTmpl: '<span class="help-block">${help_}</span>',
         buttonTmpl: '<button type="${type_}" class="btn ${cls_}" ${attribute_}>${text_}</button>',

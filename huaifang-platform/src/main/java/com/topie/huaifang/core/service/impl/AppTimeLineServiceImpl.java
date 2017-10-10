@@ -27,7 +27,7 @@ public class AppTimeLineServiceImpl extends BaseService<AppTimeLine> implements 
         if (appTimeLine.getAddUserId() != null) criteria.andEqualTo("addUserId", appTimeLine.getAddUserId());
         if (appTimeLine.getPublishTime() != null)
             criteria.andLessThanOrEqualTo("publishTime", appTimeLine.getPublishTime());
-        example.setOrderByClause(" publishTime desc");
+        example.setOrderByClause(" publish_time desc");
         return getMapper().selectByExample(example);
     }
 
