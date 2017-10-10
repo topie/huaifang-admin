@@ -62,7 +62,7 @@ public class YellowPageController {
         return ResponseUtil.success();
     }
 
-    @RequestMapping(value = "/options", method = RequestMethod.GET)
+    @RequestMapping(value = "/options")
     @ResponseBody
     public List<Option> options() {
         List<Option> options = new ArrayList<>();

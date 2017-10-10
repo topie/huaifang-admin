@@ -38,7 +38,7 @@ public class YellowPage extends Sortable {
      */
     private String note;
 
-    private String getTypeStr() {
+    public String getTypeStr() {
         if (type == null) return "";
         return YellowPageType.getName(type);
     }
