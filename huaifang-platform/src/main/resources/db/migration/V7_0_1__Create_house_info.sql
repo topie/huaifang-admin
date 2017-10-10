@@ -3,26 +3,36 @@ CREATE TABLE d_house_info (
   COMMENT '房屋id:hidden',
   house_node_id          INT(11) NOT NULL DEFAULT 0
   COMMENT '架构id:tree',
-  house_no               VARCHAR(32)      DEFAULT ''
-  COMMENT '房屋编号',
+  xq                     VARCHAR(32)      DEFAULT ''
+  COMMENT '小区:hidden',
+  lh                     VARCHAR(32)      DEFAULT ''
+  COMMENT '楼号:hidden',
+  dy                     VARCHAR(32)      DEFAULT ''
+  COMMENT '单元:hidden',
+  lc                     VARCHAR(32)      DEFAULT ''
+  COMMENT '楼层:hidden',
+  room_number            VARCHAR(32)      DEFAULT ''
+  COMMENT '房间',
   address                VARCHAR(255)     DEFAULT ''
   COMMENT '房屋地址',
+  house_no               VARCHAR(32)      DEFAULT ''
+  COMMENT '房屋编号:hidden',
   fczh                   VARCHAR(255)     DEFAULT ''
   COMMENT '房产证号',
   house_type             VARCHAR(16)      DEFAULT ''
-  COMMENT '房屋类型',
+  COMMENT '房屋类型:select:[廉租房,存量房,回迁房,公共租赁房,商品房,别墅,经济适用住房,公寓]',
   qzf_type               VARCHAR(16)      DEFAULT ''
-  COMMENT '群租房类型',
+  COMMENT '群租房类型:select:[整租,单租]',
   jzxz                   VARCHAR(16)      DEFAULT ''
-  COMMENT '建筑性质',
+  COMMENT '建筑性质:select:[民用建筑,工业建筑,农业建筑]',
   jz_type                VARCHAR(16)      DEFAULT ''
-  COMMENT '建筑类型',
+  COMMENT '建筑类型:select:[住宅建筑,公共建筑]',
   police_station         VARCHAR(255)     DEFAULT ''
   COMMENT '所属派出所',
   police                 VARCHAR(16)      DEFAULT ''
   COMMENT '社区民警',
   owner_type             VARCHAR(16)      DEFAULT ''
-  COMMENT '所有权类型:radioGroup:[个人,单位,违法建设]',
+  COMMENT '所有权类型:select:[个人,单位,违法建设]',
   house_has_danger       VARCHAR(4)       DEFAULT '无'
   COMMENT '有无安全隐患',
   owner_name             VARCHAR(16)      DEFAULT ''

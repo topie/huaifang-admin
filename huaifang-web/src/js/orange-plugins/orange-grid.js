@@ -856,6 +856,7 @@
                 });
             });
             searchFormRow.find('.form-actions').append(searchbtn);
+            this.$searchbtn = searchbtn;
             searchbtn.after("&nbsp;");
             if (buttons != undefined && buttons.length > 0) {
                 $.each(buttons, function (index, button) {
@@ -899,9 +900,11 @@
             }
         },
         refreshSearchItem: function (name, option) {
+            var that = this;
             var itemDiv = this._searchEles[name];
             itemDiv.find(".form-group").empty();
-            var item = option || this._searchElesOption[name];
+            var item = $.extend(true, {}, that._searchElesOption[name], option);
+            that._searchElesOption[name] = item;
             if (item.label != undefined) {
                 var label = $.tmpl(
                     Grid.statics.labelTmpl, {
@@ -1150,6 +1153,19 @@
                 ele = item.eleHandler();
                 itemDiv.find(".form-group").append(ele);
             }
+            ele.off("change");
+            ele.on("change", function () {
+                var name = $(this).attr("name");
+                var text = $(this).find("option:selected").text();
+                var value = $(this).val();
+                if (that._searchElesOption[name].change !== undefined) {
+                    that._searchElesOption[name].change(text, value, that);
+                }
+                if (that._options.changeLoad) {
+                    that.$searchbtn.trigger("click");
+                }
+            });
+
         },
         _renderGridWrapper: function () {
             var that = this;
@@ -1766,9 +1782,9 @@
                                 ele.find("h4[role=hd]").text(html);
                             }
 
-                            if (column.check ===true) {
-                                if(column.checkFormat!=undefined){
-                                    if(column.checkFormat(num,grid)){
+                            if (column.check === true) {
+                                if (column.checkFormat != undefined) {
+                                    if (column.checkFormat(num, grid)) {
                                         ele.find('.timeline-badge').append('<i class="fa fa-check"></i>');
                                     }
                                 }

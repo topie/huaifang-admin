@@ -28,7 +28,6 @@ public class PersonInfoServiceImpl extends BaseService<PersonInfo> implements IP
         if (StringUtils.isNotEmpty(personInfo.getpIdentifyNumber()))
             criteria.andEqualTo("pIdentifyNumber", personInfo.getpIdentifyNumber());
         if (StringUtils.isNotEmpty(personInfo.getpName())) criteria.andEqualTo("pName", personInfo.getpName());
-        if (personInfo.getpHouseNodeId() != null) criteria.andEqualTo("pHouseNodeId", personInfo.getpHouseNodeId());
         return getMapper().selectByExample(example);
     }
 

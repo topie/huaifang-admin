@@ -97,26 +97,11 @@
                                 };
                                 items.push(
                                     {
-                                        type: 'display',
-                                        html: '<h3>基本信息</h3>'
+                                        type: 'section',
+                                        title: '基本信息'
                                     }
                                 );
                                 $.each(formItems, function (ii, dd) {
-                                    if (dd.name == 'pHouseNodeId') {
-                                        dd.type = 'tree';
-                                        dd.expandAll = true;
-                                        dd.url = App.href + "/api/core/houseNode/treeNodes";
-                                        dd.chkStyle = 'radio';
-                                        dd.beforeCheck = function (treeId, treeNode, form) {
-                                            var fullName = '';
-                                            if (treeNode.getParentNode() != null) {
-                                                fullName = getFullName(treeNode.name, treeNode);
-                                            } else {
-                                                fullName = treeNode.name;
-                                            }
-                                            form.$element.find("#pHouseInfo").val(fullName);
-                                        };
-                                    }
                                     if (dd.name == 'pPersonType') {
                                         dd.items = [{
                                             text: d.pPersonType,
@@ -127,8 +112,8 @@
                                 });
                                 items.push(
                                     {
-                                        type: 'display',
-                                        html: '<h3>详细信息</h3>'
+                                        type: 'section',
+                                        title: '详细信息'
                                     }
                                 );
                                 $.ajax(
@@ -177,6 +162,7 @@
                                     showReset: true,//是否显示重置按钮
                                     resetText: "重置",//重置按钮文本
                                     isValidate: true,//开启验证
+                                    rowEleNum: 2,
                                     buttons: [{
                                         type: 'button',
                                         text: '关闭',
@@ -256,26 +242,11 @@
                                     };
                                     items.push(
                                         {
-                                            type: 'display',
-                                            html: '<h3>基本信息</h3>'
+                                            type: 'section',
+                                            title: '基本信息'
                                         }
                                     );
                                     $.each(formItems, function (ii, dd) {
-                                        if (dd.name == 'houseNodeId') {
-                                            dd.type = 'tree';
-                                            dd.expandAll = true;
-                                            dd.url = App.href + "/api/core/houseNode/treeNodes";
-                                            dd.chkStyle = 'radio';
-                                            dd.beforeCheck = function (treeId, treeNode, form) {
-                                                var fullName = '';
-                                                if (treeNode.getParentNode() != null) {
-                                                    fullName = getFullName(treeNode.name, treeNode);
-                                                } else {
-                                                    fullName = treeNode.name;
-                                                }
-                                                form.$element.find("#houseInfo").val(fullName);
-                                            };
-                                        }
                                         if (dd.name == 'pPersonType') {
                                             dd.items = [
                                                 {
@@ -288,8 +259,8 @@
                                     });
                                     items.push(
                                         {
-                                            type: 'display',
-                                            html: '<h3>详细信息</h3>'
+                                            type: 'section',
+                                            title: '详细信息'
                                         }
                                     );
                                     $.ajax(
@@ -338,6 +309,7 @@
                                         showReset: true,//是否显示重置按钮
                                         resetText: "重置",//重置按钮文本
                                         isValidate: true,//开启验证
+                                        rowEleNum: 2,
                                         buttons: [{
                                             type: 'button',
                                             text: '关闭',
@@ -388,26 +360,11 @@
                                     };
                                     items.push(
                                         {
-                                            type: 'display',
-                                            html: '<h3>基本信息</h3>'
+                                            type: 'section',
+                                            title: '基本信息'
                                         }
                                     );
                                     $.each(formItems, function (ii, dd) {
-                                        if (dd.name == 'houseNodeId') {
-                                            dd.type = 'tree';
-                                            dd.expandAll = true;
-                                            dd.url = App.href + "/api/core/houseNode/treeNodes";
-                                            dd.chkStyle = 'radio';
-                                            dd.beforeCheck = function (treeId, treeNode, form) {
-                                                var fullName = '';
-                                                if (treeNode.getParentNode() != null) {
-                                                    fullName = getFullName(treeNode.name, treeNode);
-                                                } else {
-                                                    fullName = treeNode.name;
-                                                }
-                                                form.$element.find("#houseInfo").val(fullName);
-                                            };
-                                        }
                                         if (dd.name == 'pPersonType') {
                                             dd.items = [{
                                                 text: '住户',
@@ -418,8 +375,8 @@
                                     });
                                     items.push(
                                         {
-                                            type: 'display',
-                                            html: '<h3>详细信息</h3>'
+                                            type: 'section',
+                                            title: '详细信息'
                                         }
                                     );
                                     $.ajax(
@@ -454,6 +411,7 @@
                                         showReset: true,//是否显示重置按钮
                                         resetText: "重置",//重置按钮文本
                                         isValidate: true,//开启验证
+                                        rowEleNum: 2,
                                         buttons: [{
                                             type: 'button',
                                             text: '关闭',
@@ -484,9 +442,9 @@
                 items: [
                     {
                         type: "text",
-                        label: "房屋编号",
-                        name: "houseNo",
-                        placeholder: "输入要搜索的房屋编号"
+                        label: "姓名",
+                        name: "pName",
+                        placeholder: "输入要搜索的姓名"
                     }
                 ]
             }

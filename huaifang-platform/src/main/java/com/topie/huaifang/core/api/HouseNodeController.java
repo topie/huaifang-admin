@@ -1,10 +1,7 @@
 package com.topie.huaifang.core.api;
 
 import com.github.pagehelper.PageInfo;
-import com.topie.huaifang.common.utils.PageConvertUtil;
-import com.topie.huaifang.common.utils.ResponseUtil;
-import com.topie.huaifang.common.utils.Result;
-import com.topie.huaifang.common.utils.TreeNode;
+import com.topie.huaifang.common.utils.*;
 import com.topie.huaifang.core.service.IHouseNodeService;
 import com.topie.huaifang.database.core.model.HouseNode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +71,20 @@ public class HouseNodeController {
             treeNode.setpId(nodeInfo.getPid());
             treeNode.setName(nodeInfo.getName());
             nodes.add(treeNode);
+        }
+        return nodes;
+    }
+
+    @RequestMapping(value = "/node", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Option> treeNodes(
+            @RequestParam(value = "parentId", required = false, defaultValue = "-1") Integer parentId) {
+        List<Option> nodes = new ArrayList<>();
+        HouseNode houseNode = new HouseNode();
+        houseNode.setPid(parentId);
+        List<HouseNode> list = iHouseNodeService.selectByFilter(houseNode);
+        for (HouseNode nodeInfo : list) {
+            nodes.add(new Option(nodeInfo.getName(), nodeInfo.getId()));
         }
         return nodes;
     }

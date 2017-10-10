@@ -15,3 +15,7 @@ INSERT INTO `d_function` VALUES ('10', '0', '社区管理', '1', '1', NULL, '#',
 INSERT INTO `d_role_function` (role_id, function_id) VALUES ('1', '10');
 INSERT INTO `d_function` VALUES ('11', '10', '房屋架构管理', '1', '1', NULL, '/api/core/houseNode/list', '6', NULL, NULL);
 INSERT INTO `d_role_function` (role_id, function_id) VALUES ('1', '11');
+
+INSERT INTO `d_house_node`
+VALUES (1, 0, '槐房一区'), (2, 0, '槐房二区'), (3, 0, '虚拟小区'), (4, 1, '219号楼'), (5, 2, '119号楼'), (6, 4, '0单元'), (7, 5, '1单元'),
+  (8, 6, '13层'), (9, 7, '9层');

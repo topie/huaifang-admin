@@ -11,17 +11,43 @@ import java.util.Date;
 public class HouseInfo {
 
     /**
-     * 房屋id
+     * 房屋id:hidden
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     /**
-     * 架构id
+     * 架构id:tree
      */
     @Column(name = "house_node_id")
     private Integer houseNodeId;
+
+    /**
+     * 小区
+     */
+    private String xq;
+
+    /**
+     * 楼号
+     */
+    private String lh;
+
+    /**
+     * 单元
+     */
+    private String dy;
+
+    /**
+     * 楼层
+     */
+    private String lc;
+
+    /**
+     * 房间
+     */
+    @Column(name = "room_number")
+    private String roomNumber;
 
     /**
      * 房屋编号
@@ -40,24 +66,24 @@ public class HouseInfo {
     private String fczh;
 
     /**
-     * 房屋类型
+     * 房屋类型:select:[廉租房,存量房,回迁房,公共租赁房,商品房,别墅,经济适用住房,公寓]
      */
     @Column(name = "house_type")
     private String houseType;
 
     /**
-     * 群租房类型
+     * 群租房类型:select:[整租,单租]
      */
     @Column(name = "qzf_type")
     private String qzfType;
 
     /**
-     * 建筑性质
+     * 建筑性质:select:[民用建筑,工业建筑,农业建筑]
      */
     private String jzxz;
 
     /**
-     * 建筑类型
+     * 建筑类型:select:[住宅建筑,公共建筑]
      */
     @Column(name = "jz_type")
     private String jzType;
@@ -74,7 +100,7 @@ public class HouseInfo {
     private String police;
 
     /**
-     * 所有权类型:radio:[个人,单位,违法建设]
+     * 所有权类型:select:[个人,单位,违法建设]
      */
     @Column(name = "owner_type")
     private String ownerType;
@@ -92,7 +118,7 @@ public class HouseInfo {
     private String ownerName;
 
     /**
-     * 房主性别
+     * 房主性别:radioGroup:[男,女]
      */
     @Column(name = "owner_gender")
     private String ownerGender;
@@ -248,7 +274,7 @@ public class HouseInfo {
     private Integer rentLiveNumber;
 
     /**
-     * 租金支付方式:radio:[月租,年租]
+     * 租金支付方式:radioGroup:[月租,年租]
      */
     @Column(name = "rent_pay_type")
     private String rentPayType;
@@ -260,12 +286,12 @@ public class HouseInfo {
     private BigDecimal rentMoney;
 
     /**
-     * 登记备案:radio:[已办,未办]
+     * 登记备案:radioGroup:[已办,未办]
      */
     private String dengjibeian;
 
     /**
-     * 登记备案:radio:[已缴,未缴]
+     * 登记备案:radioGroup:[已缴,未缴]
      */
     private String nashui;
 
@@ -275,7 +301,7 @@ public class HouseInfo {
     private String zerenbook;
 
     /**
-     * 租赁合同:radio:[有,无]
+     * 租赁合同:radioGroup:[有,无]
      */
     private String hetong;
 
@@ -300,39 +326,129 @@ public class HouseInfo {
     private String dangerDetail;
 
     /**
-     * 获取房屋id
+     * 获取房屋id:hidden
      *
-     * @return id - 房屋id
+     * @return id - 房屋id:hidden
      */
     public Integer getId() {
         return id;
     }
 
     /**
-     * 设置房屋id
+     * 设置房屋id:hidden
      *
-     * @param id 房屋id
+     * @param id 房屋id:hidden
      */
     public void setId(Integer id) {
         this.id = id;
     }
 
     /**
-     * 获取架构id
+     * 获取架构id:tree
      *
-     * @return house_node_id - 架构id
+     * @return house_node_id - 架构id:tree
      */
     public Integer getHouseNodeId() {
         return houseNodeId;
     }
 
     /**
-     * 设置架构id
+     * 设置架构id:tree
      *
-     * @param houseNodeId 架构id
+     * @param houseNodeId 架构id:tree
      */
     public void setHouseNodeId(Integer houseNodeId) {
         this.houseNodeId = houseNodeId;
+    }
+
+    /**
+     * 获取小区
+     *
+     * @return xq - 小区
+     */
+    public String getXq() {
+        return xq;
+    }
+
+    /**
+     * 设置小区
+     *
+     * @param xq 小区
+     */
+    public void setXq(String xq) {
+        this.xq = xq;
+    }
+
+    /**
+     * 获取楼号
+     *
+     * @return lh - 楼号
+     */
+    public String getLh() {
+        return lh;
+    }
+
+    /**
+     * 设置楼号
+     *
+     * @param lh 楼号
+     */
+    public void setLh(String lh) {
+        this.lh = lh;
+    }
+
+    /**
+     * 获取单元
+     *
+     * @return dy - 单元
+     */
+    public String getDy() {
+        return dy;
+    }
+
+    /**
+     * 设置单元
+     *
+     * @param dy 单元
+     */
+    public void setDy(String dy) {
+        this.dy = dy;
+    }
+
+    /**
+     * 获取楼层
+     *
+     * @return lc - 楼层
+     */
+    public String getLc() {
+        return lc;
+    }
+
+    /**
+     * 设置楼层
+     *
+     * @param lc 楼层
+     */
+    public void setLc(String lc) {
+        this.lc = lc;
+    }
+
+    /**
+     * 获取房间
+     *
+     * @return room_number - 房间
+     */
+    public String getRoomNumber() {
+        return roomNumber;
+    }
+
+    /**
+     * 设置房间
+     *
+     * @param roomNumber 房间
+     */
+    public void setRoomNumber(String roomNumber) {
+        this.roomNumber = roomNumber;
     }
 
     /**
@@ -390,72 +506,72 @@ public class HouseInfo {
     }
 
     /**
-     * 获取房屋类型
+     * 获取房屋类型:select:[廉租房,存量房,回迁房,公共租赁房,商品房,别墅,经济适用住房,公寓]
      *
-     * @return house_type - 房屋类型
+     * @return house_type - 房屋类型:select:[廉租房,存量房,回迁房,公共租赁房,商品房,别墅,经济适用住房,公寓]
      */
     public String getHouseType() {
         return houseType;
     }
 
     /**
-     * 设置房屋类型
+     * 设置房屋类型:select:[廉租房,存量房,回迁房,公共租赁房,商品房,别墅,经济适用住房,公寓]
      *
-     * @param houseType 房屋类型
+     * @param houseType 房屋类型:select:[廉租房,存量房,回迁房,公共租赁房,商品房,别墅,经济适用住房,公寓]
      */
     public void setHouseType(String houseType) {
         this.houseType = houseType;
     }
 
     /**
-     * 获取群租房类型
+     * 获取群租房类型:select:[整租,单租]
      *
-     * @return qzf_type - 群租房类型
+     * @return qzf_type - 群租房类型:select:[整租,单租]
      */
     public String getQzfType() {
         return qzfType;
     }
 
     /**
-     * 设置群租房类型
+     * 设置群租房类型:select:[整租,单租]
      *
-     * @param qzfType 群租房类型
+     * @param qzfType 群租房类型:select:[整租,单租]
      */
     public void setQzfType(String qzfType) {
         this.qzfType = qzfType;
     }
 
     /**
-     * 获取建筑性质
+     * 获取建筑性质:select:[民用建筑,工业建筑,农业建筑]
      *
-     * @return jzxz - 建筑性质
+     * @return jzxz - 建筑性质:select:[民用建筑,工业建筑,农业建筑]
      */
     public String getJzxz() {
         return jzxz;
     }
 
     /**
-     * 设置建筑性质
+     * 设置建筑性质:select:[民用建筑,工业建筑,农业建筑]
      *
-     * @param jzxz 建筑性质
+     * @param jzxz 建筑性质:select:[民用建筑,工业建筑,农业建筑]
      */
     public void setJzxz(String jzxz) {
         this.jzxz = jzxz;
     }
 
     /**
-     * 获取建筑类型
+     * 获取建筑类型:select:[住宅建筑,公共建筑]
      *
-     * @return jz_type - 建筑类型
+     * @return jz_type - 建筑类型:select:[住宅建筑,公共建筑]
      */
     public String getJzType() {
         return jzType;
     }
 
     /**
-     * 设置建筑类型
+     * 设置建筑类型:select:[住宅建筑,公共建筑]
      *
-     * @param jzType 建筑类型
+     * @param jzType 建筑类型:select:[住宅建筑,公共建筑]
      */
     public void setJzType(String jzType) {
         this.jzType = jzType;
@@ -498,18 +614,18 @@ public class HouseInfo {
     }
 
     /**
-     * 获取所有权类型:radio:[个人,单位,违法建设]
+     * 获取所有权类型:select:[个人,单位,违法建设]
      *
-     * @return owner_type - 所有权类型:radio:[个人,单位,违法建设]
+     * @return owner_type - 所有权类型:select:[个人,单位,违法建设]
      */
     public String getOwnerType() {
         return ownerType;
     }
 
     /**
-     * 设置所有权类型:radio:[个人,单位,违法建设]
+     * 设置所有权类型:select:[个人,单位,违法建设]
      *
-     * @param ownerType 所有权类型:radio:[个人,单位,违法建设]
+     * @param ownerType 所有权类型:select:[个人,单位,违法建设]
      */
     public void setOwnerType(String ownerType) {
         this.ownerType = ownerType;
@@ -552,18 +668,18 @@ public class HouseInfo {
     }
 
     /**
-     * 获取房主性别
+     * 获取房主性别:radioGroup:[男,女]
      *
-     * @return owner_gender - 房主性别
+     * @return owner_gender - 房主性别:radioGroup:[男,女]
      */
     public String getOwnerGender() {
         return ownerGender;
     }
 
     /**
-     * 设置房主性别
+     * 设置房主性别:radioGroup:[男,女]
      *
-     * @param ownerGender 房主性别
+     * @param ownerGender 房主性别:radioGroup:[男,女]
      */
     public void setOwnerGender(String ownerGender) {
         this.ownerGender = ownerGender;
@@ -1020,18 +1136,18 @@ public class HouseInfo {
     }
 
     /**
-     * 获取租金支付方式:radio:[月租,年租]
+     * 获取租金支付方式:radioGroup:[月租,年租]
      *
-     * @return rent_pay_type - 租金支付方式:radio:[月租,年租]
+     * @return rent_pay_type - 租金支付方式:radioGroup:[月租,年租]
      */
     public String getRentPayType() {
         return rentPayType;
     }
 
     /**
-     * 设置租金支付方式:radio:[月租,年租]
+     * 设置租金支付方式:radioGroup:[月租,年租]
      *
-     * @param rentPayType 租金支付方式:radio:[月租,年租]
+     * @param rentPayType 租金支付方式:radioGroup:[月租,年租]
      */
     public void setRentPayType(String rentPayType) {
         this.rentPayType = rentPayType;
@@ -1056,36 +1172,36 @@ public class HouseInfo {
     }
 
     /**
-     * 获取登记备案:radio:[已办,未办]
+     * 获取登记备案:radioGroup:[已办,未办]
      *
-     * @return dengjibeian - 登记备案:radio:[已办,未办]
+     * @return dengjibeian - 登记备案:radioGroup:[已办,未办]
      */
     public String getDengjibeian() {
         return dengjibeian;
     }
 
     /**
-     * 设置登记备案:radio:[已办,未办]
+     * 设置登记备案:radioGroup:[已办,未办]
      *
-     * @param dengjibeian 登记备案:radio:[已办,未办]
+     * @param dengjibeian 登记备案:radioGroup:[已办,未办]
      */
     public void setDengjibeian(String dengjibeian) {
         this.dengjibeian = dengjibeian;
     }
 
     /**
-     * 获取登记备案:radio:[已缴,未缴]
+     * 获取登记备案:radioGroup:[已缴,未缴]
      *
-     * @return nashui - 登记备案:radio:[已缴,未缴]
+     * @return nashui - 登记备案:radioGroup:[已缴,未缴]
      */
     public String getNashui() {
         return nashui;
     }
 
     /**
-     * 设置登记备案:radio:[已缴,未缴]
+     * 设置登记备案:radioGroup:[已缴,未缴]
      *
-     * @param nashui 登记备案:radio:[已缴,未缴]
+     * @param nashui 登记备案:radioGroup:[已缴,未缴]
      */
     public void setNashui(String nashui) {
         this.nashui = nashui;
@@ -1110,18 +1226,18 @@ public class HouseInfo {
     }
 
     /**
-     * 获取租赁合同:radio:[有,无]
+     * 获取租赁合同:radioGroup:[有,无]
      *
-     * @return hetong - 租赁合同:radio:[有,无]
+     * @return hetong - 租赁合同:radioGroup:[有,无]
      */
     public String getHetong() {
         return hetong;
     }
 
     /**
-     * 设置租赁合同:radio:[有,无]
+     * 设置租赁合同:radioGroup:[有,无]
      *
-     * @param hetong 租赁合同:radio:[有,无]
+     * @param hetong 租赁合同:radioGroup:[有,无]
      */
     public void setHetong(String hetong) {
         this.hetong = hetong;
@@ -1132,7 +1248,7 @@ public class HouseInfo {
      *
      * @return rent_begin - 出租起始日期
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")
     public Date getRentBegin() {
         return rentBegin;
     }
@@ -1151,7 +1267,7 @@ public class HouseInfo {
      *
      * @return rent_end - 出租截止日期
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")
     public Date getRentEnd() {
         return rentEnd;
     }

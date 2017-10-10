@@ -50,13 +50,56 @@ public class HouseInfoController {
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     @ResponseBody
     public Result insert(HouseInfo houseInfo) {
+        String[] ads = houseInfo.getAddress().split(" ");
+        for (int i = 0; i < ads.length; i++) {
+            String d = ads[i];
+            switch (i) {
+                case 0:
+                    houseInfo.setXq(d);
+                    break;
+                case 1:
+                    houseInfo.setLh(d);
+                    break;
+                case 2:
+                    houseInfo.setDy(d);
+                    break;
+                case 3:
+                    houseInfo.setLc(d);
+                    break;
+            }
+        }
+        houseInfo.setHouseNo(houseInfo.getId() + houseInfo.getRoomNumber());
         int result = iHouseInfoService.saveNotNull(houseInfo);
+
         return result > 0 ? ResponseUtil.success() : ResponseUtil.error();
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
     public Result update(HouseInfo houseInfo) {
+        houseInfo.setXq("");
+        houseInfo.setLh("");
+        houseInfo.setDy("");
+        houseInfo.setLc("");
+        String[] ads = houseInfo.getAddress().split(" ");
+        for (int i = 0; i < ads.length; i++) {
+            String d = ads[i];
+            switch (i) {
+                case 0:
+                    houseInfo.setXq(d);
+                    break;
+                case 1:
+                    houseInfo.setLh(d);
+                    break;
+                case 2:
+                    houseInfo.setDy(d);
+                    break;
+                case 3:
+                    houseInfo.setLc(d);
+                    break;
+            }
+        }
+        houseInfo.setHouseNo(houseInfo.getId() + houseInfo.getRoomNumber());
         iHouseInfoService.updateNotNull(houseInfo);
         return ResponseUtil.success();
     }

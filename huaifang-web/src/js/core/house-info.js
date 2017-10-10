@@ -63,19 +63,28 @@
             pageSelect: [2, 15, 30, 50],
             columns: [
                 {
-                    title: "id",
-                    field: "id",
-                    sort: true,
-                    width: "5%"
+                    title: "小区",
+                    field: "xq"
                 },
                 {
-                    title: "房屋地址",
-                    field: "address"
+                    title: "楼号",
+                    field: "lh"
                 },
                 {
-                    title: "房屋编号",
-                    field: "houseNo",
-                    sort: true
+                    title: "单元",
+                    field: "dy"
+                },
+                {
+                    title: "楼层",
+                    field: "lc"
+                },
+                {
+                    title: "房间",
+                    field: "roomNumber"
+                },
+                {
+                    title: "房主",
+                    field: "ownerName"
                 }
             ],
             actionColumnText: "操作",//操作列文本
@@ -105,6 +114,33 @@
                                     return name;
                                 };
                                 $.each(formItems, function (ii, dd) {
+                                    if (dd.name == 'id')
+                                        items.push(
+                                            {
+                                                type: 'display',
+                                                html: '<h3>基本信息</h3><hr>',
+                                                span: 2
+                                            }
+                                        );
+
+                                    if (dd.name == 'ownerName')
+                                        items.push(
+                                            {
+                                                type: 'display',
+                                                html: '<h3>房主信息</h3><hr>',
+                                                span: 2
+                                            }
+                                        );
+
+                                    if (dd.name == 'rentType')
+                                        items.push(
+                                            {
+                                                type: 'display',
+                                                html: '<h3>出租信息</h3><hr>',
+                                                span: 2
+                                            }
+                                        );
+
                                     if (dd.name == 'houseNodeId') {
                                         dd.type = 'tree';
                                         dd.expandAll = true;
@@ -131,7 +167,6 @@
                                     method: "POST",
                                     action: App.href + "/api/core/houseInfo/update",
                                     ajaxSubmit: true,
-                                    rowEleNum: 2,
                                     ajaxSuccess: function () {
                                         modal.hide();
                                         grid.reload();
@@ -139,6 +174,7 @@
                                     submitText: "保存",
                                     showReset: true,
                                     resetText: "重置",
+                                    rowEleNum: 2,
                                     isValidate: true,
                                     buttons: [{
                                         type: 'button',
@@ -217,6 +253,33 @@
                                         return name;
                                     };
                                     $.each(formItems, function (ii, dd) {
+                                        if (dd.name == 'id')
+                                            items.push(
+                                                {
+                                                    type: 'display',
+                                                    html: '<h3>基本信息</h3><hr>',
+                                                    span: 2
+                                                }
+                                            );
+
+                                        if (dd.name == 'ownerName')
+                                            items.push(
+                                                {
+                                                    type: 'display',
+                                                    html: '<h3>房主信息</h3><hr>',
+                                                    span: 2
+                                                }
+                                            );
+
+                                        if (dd.name == 'rentType')
+                                            items.push(
+                                                {
+                                                    type: 'display',
+                                                    html: '<h3>出租信息</h3><hr>',
+                                                    span: 2
+                                                }
+                                            );
+
                                         if (dd.name == 'houseNodeId') {
                                             dd.type = 'tree';
                                             dd.expandAll = true;
@@ -243,7 +306,6 @@
                                         method: "POST",
                                         action: App.href + "/api/core/houseInfo/insert",
                                         ajaxSubmit: true,
-                                        rowEleNum: 2,
                                         ajaxSuccess: function () {
                                             modal.hide();
                                             grid.reload();
@@ -252,6 +314,7 @@
                                         showReset: true,//是否显示重置按钮
                                         resetText: "重置",//重置按钮文本
                                         isValidate: true,//开启验证
+                                        rowEleNum: 2,
                                         buttons: [{
                                             type: 'button',
                                             text: '关闭',
@@ -275,14 +338,131 @@
                 }
             ],
             search: {
-                rowEleNum: 2,
+                rowEleNum: 4,
                 //搜索栏元素
                 items: [
                     {
-                        type: "text",
-                        label: "房屋编号",
-                        name: "houseNo",
-                        placeholder: "输入要搜索的房屋编号"
+                        type: "select",
+                        label: "小区",
+                        name: "xq",
+                        items: [
+                            {
+                                text: '全部',
+                                value: ''
+                            }
+                        ],
+                        itemsUrl: App.href + "/api/core/houseNode/node?parentId=0",
+                        change: function (text, value, grid) {
+                            grid.refreshSearchItem('lh', {
+                                type: "select",
+                                label: "楼号",
+                                name: "lh",
+                                items: [
+                                    {
+                                        text: '全部',
+                                        value: ''
+                                    }
+                                ],
+                                itemsUrl: App.href + "/api/core/houseNode/node?parentId=" + value
+                            });
+                            grid.refreshSearchItem('dy', {
+                                type: "select",
+                                label: "单元",
+                                name: "dy",
+                                items: [
+                                    {
+                                        text: '全部',
+                                        value: ''
+                                    }
+                                ],
+                                itemsUrl: App.href + "/api/core/houseNode/node"
+                            });
+                            grid.refreshSearchItem('lc', {
+                                type: "select",
+                                label: "楼层",
+                                name: "lc",
+                                items: [
+                                    {
+                                        text: '全部',
+                                        value: ''
+                                    }
+                                ],
+                                itemsUrl: App.href + "/api/core/houseNode/node"
+                            });
+                        }
+                    },
+                    {
+                        type: "select",
+                        label: "楼号",
+                        name: "lh",
+                        items: [
+                            {
+                                text: '全部',
+                                value: ''
+                            }
+                        ],
+                        change: function (text, value, grid) {
+                            grid.refreshSearchItem('dy', {
+                                type: "select",
+                                label: "单元",
+                                name: "dy",
+                                itemsUrl: App.href + "/api/core/houseNode/node?parentId=" + value
+                            });
+                            grid.refreshSearchItem('dy', {
+                                type: "select",
+                                label: "单元",
+                                name: "dy",
+                                items: [
+                                    {
+                                        text: '全部',
+                                        value: ''
+                                    }
+                                ],
+                                itemsUrl: App.href + "/api/core/houseNode/node"
+                            });
+                            grid.refreshSearchItem('lc', {
+                                type: "select",
+                                label: "楼层",
+                                name: "lc",
+                                items: [
+                                    {
+                                        text: '全部',
+                                        value: ''
+                                    }
+                                ],
+                                itemsUrl: App.href + "/api/core/houseNode/node"
+                            });
+                        }
+                    },
+                    {
+                        type: "select",
+                        label: "单元",
+                        name: "dy",
+                        items: [
+                            {
+                                text: '全部',
+                                value: ''
+                            }
+                        ],
+                        change: function (text, value, grid) {
+                            grid.refreshSearchItem('lc', {
+                                type: "select",
+                                label: "楼层",
+                                name: "lc",
+                                itemsUrl: App.href + "/api/core/houseNode/node?parentId=" + value
+                            });
+                        }
+                    },
+                    {
+                        type: "select",
+                        label: "楼层",
+                        name: "lc",
+                        items: [
+                            {
+                                text: '全部',
+                                value: ''
+                            }
+                        ]
                     }
                 ]
             }

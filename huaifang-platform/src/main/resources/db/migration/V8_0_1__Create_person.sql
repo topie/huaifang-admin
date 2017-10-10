@@ -7,7 +7,7 @@ CREATE TABLE d_person_info (
   p_house_node_id   INT(11)                   DEFAULT 0
   COMMENT '绑定架构id:hidden',
   p_house_info      VARCHAR(255)              DEFAULT ''
-  COMMENT '绑定房屋信息',
+  COMMENT '绑定房屋信息:hidden',
   p_name            VARCHAR(64) NOT NULL      DEFAULT ''
   COMMENT '姓名',
   p_birth           DATE        NULL          DEFAULT NULL

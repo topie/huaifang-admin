@@ -28,9 +28,9 @@ public class HouseNodeServiceImpl extends BaseService<HouseNode> implements IHou
     public List<HouseNode> selectByFilter(HouseNode houseNode) {
         Example example = new Example(HouseNode.class);
         Example.Criteria criteria = example.createCriteria();
+        if (houseNode.getPid() != null) criteria.andEqualTo("pid", houseNode.getPid());
         if (StringUtils.isNotEmpty(houseNode.getName())) criteria.andLike("name", "%" + houseNode.getName() + "%");
         return getMapper().selectByExample(example);
     }
-
 
 }
