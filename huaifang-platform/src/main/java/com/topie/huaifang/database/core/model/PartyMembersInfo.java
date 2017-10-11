@@ -23,7 +23,7 @@ public class PartyMembersInfo {
     private Integer nodeId;
 
     @Column(name = "node_name")
-    private String nodeName;
+    private String partyNodeName;
 
     /**
      * 党员名称
@@ -52,12 +52,12 @@ public class PartyMembersInfo {
      */
     private String tag;
 
-    public String getNodeName() {
-        return nodeName;
+    public String getPartyNodeName() {
+        return partyNodeName;
     }
 
-    public void setNodeName(String nodeName) {
-        this.nodeName = nodeName;
+    public void setPartyNodeName(String partyNodeName) {
+        this.partyNodeName = partyNodeName;
     }
 
     /**
