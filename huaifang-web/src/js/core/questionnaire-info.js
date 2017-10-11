@@ -391,7 +391,7 @@
                     handle: function (index, d, grid) {
                         var modal = $.orangeModal({
                             id: "questionStat",
-                            title: "统计分析",
+                            title: "统计分析-" + d.name,
                             destroy: true
                         }).show();
                         $.ajax({
@@ -413,7 +413,7 @@
                                         var col = {};
                                         col.col = 12;
                                         col.id = "col_div_" + ii;
-                                        col.title = dd.q;
+                                        col.title = (ii + 1) + " " + dd.q;
                                         col.type = 'panel';
                                         col.content = {};
                                         col.content.plugin = 'grid';
