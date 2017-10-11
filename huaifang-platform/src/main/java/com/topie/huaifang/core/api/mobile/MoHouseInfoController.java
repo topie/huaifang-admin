@@ -1,9 +1,6 @@
 package com.topie.huaifang.core.api.mobile;
 
-import com.topie.huaifang.common.utils.PageConvertUtil;
-import com.topie.huaifang.common.utils.ResponseUtil;
-import com.topie.huaifang.common.utils.Result;
-import com.topie.huaifang.common.utils.TreeNode;
+import com.topie.huaifang.common.utils.*;
 import com.topie.huaifang.core.service.*;
 import com.topie.huaifang.database.core.model.*;
 import com.topie.huaifang.security.utils.SecurityUtil;
@@ -42,7 +39,7 @@ public class MoHouseInfoController {
 
     @RequestMapping(value = "/node", method = RequestMethod.GET)
     @ResponseBody
-    public Result treeNodes(@RequestParam(value = "parentId", required = false, defaultValue = "0") Integer parentId) {
+    public Result treeNodes(@RequestParam(value = "parentId", required = false, defaultValue = "-1") Integer parentId) {
         List<TreeNode> nodes = new ArrayList<>();
         HouseNode houseNode = new HouseNode();
         houseNode.setPid(parentId);
