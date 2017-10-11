@@ -18,7 +18,7 @@
         page: function (title) {
             App.content.empty();
             App.title(title);
-            var content = $('<div id="main"><h3>欢迎使用智慧槐房信息服务平台!</h3></div>');
+            var content = $('<div id="main"><img style="padding: 10px 10px 10px 10px;" height="680" src="cdn/img/huaifang.jpg"></div>');
             App.content.append(content);
             //initEvents();
         }
