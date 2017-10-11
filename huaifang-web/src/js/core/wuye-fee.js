@@ -103,6 +103,10 @@
                                     buttonsAlign: "center",
                                     items: formItems
                                 });
+                                $.jeDate("#accountDate", {
+                                    format: "YYYY-MM",
+                                    festival: true
+                                });
                                 form.loadRemote(App.href + "/api/core/wuyeFee/load/" + d.id);
                             } else {
                                 alert(data.message);

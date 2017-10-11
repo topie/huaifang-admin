@@ -106,6 +106,7 @@
                                         d.type = 'tree';
                                         d.url = App.href + "/api/core/partyMembersNode/treeNodes";
                                         d.chkStyle = 'radio';
+                                        d.expandAll = true;
                                         d.beforeCheck = function (treeId, treeNode, form) {
                                             var fullName = '';
                                             if (treeNode.getParentNode() != null) {
@@ -219,6 +220,7 @@
                                             d.type = 'tree';
                                             d.url = App.href + "/api/core/partyMembersNode/treeNodes";
                                             d.chkStyle = 'radio';
+                                            d.expandAll = true;
                                             d.beforeCheck = function (treeId, treeNode, form) {
                                                 var fullName = '';
                                                 if (treeNode.getParentNode() != null) {
@@ -331,7 +333,7 @@
                     dataType: "json",
                     data: {
                         id: treeNode.id,
-                        pid: treeNode.getParentNode().id == undefined ? 0 : treeNode.getParentNode().id,
+                        pid: treeNode.getParentNode() == undefined ? 0 : treeNode.getParentNode().id,
                         name: newName
                     },
                     url: App.href + "/api/core/partyMembersNode/update",
@@ -360,6 +362,7 @@
                         data: {
                             id: treeNode.id
                         },
+                        async: false,
                         url: requestUrl,
                         success: function (data) {
                             if (data.code === 200) {

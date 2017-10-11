@@ -93,120 +93,159 @@
             ],
             actionColumnText: "操作",//操作列文本
             actionColumnWidth: "20%",
-            actionColumns: [{
-                text: "编辑",
-                cls: "btn-primary btn-sm",
-                handle: function (index, d) {
-                    var modal = $.orangeModal({
-                        id: "partyMembersActivityForm",
-                        title: "编辑",
-                        destroy: true
-                    }).show();
-                    $.ajax({
-                        type: "GET",
-                        dataType: "json",
-                        url: App.href + "/api/core/partyMembersActivity/formItems",
-                        success: function (data) {
-                            if (data.code === 200) {
-                                var formItems = data.data;
-                                var form = modal.$body.orangeForm({
-                                    id: "edit_form",
-                                    name: "edit_form",
-                                    method: "POST",
-                                    action: App.href + "/api/core/partyMembersActivity/update",
-                                    ajaxSubmit: true,
-                                    rowEleNum: 1,
-                                    ajaxSuccess: function () {
-                                        modal.hide();
-                                        grid.reload();
-                                    },
-                                    submitText: "保存",
-                                    showReset: true,
-                                    resetText: "重置",
-                                    isValidate: true,
-                                    buttons: [{
-                                        type: 'button',
-                                        text: '关闭',
-                                        handle: function () {
+            actionColumns: [
+                {
+                    text: "编辑",
+                    cls: "btn-primary btn-sm",
+                    handle: function (index, d) {
+                        var modal = $.orangeModal({
+                            id: "partyMembersActivityForm",
+                            title: "编辑",
+                            destroy: true
+                        }).show();
+                        $.ajax({
+                            type: "GET",
+                            dataType: "json",
+                            url: App.href + "/api/core/partyMembersActivity/formItems",
+                            success: function (data) {
+                                if (data.code === 200) {
+                                    var formItems = data.data;
+                                    var form = modal.$body.orangeForm({
+                                        id: "edit_form",
+                                        name: "edit_form",
+                                        method: "POST",
+                                        action: App.href + "/api/core/partyMembersActivity/update",
+                                        ajaxSubmit: true,
+                                        rowEleNum: 1,
+                                        ajaxSuccess: function () {
                                             modal.hide();
-                                        }
-                                    }],
-                                    buttonsAlign: "center",
-                                    items: formItems
-                                });
-                                form.loadRemote(App.href + "/api/core/partyMembersActivity/load/" + d.id);
-                            } else {
-                                alert(data.message);
+                                            grid.reload();
+                                        },
+                                        submitText: "保存",
+                                        showReset: true,
+                                        resetText: "重置",
+                                        isValidate: true,
+                                        buttons: [{
+                                            type: 'button',
+                                            text: '关闭',
+                                            handle: function () {
+                                                modal.hide();
+                                            }
+                                        }],
+                                        buttonsAlign: "center",
+                                        items: formItems
+                                    });
+                                    form.loadRemote(App.href + "/api/core/partyMembersActivity/load/" + d.id);
+                                } else {
+                                    alert(data.message);
+                                }
+                            },
+                            error: function (e) {
+                                alert("请求异常。");
                             }
-                        },
-                        error: function (e) {
-                            alert("请求异常。");
-                        }
-                    });
+                        });
 
-                }
-            }, {
-                text: "删除",
-                cls: "btn-danger btn-sm",
-                handle: function (index, data) {
-                    bootbox.confirm("确定该操作?", function (result) {
-                        if (result) {
-                            var requestUrl = App.href + "/api/core/partyMembersActivity/delete";
-                            $.ajax({
-                                type: "GET",
-                                dataType: "json",
-                                data: {
-                                    id: data.id
-                                },
-                                url: requestUrl,
-                                success: function (data) {
-                                    if (data.code === 200) {
-                                        grid.reload();
-                                    } else {
-                                        alert(data.message);
+                    }
+                }, {
+                    text: "删除",
+                    cls: "btn-danger btn-sm",
+                    handle: function (index, data) {
+                        bootbox.confirm("确定该操作?", function (result) {
+                            if (result) {
+                                var requestUrl = App.href + "/api/core/partyMembersActivity/delete";
+                                $.ajax({
+                                    type: "GET",
+                                    dataType: "json",
+                                    data: {
+                                        id: data.id
+                                    },
+                                    url: requestUrl,
+                                    success: function (data) {
+                                        if (data.code === 200) {
+                                            grid.reload();
+                                        } else {
+                                            alert(data.message);
+                                        }
+                                    },
+                                    error: function (e) {
+                                        alert("请求异常。");
                                     }
+                                });
+                            }
+                        });
+                    }
+                }, {
+                    text: "查看参加用户",
+                    cls: "btn-info btn-sm",
+                    handle: function (index, data) {
+                        var modal = $.orangeModal({
+                            id: "joinUsers",
+                            title: "参加的用户",
+                            destroy: true
+                        }).show();
+                        modal.$body.orangeGrid({
+                            url: App.href + "/api/core/partyMembersActivity/joinUsers?id="+data.id,
+                            contentType: "table",
+                            contentTypeItems: "table,card",
+                            pageNum: 1,//当前页码
+                            pageSize: 15,//每页显示条数
+                            idField: "id",//id域指定
+                            headField: "nickname",
+                            showCheck: true,//是否显示checkbox
+                            checkboxWidth: "3%",
+                            showIndexNum: false,
+                            indexNumWidth: "5%",
+                            pageSelect: [2, 15, 30, 50],
+                            columns: [
+                                {
+                                    title: "昵称",
+                                    field: "nickname"
                                 },
-                                error: function (e) {
-                                    alert("请求异常。");
+                                {
+                                    title: "姓名",
+                                    field: "realname"
+                                },
+                                {
+                                    title: "手机",
+                                    field: "mobilePhone"
                                 }
-                            });
-                        }
-                    });
-                }
-            }, {
-                textHandle: function (i, d) {
-                    return '上线';
-                },
-                visible: function (i, d) {
-                    return d.status === 0;
-                },
-                cls: "btn-info btn-sm",
-                handle: function (index, data) {
-                    bootbox.confirm("确定该操作?", function (result) {
-                        if (result) {
-                            var requestUrl = App.href + "/api/core/partyMembersActivity/online";
-                            $.ajax({
-                                type: "GET",
-                                dataType: "json",
-                                data: {
-                                    id: data.id
-                                },
-                                url: requestUrl,
-                                success: function (data) {
-                                    if (data.code === 200) {
-                                        grid.reload();
-                                    } else {
-                                        alert(data.message);
+                            ]
+                        });
+                    }
+                }, {
+                    textHandle: function (i, d) {
+                        return '上线';
+                    },
+                    visible: function (i, d) {
+                        return d.status === 0;
+                    },
+                    cls: "btn-info btn-sm",
+                    handle: function (index, data) {
+                        bootbox.confirm("确定该操作?", function (result) {
+                            if (result) {
+                                var requestUrl = App.href + "/api/core/partyMembersActivity/online";
+                                $.ajax({
+                                    type: "GET",
+                                    dataType: "json",
+                                    data: {
+                                        id: data.id
+                                    },
+                                    url: requestUrl,
+                                    success: function (data) {
+                                        if (data.code === 200) {
+                                            grid.reload();
+                                        } else {
+                                            alert(data.message);
+                                        }
+                                    },
+                                    error: function (e) {
+                                        alert("请求异常。");
                                     }
-                                },
-                                error: function (e) {
-                                    alert("请求异常。");
-                                }
-                            });
-                        }
-                    });
+                                });
+                            }
+                        });
+                    }
                 }
-            }
             ],
             tools: [
                 {
