@@ -99,4 +99,13 @@ public class PartyMembersActivityController {
         return ResponseUtil.success();
     }
 
+    @RequestMapping(value = "/online", method = RequestMethod.GET)
+    @ResponseBody
+    public Result online(@RequestParam(value = "id") Integer id) {
+        PartyMembersActivity partyMembersActivity = iPartyMembersActivityService.selectByKey(id);
+        partyMembersActivity.setStatus(1);
+        iPartyMembersActivityService.updateNotNull(partyMembersActivity);
+        return ResponseUtil.success();
+    }
+
 }

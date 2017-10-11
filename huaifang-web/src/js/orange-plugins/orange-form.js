@@ -1405,7 +1405,7 @@
                     } else {
                         $.each(data.items, function (j, jd) {
                             var item = that._formEles[jd.type](jd, that);
-                            that._alue(jd.name, id[jd.name], item);
+                            that._loadValue(jd.name, id[jd.name], item);
                             var iWrapper;
                             if (jd.label != undefined) {
                                 iWrapper = $('<div class="form-group"><label class="control-label col-md-offset-1 col-md-2">' + jd.label + '</label><div role="i-ele" class="col-md-9"></div></div>');
