@@ -63,22 +63,6 @@ public class MoHouseInfoController {
         return ResponseUtil.success(PageConvertUtil.grid(list));
     }
 
-    @RequestMapping(value = "/auth", method = RequestMethod.GET)
-    @ResponseBody
-    public Result auth(@RequestParam("houseId") Integer houseId, PersonInfo personInfo) {
-        Integer userId = SecurityUtil.getCurrentUserId();
-        if (userId == null) return ResponseUtil.error("未登录");
-        AppUser appUser = iAppUserService.selectByPlatformId(userId);
-        if (appUser == null) return ResponseUtil.error("用户不存在");
-        personInfo.setpImportTime(new Date());
-        iPersonInfoService.saveNotNull(personInfo);//人口信息
-        AuthUser authUser = iAuthUserService.selectByKey(appUser.getId());
-        authUser.setHouseId(houseId);
-        authUser.setPersonId(personInfo.getpId());
-        iAuthUserService.updateNotNull(authUser);//认证关系
-        return ResponseUtil.success();
-    }
-
     @RequestMapping(value = "/myHouse", method = RequestMethod.GET)
     @ResponseBody
     public Result myHouse() {

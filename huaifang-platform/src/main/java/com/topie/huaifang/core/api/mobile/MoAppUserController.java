@@ -4,10 +4,8 @@ import com.github.pagehelper.PageInfo;
 import com.topie.huaifang.common.utils.PageConvertUtil;
 import com.topie.huaifang.common.utils.ResponseUtil;
 import com.topie.huaifang.common.utils.Result;
-import com.topie.huaifang.core.service.IAppMessageService;
-import com.topie.huaifang.core.service.IAppUserMessageService;
-import com.topie.huaifang.core.service.IAppUserService;
-import com.topie.huaifang.database.core.model.AppUser;
+import com.topie.huaifang.core.service.*;
+import com.topie.huaifang.database.core.model.*;
 import com.topie.huaifang.security.service.UserService;
 import com.topie.huaifang.security.utils.SecurityUtil;
 import org.apache.commons.collections.CollectionUtils;
@@ -19,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,9 +28,6 @@ import java.util.List;
 public class MoAppUserController {
 
     @Autowired
-    private IAppUserService iAppUserService;
-
-    @Autowired
     private UserService userService;
 
     @Autowired
@@ -39,6 +35,24 @@ public class MoAppUserController {
 
     @Autowired
     private IAppUserMessageService iAppUserMessageService;
+
+    @Autowired
+    private IAppUserService iAppUserService;
+
+    @Autowired
+    private IAuthUserService iAuthUserService;
+
+    @Autowired
+    private IPersonInfoService iPersonInfoService;
+
+    @Autowired
+    private IPersonInfoRentService iPersonInfoRentService;
+
+    @Autowired
+    private IPersonInfoLiveService iPersonInfoLiveService;
+
+    @Autowired
+    private IHouseInfoService iHouseInfoService;
 
     @RequestMapping(value = "/friends", method = RequestMethod.GET)
     @ResponseBody
@@ -55,7 +69,6 @@ public class MoAppUserController {
     public Result maybeKnown(AppUser appUser,
             @RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum,
             @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize) {
-        //appUser.setStatus(2);
         Integer userId = SecurityUtil.getCurrentUserId();
         AppUser app = iAppUserService.selectByPlatformId(userId);
         if (app == null) return ResponseUtil.error("用户不存在");
@@ -123,6 +136,41 @@ public class MoAppUserController {
     public Result currentAppUser() {
         AppUser appUser = iAppUserService.selectByPlatformId(SecurityUtil.getCurrentUserId());
         return ResponseUtil.success(appUser);
+    }
+
+    @RequestMapping(value = "/auth", method = RequestMethod.GET)
+    @ResponseBody
+    public Result auth(@RequestParam("houseId") Integer houseId, PersonInfo personInfo) {
+        Integer userId = SecurityUtil.getCurrentUserId();
+        if (userId == null) return ResponseUtil.error("未登录");
+        AppUser appUser = iAppUserService.selectByPlatformId(userId);
+        if (appUser == null) return ResponseUtil.error("用户不存在");
+        personInfo.setpImportTime(new Date());
+        personInfo.setpMobilePhone(appUser.getMobilePhone());
+        HouseInfo houseInfo = iHouseInfoService.selectByKey(houseId);
+        personInfo.setpHouseNodeId(houseId);
+        personInfo.setpHouseInfo(houseInfo.getAddress() + " " + houseInfo.getRoomNumber());
+        iPersonInfoService.saveNotNull(personInfo);//人口信息
+        if ("租户".equals(personInfo.getpPersonType())) {
+            PersonInfoRent personInfoRent = new PersonInfoRent();
+            personInfoRent.setrPersonId(personInfo.getpId());
+            personInfoRent.setrContact(personInfo.getpMobilePhone());
+            personInfoRent.setrIdentifyNumber(personInfo.getpIdentifyNumber());
+            personInfoRent.setrName(personInfo.getpName());
+            iPersonInfoRentService.saveNotNull(personInfoRent);
+        } else {
+            PersonInfoLive personInfoLive = new PersonInfoLive();
+            personInfoLive.setlPersonId(personInfo.getpId());
+            personInfoLive.setlContact(personInfo.getpMobilePhone());
+            personInfoLive.setlIdentifyNumber(personInfo.getpIdentifyNumber());
+            personInfoLive.setlName(personInfo.getpName());
+            iPersonInfoLiveService.saveNotNull(personInfoLive);
+        }
+        AuthUser authUser = iAuthUserService.selectByKey(appUser.getId());
+        authUser.setHouseId(houseId);
+        authUser.setPersonId(personInfo.getpId());
+        iAuthUserService.updateNotNull(authUser);//认证关系
+        return ResponseUtil.success();
     }
 
 }
