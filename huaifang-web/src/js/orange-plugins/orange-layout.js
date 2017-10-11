@@ -73,8 +73,10 @@
                             if (col.type === 'panel') {
                                 var panel = that.getPanel(col.title);
                                 spanElement.append(panel);
+                                panel.find("div.panel-body").attr("id", "pb_" + i + "_" + j);
                                 that.renderContent(panel.find("div.panel-body"), col.content);
                             } else {
+                                spanElement.attr("id", "pb_" + i + "_" + j);
                                 that.renderContent(spanElement, col.content);
                             }
 

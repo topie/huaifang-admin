@@ -6,16 +6,16 @@ import com.topie.huaifang.common.tools.plugins.FormItem;
 import com.topie.huaifang.common.utils.PageConvertUtil;
 import com.topie.huaifang.common.utils.ResponseUtil;
 import com.topie.huaifang.common.utils.Result;
-import com.topie.huaifang.core.service.ICommonQueryService;
-import com.topie.huaifang.core.service.IQuestionnaireInfoService;
+import com.topie.huaifang.core.service.*;
 import com.topie.huaifang.database.core.model.QuestionnaireInfo;
+import com.topie.huaifang.database.core.model.QuestionnaireItem;
+import com.topie.huaifang.database.core.model.QuestionnaireOption;
 import com.topie.huaifang.security.utils.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by chenguojun on 2017/4/19.
@@ -26,6 +26,15 @@ public class QuestionnaireInfoController {
 
     @Autowired
     private IQuestionnaireInfoService iQuestionnaireInfoService;
+
+    @Autowired
+    private IQuestionnaireItemService iQuestionnaireItemService;
+
+    @Autowired
+    private IQuestionnaireOptionService iQuestionnaireOptionService;
+
+    @Autowired
+    private IQuestionnaireResultService iQuestionnaireResultService;
 
     @Autowired
     private ICommonQueryService iCommonQueryService;
@@ -80,6 +89,41 @@ public class QuestionnaireInfoController {
     public Result delete(@RequestParam(value = "id") Integer id) {
         iQuestionnaireInfoService.delete(id);
         return ResponseUtil.success();
+    }
+
+    @RequestMapping(value = "/stat", method = RequestMethod.GET)
+    @ResponseBody
+    public Result stat(@RequestParam(value = "id") Integer infoId) {
+        QuestionnaireItem item = new QuestionnaireItem();
+        item.setInfoId(infoId);
+        List<QuestionnaireItem> items = iQuestionnaireItemService.selectByFilter(item);
+        List<Map> iList = new ArrayList<>();
+        for (QuestionnaireItem questionnaireItem : items) {
+            Map iMap = new HashMap();
+            iMap.put("q", questionnaireItem.getQuestion());
+            Integer itemId = questionnaireItem.getId();
+            Map arg = new HashMap();
+            arg.put("infoId", infoId);
+            arg.put("itemId", itemId);
+            Integer iTotal = iQuestionnaireResultService.countDistinctUserId(arg);
+            iMap.put("total", iTotal);
+            QuestionnaireOption option = new QuestionnaireOption();
+            option.setItemId(itemId);
+            List<Map> oList = new ArrayList<>();
+            List<QuestionnaireOption> options = iQuestionnaireOptionService.selectByFilter(option);
+            for (QuestionnaireOption questionnaireOption : options) {
+                Integer optionId = questionnaireOption.getId();
+                Map oMap = new HashMap();
+                oMap.put("a", questionnaireOption.getText());
+                arg.put("optionId", optionId);
+                Integer qTotal = iQuestionnaireResultService.countDistinctUserId(arg);
+                oMap.put("total", qTotal);
+                oList.add(oMap);
+            }
+            iMap.put("options", oList);
+            iList.add(iMap);
+        }
+        return ResponseUtil.success(iList);
     }
 
 }

@@ -29,8 +29,12 @@ public class QuestionnaireItemServiceImpl extends BaseService<QuestionnaireItem>
         if (questionnaireItem != null) {
             if (questionnaireItem.getInfoId() != null) criteria.andEqualTo("infoId", questionnaireItem.getInfoId());
         }
-        if (StringUtils.isNotEmpty(questionnaireItem.getSortWithOutOrderBy()))
+        if (StringUtils.isNotEmpty(questionnaireItem.getSortWithOutOrderBy())) {
             example.setOrderByClause(questionnaireItem.getSortWithOutOrderBy());
+        } else {
+            example.setOrderByClause(" question_index asc");
+        }
+
         return getMapper().selectByExample(example);
     }
 

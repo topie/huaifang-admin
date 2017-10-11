@@ -280,6 +280,7 @@
                 this.$element.attr("id", id);
             }
             this._elementId = id;
+
             this._options = options;
 
             this.$searchForm = undefined;
@@ -297,8 +298,8 @@
             this._type = options.type == undefined ? "GET" : options.type;
             this._beforeSend = options.beforeSend;
             if (options.data != undefined) {
-                if (options.data.data != undefined
-                    || options.data.total != undefined) {
+                if (options.data.data == undefined
+                    || options.data.total == undefined) {
                     console.error("data格式不正确，必须包含data和total");
                     return;
                 }
@@ -373,57 +374,61 @@
         },
         // 异步加载数据
         _loadData: function () {
-            var that = this;
-            var parameters = "";
-            if (that._url.indexOf("?") != -1) {
-                parameters = "&";
-            } else {
-                parameters = "?";
-            }
-            parameters += "pageNum=" + this._pageNum;
-            parameters += "&pageSize=" + this._pageSize;
-            parameters += "&sort_="
-                + (this._sort == undefined ? "" : this._sort);
-            this.$element.block(
-                {
-                    message: null,
-                    css: {
-                        backgroundColor: '#ddd',
-                        color: '#ddd'
+            if (this._url != undefined) {
+                var that = this;
+                var parameters = "";
+                if (that._url.indexOf("?") != -1) {
+                    parameters = "&";
+                } else {
+                    parameters = "?";
+                }
+                parameters += "pageNum=" + this._pageNum;
+                parameters += "&pageSize=" + this._pageSize;
+                parameters += "&sort_="
+                    + (this._sort == undefined ? "" : this._sort);
+                this.$element.block(
+                    {
+                        message: null,
+                        css: {
+                            backgroundColor: '#ddd',
+                            color: '#ddd'
+                        }
+                    });
+                $.ajax({
+                    type: that._type,
+                    dataType: "json",
+                    data: that.$searchForm == undefined ? {} : that.$searchForm
+                        .serialize(),
+                    beforeSend: function (request) {
+                        if (that._beforeSend != undefined) {
+                            that._beforeSend(request);
+                        }
+                    },
+                    url: that._url + (parameters == undefined ? "" : parameters),
+                    success: function (data) {
+                        if (data.code === 200) {
+                            that.$element.unblock();
+                            that._setData(data.data);
+                            that._init();
+                        } else if (data.code === 401) {
+                            that.$element.unblock();
+                            that._alert(data.message + ";请重新登录！", undefined, undefined, App.redirectLogin);
+                        } else if (data.code === 403) {
+                            that.$element.unblock();
+                            that._alert(data.message);
+                        } else {
+                            that.$element.unblock();
+                            that._alert(data.message);
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorMsg) {
+                        that.$element.unblock();
+                        console.error("请求异常！");
                     }
                 });
-            $.ajax({
-                type: that._type,
-                dataType: "json",
-                data: that.$searchForm == undefined ? {} : that.$searchForm
-                    .serialize(),
-                beforeSend: function (request) {
-                    if (that._beforeSend != undefined) {
-                        that._beforeSend(request);
-                    }
-                },
-                url: that._url + (parameters == undefined ? "" : parameters),
-                success: function (data) {
-                    if (data.code === 200) {
-                        that.$element.unblock();
-                        that._setData(data.data);
-                        that._init();
-                    } else if (data.code === 401) {
-                        that.$element.unblock();
-                        that._alert(data.message + ";请重新登录！", undefined, undefined, App.redirectLogin);
-                    } else if (data.code === 403) {
-                        that.$element.unblock();
-                        that._alert(data.message);
-                    } else {
-                        that.$element.unblock();
-                        that._alert(data.message);
-                    }
-                },
-                error: function (jqXHR, textStatus, errorMsg) {
-                    that.$element.unblock();
-                    console.error("请求异常！");
-                }
-            });
+            } else {
+                this._init();
+            }
         },
         _setData: function (data) {
             this._data = data;

@@ -386,6 +386,88 @@
                     }
                 },
                 {
+                    text: "统计分析",
+                    cls: "btn-info btn-sm",
+                    handle: function (index, d, grid) {
+                        var modal = $.orangeModal({
+                            id: "questionStat",
+                            title: "统计分析",
+                            destroy: true
+                        }).show();
+                        $.ajax({
+                            type: "GET",
+                            dataType: "json",
+                            data: {
+                                id: d.id
+                            },
+                            url: App.href + "/api/core/questionnaireInfo/stat",
+                            success: function (data) {
+                                if (data.code === 200) {
+                                    var items = data.data;
+                                    var layoutOptions = {};
+                                    layoutOptions.title = d.name;
+                                    layoutOptions.rows = [];
+                                    $.each(items, function (ii, dd) {
+                                        var row = {};
+                                        row.cols = [];
+                                        var col = {};
+                                        col.col = 12;
+                                        col.id = "col_div_" + ii;
+                                        col.title = dd.q;
+                                        col.type = 'panel';
+                                        col.content = {};
+                                        col.content.plugin = 'grid';
+                                        col.content.options = {
+                                            contentType: "table",
+                                            showContentType: true,
+                                            contentTypeItems: "table,chart-pie",
+                                            pageNum: 1,//当前页码
+                                            pageSize: 200,//每页显示条数
+                                            idField: "uri",//id域指定
+                                            headField: "uri",
+                                            showCheck: true,//是否显示checkbox
+                                            checkboxWidth: "3%",
+                                            showIndexNum: false,
+                                            indexNumWidth: "5%",
+                                            pageSelect: [200],
+                                            showPaging: false,
+                                            columns: [
+                                                {
+                                                    title: "选项",
+                                                    field: 'a',
+                                                    chartX: true
+                                                }, {
+                                                    title: "选择用户",
+                                                    field: "total",
+                                                    chartY: true
+                                                }, {
+                                                    title: "占比",
+                                                    field: "total",
+                                                    format: function (i, d) {
+                                                        return (d.total / dd.total) * 100 + "%";
+                                                    }
+                                                }
+                                            ],
+                                            data: {
+                                                "total": dd.options.length,
+                                                "data": dd.options
+                                            }
+                                        };
+                                        row.cols.push(col);
+                                        layoutOptions.rows.push(row);
+                                    });
+                                    modal.$body.orangeLayout(layoutOptions);
+                                } else {
+                                    alert(data.message);
+                                }
+                            },
+                            error: function (e) {
+                                alert("请求异常。");
+                            }
+                        });
+                    }
+                },
+                {
                     text: "删除",
                     cls: "btn-danger btn-sm",
                     handle: function (index, data, grid) {
