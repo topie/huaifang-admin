@@ -309,14 +309,14 @@ public class HouseInfo {
      * 出租起始日期
      */
     @Column(name = "rent_begin")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date rentBegin;
 
     /**
      * 出租截止日期
      */
     @Column(name = "rent_end")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date rentEnd;
 
     /**
