@@ -420,7 +420,7 @@
                                         col.content.options = {
                                             contentType: "table",
                                             showContentType: true,
-                                            contentTypeItems: "table,chart-pie",
+                                            contentTypeItems: "table,chart-pie,chart-bar",
                                             pageNum: 1,//当前页码
                                             pageSize: 200,//每页显示条数
                                             idField: "uri",//id域指定
