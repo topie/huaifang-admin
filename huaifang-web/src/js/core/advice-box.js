@@ -86,9 +86,12 @@
                                 var formItems = data.data;
                                 var items = [];
                                 $.each(formItems, function (jj, jd) {
-                                    if (jd.name == 'contactUserId')
+                                    if (jd.name === 'contactUserId')
                                         jd.type = 'hidden';
+                                    if (jd.name === 'messageContent')
+                                        jd.type = 'textarea';
                                     items.push(jd);
+
                                 });
                                 var form = modal.$body.orangeForm({
                                     id: "edit_form",
@@ -174,8 +177,10 @@
                                     var formItems = data.data;
                                     var items = [];
                                     $.each(formItems, function (jj, jd) {
-                                        if (jd.name == 'contactUserId')
+                                        if (jd.name === 'contactUserId')
                                             jd.type = 'hidden';
+                                        if (jd.name === 'messageContent')
+                                            jd.type = 'textarea';
                                         items.push(jd);
                                     });
                                     var form = modal.$body.orangeForm({

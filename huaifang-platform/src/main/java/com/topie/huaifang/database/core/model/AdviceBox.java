@@ -38,7 +38,7 @@ public class AdviceBox {
     private String contactEmail;
 
     /**
-     * 留言内容:textare
+     * 留言内容:textarea
      */
     @Column(name = "message_content")
     private String messageContent;
