@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by chenguojun on 2017/4/19.
@@ -138,6 +136,32 @@ public class MoAppUserController {
         return ResponseUtil.success(appUser);
     }
 
+    @RequestMapping(value = "/authInfo", method = RequestMethod.GET)
+    @ResponseBody
+    public Result authInfo() {
+        Integer userId = SecurityUtil.getCurrentUserId();
+        if (userId == null) return ResponseUtil.error("未登录");
+        AppUser appUser = iAppUserService.selectByPlatformId(userId);
+        if (appUser == null) return ResponseUtil.error("用户不存在");
+        if (appUser.getStatus() != 2) {
+            return ResponseUtil.error("未认证");
+        } else {
+            Map result = new HashMap<>();
+            AuthUser authUser = iAuthUserService.selectByKey(appUser.getId());
+            PersonInfo personInfo = iPersonInfoService.selectByKey(authUser.getPersonId());
+            HouseInfo houseInfo = iHouseInfoService.selectByKey(authUser.getHouseId());
+            result.put("xq", houseInfo.getXq());
+            result.put("lh", houseInfo.getLh());
+            result.put("dy", houseInfo.getDy());
+            result.put("lc", houseInfo.getLc());
+            result.put("mp", houseInfo.getRoomNumber());
+            result.put("name", personInfo.getpName());
+            result.put("idn", personInfo.getpIdentifyNumber());
+            result.put("sf", personInfo.getpPersonType());
+            return ResponseUtil.success(result);
+        }
+    }
+
     @RequestMapping(value = "/auth", method = RequestMethod.GET)
     @ResponseBody
     public Result auth(@RequestParam("houseId") Integer houseId, PersonInfo personInfo) {
@@ -171,6 +195,8 @@ public class MoAppUserController {
         authUser.setPersonId(personInfo.getpId());
         iAuthUserService.updateNotNull(authUser);//认证关系
         appUser.setStatus(1);
+        appUser.setRealname(personInfo.getpName());
+        appUser.setNickname(personInfo.getpName());
         iAppUserService.updateNotNull(appUser);
         return ResponseUtil.success();
     }

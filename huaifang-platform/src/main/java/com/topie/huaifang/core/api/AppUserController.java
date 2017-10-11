@@ -5,10 +5,8 @@ import com.topie.huaifang.common.tools.plugins.FormItem;
 import com.topie.huaifang.common.utils.PageConvertUtil;
 import com.topie.huaifang.common.utils.ResponseUtil;
 import com.topie.huaifang.common.utils.Result;
-import com.topie.huaifang.core.service.IAppUserService;
-import com.topie.huaifang.core.service.ICommonQueryService;
-import com.topie.huaifang.database.core.model.AppUser;
-import com.topie.huaifang.database.core.model.User;
+import com.topie.huaifang.core.service.*;
+import com.topie.huaifang.database.core.model.*;
 import com.topie.huaifang.security.exception.AuBzConstant;
 import com.topie.huaifang.security.exception.AuthBusinessException;
 import com.topie.huaifang.security.service.UserService;
@@ -33,6 +31,18 @@ public class AppUserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private IAuthUserService iAuthUserService;
+
+    @Autowired
+    private IPersonInfoService iPersonInfoService;
+
+    @Autowired
+    private IPersonInfoLiveService iPersonInfoLiveService;
+
+    @Autowired
+    private IPersonInfoRentService iPersonInfoRentService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
@@ -85,6 +95,37 @@ public class AppUserController {
     @ResponseBody
     public Result delete(@RequestParam(value = "id") Integer id) {
         iAppUserService.delete(id);
+        return ResponseUtil.success();
+    }
+
+    @RequestMapping(value = "/pass", method = RequestMethod.GET)
+    @ResponseBody
+    public Result pass(@RequestParam(value = "id") Integer id) {
+        AppUser appUser = iAppUserService.selectByKey(id);
+        appUser.setStatus(2);
+        iAppUserService.updateNotNull(appUser);
+        return ResponseUtil.success();
+    }
+
+    @RequestMapping(value = "/nopass", method = RequestMethod.GET)
+    @ResponseBody
+    public Result nopass(@RequestParam(value = "id") Integer id) {
+        AppUser appUser = iAppUserService.selectByKey(id);
+        appUser.setStatus(3);
+        iAppUserService.updateNotNull(appUser);
+        AuthUser authUser = iAuthUserService.selectByKey(appUser.getId());
+        PersonInfo personInfo = iPersonInfoService.selectByKey(authUser.getPersonId());
+        //清除人口信息
+        if (personInfo != null) {
+            PersonInfoRent personInfoRent = iPersonInfoRentService.selectByPersonId(personInfo.getpId());
+            if (personInfoRent != null) iPersonInfoRentService.delete(personInfoRent);
+            PersonInfoLive personInfoLive = iPersonInfoLiveService.selectByPersonId(personInfo.getpId());
+            if (personInfoLive != null) iPersonInfoLiveService.delete(personInfoLive);
+            iPersonInfoService.delete(personInfo);
+        }
+        authUser.setHouseId(0);
+        authUser.setPersonId(0);
+        iAuthUserService.updateNotNull(authUser);
         return ResponseUtil.success();
     }
 

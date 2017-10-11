@@ -98,13 +98,66 @@
             actionColumnWidth: "20%",
             actionColumns: [
                 {
-                    text: "审核",
+                    text: "通过",
                     visible: function (i, d) {
                         return d.status === 1;
                     },
-                    cls: "btn-primary btn-sm",
+                    cls: "btn-info btn-sm",
                     handle: function (index, d) {
-
+                        bootbox.confirm("确定该操作?", function (result) {
+                            if (result) {
+                                var requestUrl = App.href + "/api/core/appUser/pass";
+                                $.ajax({
+                                    type: "GET",
+                                    dataType: "json",
+                                    data: {
+                                        id: d.id
+                                    },
+                                    url: requestUrl,
+                                    success: function (data) {
+                                        if (data.code === 200) {
+                                            grid.reload();
+                                        } else {
+                                            alert(data.message);
+                                        }
+                                    },
+                                    error: function (e) {
+                                        alert("请求异常。");
+                                    }
+                                });
+                            }
+                        });
+                    }
+                }, {
+                    text: "不通过",
+                    visible: function (i, d) {
+                        return d.status === 1;
+                    },
+                    cls: "btn-danger btn-sm",
+                    handle: function (index, d) {
+                        bootbox.confirm("确定该操作?", function (result) {
+                            if (result) {
+                                var requestUrl = App.href + "/api/core/appUser/nopass";
+                                $.ajax({
+                                    type: "GET",
+                                    dataType: "json",
+                                    data: {
+                                        id: d.id
+                                    },
+                                    url: requestUrl,
+                                    success: function (data) {
+                                        if (data.code === 200) {
+                                            grid.reload();
+                                        } else {
+                                            alert(data.message);
+                                        }
+                                    },
+                                    error: function (e) {
+                                        alert("请求异常。");
+                                    }
+                                });
+                            }
+                        });
                     }
                 },
                 {

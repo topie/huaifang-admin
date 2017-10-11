@@ -92,7 +92,7 @@ public class PersonInfoController {
         appUser.setAddTime(new Date());
         appUser.setMobilePhone(personInfo.getpMobilePhone());
         appUser.setLoginStatus(1);
-        appUser.setStatus(0);
+        appUser.setStatus(2);
         iAppUserService.saveNotNull(appUser);
         personInfoRent.setrPersonId(personInfo.getpId());
         personInfoRent.setrName(personInfo.getpName());
@@ -130,7 +130,7 @@ public class PersonInfoController {
         appUser.setAddTime(new Date());
         appUser.setMobilePhone(personInfo.getpMobilePhone());
         appUser.setLoginStatus(1);
-        appUser.setStatus(0);
+        appUser.setStatus(2);
         iAppUserService.saveNotNull(appUser);
         personInfoLive.setlPersonId(personInfo.getpId());
         personInfoLive.setlName(personInfo.getpName());
