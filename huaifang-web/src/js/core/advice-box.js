@@ -51,7 +51,7 @@
                 },
                 {
                     title: "联系邮箱",
-                    field: "concatEmail"
+                    field: "contactEmail"
                 },
                 {
                     title: "留言内容",
@@ -83,6 +83,13 @@
                         success: function (data) {
                             if (data.code === 200) {
                                 var formItems = data.data;
+                                var formItems = data.data;
+                                var items = [];
+                                $.each(formItems, function (jj, jd) {
+                                    if (jd.name == 'contactUserId')
+                                        jd.type = 'hidden';
+                                    items.push(jd);
+                                });
                                 var form = modal.$body.orangeForm({
                                     id: "edit_form",
                                     name: "edit_form",
@@ -105,7 +112,7 @@
                                         }
                                     }],
                                     buttonsAlign: "center",
-                                    items: formItems
+                                    items: items
                                 });
                                 form.loadRemote(App.href + "/api/core/adviceBox/load/" + d.id);
                             } else {
@@ -165,6 +172,12 @@
                             success: function (data) {
                                 if (data.code === 200) {
                                     var formItems = data.data;
+                                    var items = [];
+                                    $.each(formItems, function (jj, jd) {
+                                        if (jd.name == 'contactUserId')
+                                            jd.type = 'hidden';
+                                        items.push(jd);
+                                    });
                                     var form = modal.$body.orangeForm({
                                         id: "add_form",
                                         name: "add_form",
@@ -188,7 +201,7 @@
                                             }
                                         }],
                                         buttonsAlign: "center",
-                                        items: formItems
+                                        items: items
                                     });
                                 } else {
                                     alert(data.message);
