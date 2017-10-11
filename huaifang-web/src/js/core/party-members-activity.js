@@ -173,7 +173,41 @@
                         }
                     });
                 }
-            }],
+            }, {
+                textHandle: function (i, d) {
+                    return '上线';
+                },
+                visible: function (i, d) {
+                    return d.status === 0;
+                },
+                cls: "btn-info btn-sm",
+                handle: function (index, data) {
+                    bootbox.confirm("确定该操作?", function (result) {
+                        if (result) {
+                            var requestUrl = App.href + "/api/core/partyMembersActivity/online";
+                            $.ajax({
+                                type: "GET",
+                                dataType: "json",
+                                data: {
+                                    id: data.id
+                                },
+                                url: requestUrl,
+                                success: function (data) {
+                                    if (data.code === 200) {
+                                        grid.reload();
+                                    } else {
+                                        alert(data.message);
+                                    }
+                                },
+                                error: function (e) {
+                                    alert("请求异常。");
+                                }
+                            });
+                        }
+                    });
+                }
+            }
+            ],
             tools: [
                 {
                     text: " 添 加",

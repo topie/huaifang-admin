@@ -231,6 +231,8 @@
                                                         if (jd.name == 'reportId') {
                                                             jd.value = reportId;
                                                         }
+                                                        if(jd.name == 'contactUserId')
+                                                            jd.type='hidden';
                                                         items.push(jd);
                                                     });
                                                     modal2.$body.orangeForm({
@@ -371,6 +373,12 @@
                             success: function (data) {
                                 if (data.code === 200) {
                                     var formItems = data.data;
+                                    var items = [];
+                                    $.each(formItems, function (jj, jd) {
+                                        if(jd.name == 'contactUserId')
+                                            jd.type='hidden';
+                                        items.push(jd);
+                                    });
                                     var form = modal.$body.orangeForm({
                                         id: "add_form",
                                         name: "add_form",
@@ -394,7 +402,7 @@
                                             }
                                         }],
                                         buttonsAlign: "center",
-                                        items: formItems
+                                        items: items
                                     });
                                 } else {
                                     alert(data.message);
