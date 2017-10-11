@@ -170,6 +170,8 @@ public class MoAppUserController {
         authUser.setHouseId(houseId);
         authUser.setPersonId(personInfo.getpId());
         iAuthUserService.updateNotNull(authUser);//认证关系
+        appUser.setStatus(1);
+        iAppUserService.updateNotNull(appUser);
         return ResponseUtil.success();
     }
 
