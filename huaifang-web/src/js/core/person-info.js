@@ -279,7 +279,7 @@
                                             max: "必须是房屋节点"
                                         }
                                     }, {
-                                        type: 'text',
+                                        type: 'hidden',
                                         name: 'personId',
                                         value: data.pId
                                     }
