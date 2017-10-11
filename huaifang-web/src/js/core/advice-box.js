@@ -83,7 +83,6 @@
                         success: function (data) {
                             if (data.code === 200) {
                                 var formItems = data.data;
-                                var formItems = data.data;
                                 var items = [];
                                 $.each(formItems, function (jj, jd) {
                                     if (jd.name === 'contactUserId')

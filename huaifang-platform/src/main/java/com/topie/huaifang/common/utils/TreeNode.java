@@ -4,18 +4,34 @@ package com.topie.huaifang.common.utils;
  * Created by cgj on 2015/11/23.
  */
 public class TreeNode {
+
     private int id;
+
     private int pId;
+
     private String name;
+
     private boolean checked;
+
     private boolean open;
-    
+
     private String type;
 
     private int i;
+
     private String s;
+
     private boolean b;
 
+    private String icon;
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
 
     public int getId() {
         return id;
@@ -81,13 +97,12 @@ public class TreeNode {
         this.b = b;
     }
 
-	public String getType() {
-		return type;
-	}
+    public String getType() {
+        return type;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
-    
-    
+    public void setType(String type) {
+        this.type = type;
+    }
+
 }

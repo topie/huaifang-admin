@@ -143,8 +143,8 @@
 
                                     if (dd.name == 'houseNodeId') {
                                         dd.type = 'tree';
-                                        dd.expandAll = true;
                                         dd.url = App.href + "/api/core/houseNode/treeNodes";
+                                        dd.expandAll = true;
                                         dd.chkStyle = 'radio';
                                         dd.beforeCheck = function (treeId, treeNode, form) {
                                             var fullName = '';

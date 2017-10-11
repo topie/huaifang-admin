@@ -70,6 +70,7 @@ public class HouseNodeController {
             treeNode.setId(nodeInfo.getId());
             treeNode.setpId(nodeInfo.getPid());
             treeNode.setName(nodeInfo.getName());
+            treeNode.setIcon("upload/node.png");
             nodes.add(treeNode);
         }
         return nodes;

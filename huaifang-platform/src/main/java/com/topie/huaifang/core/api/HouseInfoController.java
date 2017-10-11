@@ -5,17 +5,17 @@ import com.topie.huaifang.common.tools.plugins.FormItem;
 import com.topie.huaifang.common.utils.PageConvertUtil;
 import com.topie.huaifang.common.utils.ResponseUtil;
 import com.topie.huaifang.common.utils.Result;
-import com.topie.huaifang.core.service.IAuthUserService;
-import com.topie.huaifang.core.service.ICommonQueryService;
-import com.topie.huaifang.core.service.IHouseInfoService;
-import com.topie.huaifang.core.service.IHouseNodeService;
+import com.topie.huaifang.common.utils.TreeNode;
+import com.topie.huaifang.core.service.*;
 import com.topie.huaifang.database.core.model.AuthUser;
 import com.topie.huaifang.database.core.model.HouseInfo;
+import com.topie.huaifang.database.core.model.HouseNode;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,6 +36,9 @@ public class HouseInfoController {
 
     @Autowired
     private ICommonQueryService iCommonQueryService;
+
+    @Autowired
+    private IPersonInfoService iPersonInfoService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
@@ -138,6 +141,44 @@ public class HouseInfoController {
     public Result delete(@RequestParam(value = "id") Integer id) {
         iHouseInfoService.delete(id);
         return ResponseUtil.success();
+    }
+
+    @RequestMapping(value = "/treeNodes")
+    @ResponseBody
+    public Object treeNodes(@RequestParam(value = "personId", required = false) Integer personId) {
+        HouseNode houseNode = new HouseNode();
+        List<TreeNode> nodes = new ArrayList<>();
+        List<HouseNode> list = iHouseNodeService.selectByFilter(houseNode);
+        for (HouseNode nodeInfo : list) {
+            TreeNode treeNode = new TreeNode();
+            treeNode.setId(nodeInfo.getId());
+            treeNode.setpId(nodeInfo.getPid());
+            treeNode.setName(nodeInfo.getName());
+            treeNode.setIcon("upload/node.png");
+            nodes.add(treeNode);
+        }
+        AuthUser cu = new AuthUser();
+        if (personId != null) {
+            AuthUser authUser = new AuthUser();
+            authUser.setPersonId(personId);
+            List<AuthUser> authUsers = iAuthUserService.selectByFilter(authUser);
+            if (CollectionUtils.isNotEmpty(authUsers)) {
+                cu = authUsers.get(0);
+            }
+        }
+        List<HouseInfo> houseInfos = iHouseInfoService.selectAll();
+        for (HouseInfo houseInfo : houseInfos) {
+            TreeNode treeNode = new TreeNode();
+            treeNode.setIcon("upload/house.png");
+            treeNode.setId(-houseInfo.getId());
+            treeNode.setpId(houseInfo.getHouseNodeId());
+            treeNode.setName(houseInfo.getRoomNumber());
+            if (cu.getHouseId() != null && cu.getHouseId().intValue() == houseInfo.getId().intValue()) {
+                treeNode.setChecked(true);
+            }
+            nodes.add(treeNode);
+        }
+        return nodes;
     }
 
 }

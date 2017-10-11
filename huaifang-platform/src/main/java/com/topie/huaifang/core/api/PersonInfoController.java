@@ -49,6 +49,9 @@ public class PersonInfoController {
     @Autowired
     private IAuthUserService iAuthUserService;
 
+    @Autowired
+    private IHouseInfoService iHouseInfoService;
+
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
     public Result list(PersonInfo personInfo,
@@ -237,6 +240,30 @@ public class PersonInfoController {
         if (personInfoRent != null) iPersonInfoRentService.delete(personInfoRent.getrId());
         PersonInfoLive personInfoLive = iPersonInfoLiveService.selectByPersonId(id);
         if (personInfoLive != null) iPersonInfoLiveService.delete(personInfoLive.getlId());
+        return ResponseUtil.success();
+    }
+
+    @RequestMapping(value = "/bindHouse")
+    @ResponseBody
+    public Result bindHouse(@RequestParam(value = "personId") Integer personId,
+            @RequestParam(value = "houseId") Integer houseId) {
+        if (houseId > 0) ResponseUtil.error("请选择房屋节点绑定");
+        houseId = -houseId;
+        AuthUser authUser = new AuthUser();
+        authUser.setPersonId(personId);
+        List<AuthUser> authUsers = iAuthUserService.selectByFilter(authUser);
+        if (CollectionUtils.isNotEmpty(authUsers)) {
+            authUser = authUsers.get(0);
+            authUser.setHouseId(houseId);
+            iAuthUserService.updateNotNull(authUser);
+            HouseInfo houseInfo = iHouseInfoService.selectByKey(houseId);
+            PersonInfo personInfo = iPersonInfoService.selectByKey(personId);
+            personInfo.setpHouseNodeId(houseId);
+            personInfo.setpHouseInfo(houseInfo.getAddress() + " " + houseInfo.getRoomNumber());
+            iPersonInfoService.updateNotNull(personInfo);
+        } else {
+            return ResponseUtil.error("改人口信息未绑定平台账号");
+        }
         return ResponseUtil.success();
     }
 
