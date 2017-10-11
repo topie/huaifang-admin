@@ -92,6 +92,13 @@
                         url: App.href + "/api/core/partyMembersInfo/formItems",
                         success: function (data) {
                             if (data.code === 200) {
+                                var getFullName = function (name, node) {
+                                    if (node.getParentNode() != null) {
+                                        name = node.getParentNode().name + ' ' + name;
+                                        name = getFullName(name, node.getParentNode());
+                                    }
+                                    return name;
+                                };
                                 var formItems = data.data;
                                 var items = [];
                                 $.each(formItems, function (i, d) {
@@ -99,6 +106,20 @@
                                         d.type = 'tree';
                                         d.url = App.href + "/api/core/partyMembersNode/treeNodes";
                                         d.chkStyle = 'radio';
+                                        d.beforeCheck = function (treeId, treeNode, form) {
+                                            var fullName = '';
+                                            if (treeNode.getParentNode() != null) {
+                                                fullName = getFullName(treeNode.name, treeNode);
+                                            } else {
+                                                fullName = treeNode.name;
+                                            }
+                                            form.$element.find("#partyNodeName").val(fullName);
+                                        };
+                                    }
+                                    if (d.name == 'nodeName') {
+                                        d.readonly = "readonly";
+                                        d.name = 'partyNodeName';
+                                        d.id = 'partyNodeName';
                                     }
                                     items.push(d);
                                 });
@@ -184,6 +205,13 @@
                             url: App.href + "/api/core/partyMembersInfo/formItems",
                             success: function (data) {
                                 if (data.code === 200) {
+                                    var getFullName = function (name, node) {
+                                        if (node.getParentNode() != null) {
+                                            name = node.getParentNode().name + ' ' + name;
+                                            name = getFullName(name, node.getParentNode());
+                                        }
+                                        return name;
+                                    };
                                     var formItems = data.data;
                                     var items = [];
                                     $.each(formItems, function (i, d) {
@@ -191,6 +219,20 @@
                                             d.type = 'tree';
                                             d.url = App.href + "/api/core/partyMembersNode/treeNodes";
                                             d.chkStyle = 'radio';
+                                            d.beforeCheck = function (treeId, treeNode, form) {
+                                                var fullName = '';
+                                                if (treeNode.getParentNode() != null) {
+                                                    fullName = getFullName(treeNode.name, treeNode);
+                                                } else {
+                                                    fullName = treeNode.name;
+                                                }
+                                                form.$element.find("#partyNodeName").val(fullName);
+                                            };
+                                        }
+                                        if (d.name == 'nodeName') {
+                                            d.readonly = "readonly";
+                                            d.name = 'partyNodeName';
+                                            d.id = 'partyNodeName';
                                         }
                                         items.push(d);
                                     });
