@@ -29,7 +29,7 @@ public class AppTimeLineCommentServiceImpl extends BaseService<AppTimeLineCommen
         if (appTimeLineComment.getLineId() != null) criteria.andEqualTo("lineId", appTimeLineComment.getLineId());
         if (appTimeLineComment.getCommentTime() != null)
             criteria.andGreaterThan("commentTime", appTimeLineComment.getCommentTime());
-        example.setOrderByClause(" commentTime asc");
+        example.setOrderByClause("comment_time desc");
         return getMapper().selectByExample(example);
     }
 

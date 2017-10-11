@@ -26,7 +26,7 @@ public class AppTimeLineLikeServiceImpl extends BaseService<AppTimeLineLike> imp
         Example.Criteria criteria = example.createCriteria();
         if (appTimeLineLike.getLineId() != null) criteria.andEqualTo("lineId", appTimeLineLike.getLineId());
         if (appTimeLineLike.getLikeTime() != null) criteria.andGreaterThan("likeTime", appTimeLineLike.getLikeTime());
-        example.setOrderByClause(" likeTime asc");
+        example.setOrderByClause(" like_time desc");
         return getMapper().selectByExample(example);
     }
 
