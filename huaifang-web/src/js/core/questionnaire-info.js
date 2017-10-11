@@ -557,9 +557,29 @@
                 items: [
                     {
                         type: "text",
-                        label: "联系电话",
-                        name: "contactPhone",
-                        placeholder: "输入要搜索的联系电话"
+                        label: "问卷调查名称",
+                        name: "name",
+                        placeholder: "输入要搜索的问卷调查名称"
+                    },
+                    {
+                        type: "select",
+                        label: "状态",
+                        name: "status",
+                        items: [
+                            {
+                                text: '全部',
+                                value: ''
+                            },{
+                                text: '未发布',
+                                value: '未发布'
+                            }, {
+                                text: '已发布',
+                                value: '已发布'
+                            }, {
+                                text: '已回收',
+                                value: '已回收'
+                            }
+                        ]
                     }
                 ]
             }
