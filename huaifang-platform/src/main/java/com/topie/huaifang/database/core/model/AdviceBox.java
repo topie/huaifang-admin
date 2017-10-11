@@ -71,7 +71,7 @@ public class AdviceBox {
     /**
      * 处理时间:datetime
      */
-    @Column(name = "message_time")
+    @Column(name = "handle_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date handleTime;
 

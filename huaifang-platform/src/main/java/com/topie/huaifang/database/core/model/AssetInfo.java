@@ -1,5 +1,8 @@
 package com.topie.huaifang.database.core.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 import javax.persistence.*;
 
@@ -65,6 +68,7 @@ public class AssetInfo {
      * 获得日期:date
      */
     @Column(name = "get_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date getDate;
 
     /**
@@ -77,6 +81,7 @@ public class AssetInfo {
      * 财务入账日期:date
      */
     @Column(name = "caiwuruzhang_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date caiwuruzhangDate;
 
     /**
@@ -293,6 +298,7 @@ public class AssetInfo {
      *
      * @return get_date - 获得日期:date
      */
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")
     public Date getGetDate() {
         return getDate;
     }
@@ -329,6 +335,7 @@ public class AssetInfo {
      *
      * @return caiwuruzhang_date - 财务入账日期:date
      */
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Shanghai")
     public Date getCaiwuruzhangDate() {
         return caiwuruzhangDate;
     }
