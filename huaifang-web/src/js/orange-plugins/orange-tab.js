@@ -73,22 +73,27 @@
 
         },
         renderContent: function (spanElement, content) {
+            var rObject = $(spanElement);
             if (content.plugin !== undefined) {
                 switch (content.plugin) {
                     case 'grid':
-                        $(spanElement).orangeGrid(content.options);
+                        rObject = $(spanElement).orangeGrid(content.options);
                         break;
                     case 'form':
-                        $(spanElement).orangeForm(content.options);
+                        rObject = $(spanElement).orangeForm(content.options);
                         break;
                     case 'tab':
-                        $(spanElement).orangeTab(content.options);
+                        rObject = $(spanElement).orangeTab(content.options);
                         break;
                     default:
                         $(spanElement).append(content.html);
                 }
             } else {
                 $(spanElement).append(content.html);
+            }
+            console.log(content.afterRender);
+            if (content.afterRender != undefined) {
+                content.afterRender(rObject);
             }
         }
     };

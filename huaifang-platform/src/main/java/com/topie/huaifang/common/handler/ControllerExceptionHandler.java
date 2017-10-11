@@ -5,6 +5,7 @@ import com.topie.huaifang.common.utils.ResponseUtil;
 import com.topie.huaifang.common.utils.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,11 +23,16 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public Result handleAllException(Exception e) {
+        String error = e.getMessage();
         if (e instanceof BusinessException) {
-            logger.error(e.getMessage());
+            error = e.getMessage();
+            logger.error(error);
+        } else if (e instanceof BindException) {
+            error = ((BindException) e).getAllErrors().get(0).getDefaultMessage();
+            logger.error(error);
         } else {
             e.printStackTrace();
         }
-        return ResponseUtil.error(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
+        return ResponseUtil.error(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, error);
     }
 }

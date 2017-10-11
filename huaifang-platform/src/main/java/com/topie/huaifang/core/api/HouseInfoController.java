@@ -5,10 +5,13 @@ import com.topie.huaifang.common.tools.plugins.FormItem;
 import com.topie.huaifang.common.utils.PageConvertUtil;
 import com.topie.huaifang.common.utils.ResponseUtil;
 import com.topie.huaifang.common.utils.Result;
+import com.topie.huaifang.core.service.IAuthUserService;
 import com.topie.huaifang.core.service.ICommonQueryService;
 import com.topie.huaifang.core.service.IHouseInfoService;
 import com.topie.huaifang.core.service.IHouseNodeService;
+import com.topie.huaifang.database.core.model.AuthUser;
 import com.topie.huaifang.database.core.model.HouseInfo;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +30,9 @@ public class HouseInfoController {
 
     @Autowired
     private IHouseNodeService iHouseNodeService;
+
+    @Autowired
+    private IAuthUserService iAuthUserService;
 
     @Autowired
     private ICommonQueryService iCommonQueryService;
@@ -109,6 +115,22 @@ public class HouseInfoController {
     public Result load(@PathVariable(value = "id") Integer id) {
         HouseInfo houseInfo = iHouseInfoService.selectByKey(id);
         return ResponseUtil.success(houseInfo);
+    }
+
+    @RequestMapping(value = "/loadByAppUser/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public Result loadByAppUser(@PathVariable(value = "id") Integer id) {
+        AuthUser authUser = new AuthUser();
+        authUser.setUserId(id);
+        List<AuthUser> authUsers = iAuthUserService.selectByFilter(authUser);
+        if (CollectionUtils.isNotEmpty(authUsers)) {
+            Integer houseId = authUsers.get(0).getHouseId();
+            HouseInfo houseInfo = iHouseInfoService.selectByKey(houseId);
+            return ResponseUtil.success(houseInfo);
+        } else {
+            return ResponseUtil.success();
+        }
+
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.GET)

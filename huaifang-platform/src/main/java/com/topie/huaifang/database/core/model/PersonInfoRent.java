@@ -93,7 +93,6 @@ public class PersonInfoRent {
     /**
      * 联系电话
      */
-    @Column(name = "r_contact")
     private String rContact;
 
     /**

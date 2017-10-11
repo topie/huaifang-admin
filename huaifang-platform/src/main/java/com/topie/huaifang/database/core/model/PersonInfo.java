@@ -1,13 +1,15 @@
 package com.topie.huaifang.database.core.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
 import javax.persistence.*;
+import java.util.Date;
 
 @Table(name = "d_person_info")
 public class PersonInfo {
+
     /**
      * ID:hidden
      */
@@ -35,9 +37,17 @@ public class PersonInfo {
     private String pHouseInfo;
 
     /**
+     * 手机号码
+     */
+    @Column(name = "p_mobile_phone")
+    @NotEmpty(message = "手机号码不能为空")
+    private String pMobilePhone;
+
+    /**
      * 姓名
      */
     @Column(name = "p_name")
+    @NotEmpty(message = "姓名不能为空")
     private String pName;
 
     /**
@@ -51,6 +61,7 @@ public class PersonInfo {
      * 身份证号
      */
     @Column(name = "p_identify_number")
+    @NotEmpty(message = "身份证号不能为空")
     private String pIdentifyNumber;
 
     /**
@@ -59,6 +70,14 @@ public class PersonInfo {
     @Column(name = "p_import_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date pImportTime;
+
+    public String getpMobilePhone() {
+        return pMobilePhone;
+    }
+
+    public void setpMobilePhone(String pMobilePhone) {
+        this.pMobilePhone = pMobilePhone;
+    }
 
     /**
      * 获取ID:hidden

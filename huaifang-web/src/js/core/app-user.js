@@ -54,10 +54,6 @@
                     field: "mobilePhone"
                 },
                 {
-                    title: "身份证号",
-                    field: "identityNumber"
-                },
-                {
                     title: "注册时间",
                     field: "regTime"
                 },
@@ -100,86 +96,302 @@
             ],
             actionColumnText: "操作",//操作列文本
             actionColumnWidth: "20%",
-            actionColumns: [{
-                text: "编辑",
-                cls: "btn-primary btn-sm",
-                handle: function (index, d) {
-                    var modal = $.orangeModal({
-                        id: "appUserForm",
-                        title: "编辑",
-                        destroy: true
-                    }).show();
-                    $.ajax({
-                        type: "GET",
-                        dataType: "json",
-                        url: App.href + "/api/core/appUser/formItems",
-                        success: function (data) {
-                            if (data.code === 200) {
-                                var formItems = data.data;
-                                var form = modal.$body.orangeForm({
-                                    id: "edit_form",
-                                    name: "edit_form",
-                                    method: "POST",
-                                    action: App.href + "/api/core/appUser/update",
-                                    ajaxSubmit: true,
-                                    ajaxSuccess: function () {
-                                        modal.hide();
-                                        grid.reload();
-                                    },
-                                    submitText: "保存",
-                                    showReset: true,
-                                    resetText: "重置",
-                                    isValidate: true,
-                                    buttons: [{
-                                        type: 'button',
-                                        text: '关闭',
-                                        handle: function () {
-                                            modal.hide();
-                                        }
-                                    }],
-                                    buttonsAlign: "center",
-                                    items: formItems
-                                });
-                                form.loadRemote(App.href + "/api/core/appUser/load/" + d.id);
-                            } else {
-                                alert(data.message);
-                            }
-                        },
-                        error: function (e) {
-                            alert("请求异常。");
-                        }
-                    });
+            actionColumns: [
+                {
+                    text: "查看详情",
+                    cls: "btn-primary btn-sm",
+                    handle: function (index, d) {
+                        var modal = $.orangeModal({
+                            id: "appUserForm",
+                            title: "查看详情",
+                            destroy: true
+                        }).show();
 
-                }
-            }, {
-                text: "删除",
-                cls: "btn-danger btn-sm",
-                handle: function (index, data) {
-                    bootbox.confirm("确定该操作?", function (result) {
-                        if (result) {
-                            var requestUrl = App.href + "/api/core/appUser/delete";
-                            $.ajax({
-                                type: "GET",
-                                dataType: "json",
-                                data: {
-                                    id: data.id
-                                },
-                                url: requestUrl,
-                                success: function (data) {
-                                    if (data.code === 200) {
-                                        grid.reload();
-                                    } else {
-                                        alert(data.message);
-                                    }
-                                },
-                                error: function (e) {
-                                    alert("请求异常。");
+                        $.ajax({
+                            type: "GET",
+                            dataType: "json",
+                            url: App.href + "/api/core/commonQuery/formItems",
+                            data: {
+                                tables: 'd_app_user,d_person_info,d_person_info_live,d_person_info_rent,d_house_info'
+                            },
+                            success: function (data) {
+                                if (data.code === 200) {
+                                    var formItems1 = data.data['d_app_user'];
+                                    var items1 = [];
+                                    $.each(formItems1, function (ii, dd) {
+                                        dd.readonly = "readonly";
+                                        if (dd.type === 'datepicker')
+                                            dd.type = 'display';
+                                        items1.push(dd);
+                                    });
+
+                                    var formItems2 = data.data['d_person_info'];
+                                    var items2 = [];
+                                    $.each(formItems2, function (ii, dd) {
+                                        dd.readonly = "readonly";
+                                        if (dd.type === 'datepicker')
+                                            dd.type = 'display';
+                                        items2.push(dd);
+                                    });
+
+                                    var formItems3 = data.data['d_person_info_live'];
+                                    var items3 = [];
+                                    $.each(formItems3, function (ii, dd) {
+                                        dd.readonly = "readonly";
+                                        if (dd.type === 'datepicker')
+                                            dd.type = 'display';
+                                        items3.push(dd);
+                                    });
+
+                                    var formItems4 = data.data['d_person_info_rent'];
+                                    var items4 = [];
+                                    $.each(formItems4, function (ii, dd) {
+                                        if (dd.name == 'rFirmIndustry') {
+                                            dd.items = [
+                                                {
+                                                    text: '请选择',
+                                                    value: ''
+                                                },
+                                                {
+                                                    text: '农、林、牧、渔业',
+                                                    value: '农、林、牧、渔业'
+                                                },
+                                                {
+                                                    text: '采矿业',
+                                                    value: '采矿业'
+                                                },
+                                                {
+                                                    text: '其它',
+                                                    value: '其它'
+                                                }
+                                            ]
+                                        }
+                                        dd.readonly = "readonly";
+                                        if (dd.type === 'datepicker')
+                                            dd.type = 'display';
+                                        items4.push(dd);
+                                    });
+                                    var formItems5 = data.data['d_house_info'];
+                                    var items5 = [];
+                                    $.each(formItems5, function (ii, dd) {
+                                        dd.readonly = "readonly";
+                                        if (dd.type === 'datepicker')
+                                            dd.type = 'display';
+                                        if (dd.type === 'tree')
+                                            dd.type = 'hidden';
+                                        items5.push(dd);
+                                    });
+
+
+                                    modal.$body.orangeTab({
+                                        tabs: [
+                                            {
+                                                title: 'APP用户信息',
+                                                active: true,
+                                                content: {
+                                                    plugin: 'form',
+                                                    options: {
+                                                        id: "app_view_form",
+                                                        name: "app_view_form",
+                                                        method: "POST",
+                                                        action: App.href + "/api/core/appUser/update",
+                                                        ajaxSubmit: true,
+                                                        ajaxSuccess: function () {
+                                                            modal.hide();
+                                                            grid.reload();
+                                                        },
+                                                        showReset: false,
+                                                        showSubmit: false,
+                                                        isValidate: true,
+                                                        buttons: [{
+                                                            type: 'button',
+                                                            text: '关闭',
+                                                            handle: function () {
+                                                                modal.hide();
+                                                            }
+                                                        }],
+                                                        buttonsAlign: "center",
+                                                        items: items1
+                                                    },
+                                                    afterRender: function (form) {
+                                                        form.loadRemote(App.href + "/api/core/appUser/load/" + d.id);
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                title: '人口基本信息',
+                                                active: false,
+                                                content: {
+                                                    plugin: 'form',
+                                                    options: {
+                                                        id: "p_view_form",
+                                                        name: "p_view_form",
+                                                        method: "POST",
+                                                        action: "",
+                                                        ajaxSubmit: true,
+                                                        ajaxSuccess: function () {
+                                                            modal.hide();
+                                                            grid.reload();
+                                                        },
+                                                        showReset: false,
+                                                        showSubmit: false,
+                                                        isValidate: true,
+                                                        buttons: [{
+                                                            type: 'button',
+                                                            text: '关闭',
+                                                            handle: function () {
+                                                                modal.hide();
+                                                            }
+                                                        }],
+                                                        buttonsAlign: "center",
+                                                        items: items2
+                                                    },
+                                                    afterRender: function (form) {
+                                                        form.loadRemote(App.href + "/api/core/personInfo/loadByAppUser/" + d.id);
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                title: '人口租户信息',
+                                                active: false,
+                                                content: {
+                                                    plugin: 'form',
+                                                    options: {
+                                                        id: "r_view_form",
+                                                        name: "r_view_form",
+                                                        method: "POST",
+                                                        action: "",
+                                                        ajaxSubmit: true,
+                                                        ajaxSuccess: function () {
+                                                            modal.hide();
+                                                            grid.reload();
+                                                        },
+                                                        showReset: false,
+                                                        showSubmit: false,
+                                                        isValidate: true,
+                                                        buttons: [{
+                                                            type: 'button',
+                                                            text: '关闭',
+                                                            handle: function () {
+                                                                modal.hide();
+                                                            }
+                                                        }],
+                                                        buttonsAlign: "center",
+                                                        items: items4
+                                                    },
+                                                    afterRender: function (form) {
+                                                        form.loadRemote(App.href + "/api/core/personInfo/loadRentByAppUser/" + d.id);
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                title: '人口住户信息',
+                                                active: false,
+                                                content: {
+                                                    plugin: 'form',
+                                                    options: {
+                                                        id: "l_view_form",
+                                                        name: "l_view_form",
+                                                        method: "POST",
+                                                        action: "",
+                                                        ajaxSubmit: true,
+                                                        ajaxSuccess: function () {
+                                                            modal.hide();
+                                                            grid.reload();
+                                                        },
+                                                        showReset: false,
+                                                        showSubmit: false,
+                                                        isValidate: true,
+                                                        buttons: [{
+                                                            type: 'button',
+                                                            text: '关闭',
+                                                            handle: function () {
+                                                                modal.hide();
+                                                            }
+                                                        }],
+                                                        buttonsAlign: "center",
+                                                        items: items3
+                                                    },
+                                                    afterRender: function (form) {
+                                                        form.loadRemote(App.href + "/api/core/personInfo/loadLiveByAppUser/" + d.id);
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                title: '房屋信息',
+                                                active: false,
+                                                content: {
+                                                    plugin: 'form',
+                                                    options: {
+                                                        id: "house_view_form",
+                                                        name: "house_view_form",
+                                                        method: "POST",
+                                                        action: "",
+                                                        ajaxSubmit: true,
+                                                        ajaxSuccess: function () {
+                                                            modal.hide();
+                                                            grid.reload();
+                                                        },
+                                                        showReset: false,
+                                                        showSubmit: false,
+                                                        isValidate: true,
+                                                        buttons: [{
+                                                            type: 'button',
+                                                            text: '关闭',
+                                                            handle: function () {
+                                                                modal.hide();
+                                                            }
+                                                        }],
+                                                        buttonsAlign: "center",
+                                                        items: items5
+                                                    },
+                                                    afterRender: function (form) {
+                                                        form.loadRemote(App.href + "/api/core/houseInfo/loadByAppUser/" + d.id);
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    });
+                                } else {
+                                    alert(data.message);
                                 }
-                            });
-                        }
-                    });
+                            },
+                            error: function (e) {
+                                alert("请求异常。");
+                            }
+                        });
+
+                    }
+                }, {
+                    text: "删除",
+                    cls: "btn-danger btn-sm",
+                    handle: function (index, data) {
+                        bootbox.confirm("确定该操作?", function (result) {
+                            if (result) {
+                                var requestUrl = App.href + "/api/core/appUser/delete";
+                                $.ajax({
+                                    type: "GET",
+                                    dataType: "json",
+                                    data: {
+                                        id: data.id
+                                    },
+                                    url: requestUrl,
+                                    success: function (data) {
+                                        if (data.code === 200) {
+                                            grid.reload();
+                                        } else {
+                                            alert(data.message);
+                                        }
+                                    },
+                                    error: function (e) {
+                                        alert("请求异常。");
+                                    }
+                                });
+                            }
+                        });
+                    }
                 }
-            }],
+            ],
             tools: [
                 {
                     text: " 添 加",
@@ -247,6 +459,7 @@
                 ]
             }
         };
+
         grid = window.App.content.find("#grid").orangeGrid(options);
     }
 })(jQuery, window, document);

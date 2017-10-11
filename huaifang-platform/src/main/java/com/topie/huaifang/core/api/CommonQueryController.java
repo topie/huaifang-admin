@@ -1,14 +1,20 @@
 package com.topie.huaifang.core.api;
 
 import com.github.pagehelper.PageInfo;
+import com.topie.huaifang.common.tools.plugins.FormItem;
 import com.topie.huaifang.common.utils.PageConvertUtil;
 import com.topie.huaifang.common.utils.ResponseUtil;
 import com.topie.huaifang.common.utils.Result;
 import com.topie.huaifang.core.service.ICommonQueryService;
 import com.topie.huaifang.database.core.model.CommonQuery;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by chenguojun on 2017/4/19.
@@ -55,6 +61,20 @@ public class CommonQueryController {
     public Result delete(@RequestParam(value = "id") Integer id) {
         iCommonQueryService.delete(id);
         return ResponseUtil.success();
+    }
+
+    @RequestMapping(value = "/formItems", method = RequestMethod.GET)
+    @ResponseBody
+    public Result formItems(@RequestParam(value = "tables") String tables) {
+        Map tbsMap = new HashMap<>();
+        String[] tbs = tables.split(",");
+        for (String tb : tbs) {
+            if (StringUtils.isNotEmpty(tb)) {
+                List<FormItem> list = iCommonQueryService.selectFormItemsByTable(tb);
+                tbsMap.put(tb, list);
+            }
+        }
+        return ResponseUtil.success(tbsMap);
     }
 
 }

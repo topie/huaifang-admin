@@ -108,6 +108,14 @@
                                             value: d.pPersonType
                                         }];
                                     }
+                                    if (dd.name == 'pMobilePhone' || dd.name == 'pName' || dd.name == 'pIdentifyNumber') {
+                                        dd.rule = {
+                                            required: true
+                                        };
+                                        dd.message = {
+                                            required: "必填"
+                                        }
+                                    }
                                     items.push(dd);
                                 });
                                 items.push(
@@ -139,6 +147,10 @@
                                                             {
                                                                 text: '采矿业',
                                                                 value: '采矿业'
+                                                            },
+                                                            {
+                                                                text: '其它',
+                                                                value: '其它'
                                                             }
                                                         ]
                                                     }
@@ -255,7 +267,16 @@
                                                 }
                                             ];
                                         }
+                                        if (dd.name == 'pMobilePhone' || dd.name == 'pName' || dd.name == 'pIdentifyNumber') {
+                                            dd.rule = {
+                                                required: true
+                                            };
+                                            dd.message = {
+                                                required: "必填"
+                                            }
+                                        }
                                         items.push(dd);
+
                                     });
                                     items.push(
                                         {
@@ -370,6 +391,14 @@
                                                 text: '住户',
                                                 value: '住户'
                                             }];
+                                        }
+                                        if (dd.name == 'pMobilePhone' || dd.name == 'pName' || dd.name == 'pIdentifyNumber') {
+                                            dd.rule = {
+                                                required: true
+                                            };
+                                            dd.message = {
+                                                required: "必填"
+                                            }
                                         }
                                         items.push(dd);
                                     });

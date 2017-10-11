@@ -50,6 +50,13 @@ public class AppTest {
     }
 
     @Test
+    public void idNum() throws Exception {
+        String idNum = "350822199008151317";
+
+        System.out.println(idNum.substring(idNum.length()-6));
+    }
+
+    @Test
     public void json() {
         DisputeResolution item  = new DisputeResolution();
         List<DisputeResolution> list = new ArrayList<>();

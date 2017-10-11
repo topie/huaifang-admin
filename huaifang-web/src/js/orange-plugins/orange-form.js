@@ -180,6 +180,7 @@
             });
             this.$element.append(alertDiv);
             alertDiv.delay(seconds * 1000).fadeOut();
+            bootbox.alert(alertText);
         },
         _setVariable: function (element, options) {
             this.$element = $(element);
@@ -960,6 +961,10 @@
                     "id_": (data.id === undefined ? data.name : data.id),
                     "name_": data.name
                 });
+                if (data.readonly == 'readonly') {
+                    ele.find(".btn").hide();
+                    ele.find("span").hide();
+                }
                 if (data.uploadUrl === undefined) {
                     data.uploadUrl = App.href + "/api/common/uploadImage";
                 }
@@ -1055,16 +1060,18 @@
                                 }
                             });
                     };
-                    if (data.autoUpload) {
-                        ele.find('[role="file"]').on("change", function () {
-                            uploadFile();
-                        });
-                    } else {
-                        var upload = $('<a href="javascript:;" role="upload" data-dismiss="fileinput" class="btn btn-primary fileinput-exists">上传 </a>');
-                        ele.find("[role='imageDiv']").append(upload);
-                        upload.on("click", function () {
-                            uploadFile();
-                        });
+                    if (data.readonly !== 'readonly') {
+                        if (data.autoUpload) {
+                            ele.find('[role="file"]').on("change", function () {
+                                uploadFile();
+                            });
+                        } else {
+                            var upload = $('<a href="javascript:;" role="upload" data-dismiss="fileinput" class="btn btn-primary fileinput-exists">上传 </a>');
+                            ele.find("[role='imageDiv']").append(upload);
+                            upload.on("click", function () {
+                                uploadFile();
+                            });
+                        }
                     }
                 }
                 return ele;

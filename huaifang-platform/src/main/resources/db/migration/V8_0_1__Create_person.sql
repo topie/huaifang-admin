@@ -12,6 +12,8 @@ CREATE TABLE d_person_info (
   COMMENT '姓名',
   p_birth           DATE        NULL          DEFAULT NULL
   COMMENT '出生年月:date',
+  p_mobile_phone    VARCHAR(32) NOT NULL      DEFAULT ''
+  COMMENT '联系电话',
   p_identify_number VARCHAR(32) NOT NULL      DEFAULT ''
   COMMENT '身份证号',
   p_import_time     TIMESTAMP   NOT NULL      DEFAULT CURRENT_TIMESTAMP
@@ -31,13 +33,13 @@ CREATE TABLE d_person_info_rent (
   r_person_id                   INT(11)       NOT NULL  DEFAULT 0
   COMMENT '人口ID:hidden',
   r_name                        VARCHAR(64)   NOT NULL  DEFAULT ''
-  COMMENT '姓名',
+  COMMENT '姓名:hidden',
   r_gender                      VARCHAR(8)    NOT NULL  DEFAULT ''
   COMMENT '性别:radioGroup:[男,女]',
   r_birth                       DATE          NULL      DEFAULT NULL
   COMMENT '出生年月:date',
   r_identify_number             VARCHAR(32)   NOT NULL  DEFAULT ''
-  COMMENT '身份证号',
+  COMMENT '身份证号:hidden',
   r_nation                      VARCHAR(32)   NOT NULL  DEFAULT ''
   COMMENT '民族',
   r_political_status            VARCHAR(32)   NOT NULL  DEFAULT ''
@@ -115,13 +117,13 @@ CREATE TABLE d_person_info_live (
   l_person_id          INT(11)       NOT NULL  DEFAULT 0
   COMMENT '人口ID:hidden',
   l_name               VARCHAR(64)   NOT NULL  DEFAULT ''
-  COMMENT '姓名',
+  COMMENT '姓名:hidden',
   l_gender             VARCHAR(8)    NOT NULL  DEFAULT ''
   COMMENT '性别:radioGroup:[男,女]',
   l_birth              DATE          NULL      DEFAULT NULL
   COMMENT '出生年月:date',
   l_identify_number    VARCHAR(32)   NOT NULL  DEFAULT ''
-  COMMENT '身份证号',
+  COMMENT '身份证号:hidden',
   l_nation             VARCHAR(32)   NOT NULL  DEFAULT ''
   COMMENT '民族',
   l_political_status   VARCHAR(32)   NOT NULL  DEFAULT ''
