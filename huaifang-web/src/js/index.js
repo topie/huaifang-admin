@@ -18,7 +18,7 @@
         page: function (title) {
             App.content.empty();
             App.title(title);
-            var content = $('<div id="main"><p>欢迎使用!</p></div>');
+            var content = $('<div id="main"><h3>欢迎使用智慧槐房信息服务平台!</h3></div>');
             App.content.append(content);
             //initEvents();
         }
