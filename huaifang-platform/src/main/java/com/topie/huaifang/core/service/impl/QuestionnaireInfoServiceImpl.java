@@ -32,6 +32,7 @@ public class QuestionnaireInfoServiceImpl extends BaseService<QuestionnaireInfo>
             if (StringUtils.isNotEmpty(questionnaireInfo.getStatus()))
                 criteria.andEqualTo("status", questionnaireInfo.getStatus());
         }
+        example.setOrderByClause(" id desc");
         return getMapper().selectByExample(example);
     }
 
