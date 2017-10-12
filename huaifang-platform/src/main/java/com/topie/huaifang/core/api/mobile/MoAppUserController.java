@@ -170,7 +170,7 @@ public class MoAppUserController {
         AuthUser authUser = iAuthUserService.selectByKey(appUser.getId());
         PersonInfo personInfo = new PersonInfo();
         if (authUser != null && authUser.getPersonId() != null && authUser.getPersonId() > 0) {
-            personInfo = iPersonInfoService.selectByKey(personInfo.getpId());
+            personInfo = iPersonInfoService.selectByKey(authUser.getPersonId());
         }
         personInfo.setpName(authDto.getpName());
         personInfo.setpIdentifyNumber(authDto.getpIdentifyNumber());
