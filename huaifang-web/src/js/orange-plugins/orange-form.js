@@ -736,7 +736,7 @@
                 if (data.items !== undefined && data.items.length > 0) {
                     $.each(data.items, function (i, radio) {
                         var rd = $.tmpl(radioTmpl, {
-                            "inline_": data.inline ? inlineCls : "",
+                            "inline_": data.inline ? "" : inlineCls,
                             "name_": data.name,
                             "value_": radio.value,
                             "text_": radio.text,
