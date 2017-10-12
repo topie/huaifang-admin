@@ -1,6 +1,8 @@
 package com.topie.huaifang.database.core.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.topie.huaifang.common.utils.date.DateStyle;
+import com.topie.huaifang.common.utils.date.DateUtil;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -117,13 +119,14 @@ public class ActionGuide {
 
     public String getAllContent() {
         StringBuilder sb = new StringBuilder();
-        sb.append("办事条件:<br>").append(actionCondition).append("<br>");
-        sb.append("办事材料:<br>").append(actionMaterial).append("<br>");;
-        sb.append("办事地址:<br>").append(actionAddress).append("<br>");;
-        sb.append("流程:<br>").append(actionFlow).append("<br>");
-        sb.append("时间范围:<br>").append(actionBegin).append("-").append(actionEnd).append("<br>");
-        sb.append("办事费用:<br>").append(actionFee).append("<br>");
-        sb.append("办事依据:<br>").append(actionYiju).append("<br>");
+        sb.append("办事条件:<br>").append(getActionCondition()).append("<br>");
+        sb.append("办事材料:<br>").append(getActionMaterial()).append("<br>");
+        sb.append("办事地址:<br>").append(getActionAddress()).append("<br>");
+        sb.append("流程:<br>").append(getActionFlow()).append("<br>");
+        sb.append("时间范围:<br>").append(DateUtil.DateToString(getActionBegin(), DateStyle.YYYY_MM_DD)).append("-")
+                .append(actionEnd).append("<br>");
+        sb.append("办事费用:<br>").append(DateUtil.DateToString(getActionEnd(), DateStyle.YYYY_MM_DD)).append("<br>");
+        sb.append("办事依据:<br>").append(getActionYiju()).append("<br>");
         return sb.toString();
     }
 
