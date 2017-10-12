@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.topie.huaifang.common.utils.PageConvertUtil;
 import com.topie.huaifang.common.utils.ResponseUtil;
 import com.topie.huaifang.common.utils.Result;
+import com.topie.huaifang.core.dto.AuthDto;
 import com.topie.huaifang.core.service.*;
 import com.topie.huaifang.database.core.model.*;
 import com.topie.huaifang.security.service.UserService;
@@ -11,10 +12,7 @@ import com.topie.huaifang.security.utils.SecurityUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -94,7 +92,7 @@ public class MoAppUserController {
     @ResponseBody
     public Result addFriend(@RequestParam(value = "id") Integer id) {
         Integer userId = SecurityUtil.getCurrentUserId();
-        if (userId == null) return ResponseUtil.error(401,"未登录");
+        if (userId == null) return ResponseUtil.error(401, "未登录");
         AppUser appUser = iAppUserService.selectByPlatformId(userId);
         if (appUser == null) return ResponseUtil.error("用户不存在");
         iAppUserService.insertToAddFriend(appUser.getId(), id);
@@ -108,7 +106,7 @@ public class MoAppUserController {
     public Result sendMessage(@RequestParam(value = "userId") Integer userId,
             @RequestParam(value = "content") String content) {
         Integer cUserId = SecurityUtil.getCurrentUserId();
-        if (userId == null) return ResponseUtil.error(401,"未登录");
+        if (userId == null) return ResponseUtil.error(401, "未登录");
         AppUser appUser = iAppUserService.selectByPlatformId(cUserId);
         if (appUser == null) return ResponseUtil.error("用户不存在");
         iAppUserMessageService
@@ -140,7 +138,7 @@ public class MoAppUserController {
     @ResponseBody
     public Result authInfo() {
         Integer userId = SecurityUtil.getCurrentUserId();
-        if (userId == null) return ResponseUtil.error(401,"未登录");
+        if (userId == null) return ResponseUtil.error(401, "未登录");
         AppUser appUser = iAppUserService.selectByPlatformId(userId);
         if (appUser == null) return ResponseUtil.error("用户不存在");
         if (appUser.getStatus() != 2) {
@@ -164,9 +162,14 @@ public class MoAppUserController {
 
     @RequestMapping(value = "/auth")
     @ResponseBody
-    public Result auth(@RequestParam("houseId") Integer houseId, PersonInfo personInfo) {
+    public Result auth(@RequestBody AuthDto authDto) {
+        PersonInfo personInfo = new PersonInfo();
+        personInfo.setpName(authDto.getpName());
+        personInfo.setpIdentifyNumber(authDto.getpIdentifyNumber());
+        personInfo.setpPersonType(authDto.getpPersonType());
+        Integer houseId = authDto.getHouseId();
         Integer userId = SecurityUtil.getCurrentUserId();
-        if (userId == null) return ResponseUtil.error(401,"未登录");
+        if (userId == null) return ResponseUtil.error(401, "未登录");
         AppUser appUser = iAppUserService.selectByPlatformId(userId);
         if (appUser == null) return ResponseUtil.error("用户不存在");
         personInfo.setpImportTime(new Date());
