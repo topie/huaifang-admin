@@ -7,6 +7,7 @@ import com.topie.huaifang.common.utils.ResponseUtil;
 import com.topie.huaifang.common.utils.Result;
 import com.topie.huaifang.common.utils.TreeNode;
 import com.topie.huaifang.core.service.*;
+import com.topie.huaifang.database.core.model.AppUser;
 import com.topie.huaifang.database.core.model.AuthUser;
 import com.topie.huaifang.database.core.model.HouseInfo;
 import com.topie.huaifang.database.core.model.HouseNode;
@@ -38,7 +39,7 @@ public class HouseInfoController {
     private ICommonQueryService iCommonQueryService;
 
     @Autowired
-    private IPersonInfoService iPersonInfoService;
+    private IAppUserService iAppUserService;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
@@ -179,6 +180,22 @@ public class HouseInfoController {
             nodes.add(treeNode);
         }
         return nodes;
+    }
+
+    @RequestMapping(value = "/bindUsers", method = RequestMethod.GET)
+    @ResponseBody
+    public Result bindUsers(@RequestParam(value = "id") Integer id) {
+        AuthUser authUser = new AuthUser();
+        authUser.setHouseId(id);
+        List<AuthUser> authUsers = iAuthUserService.selectByFilter(authUser);
+        List<Integer> userList = new ArrayList<>();
+        for (AuthUser aUser : authUsers) {
+            userList.add(aUser.getUserId());
+        }
+        AppUser appUser = new AppUser();
+        appUser.setUserIds(userList);
+        List<AppUser> appUsers = iAppUserService.selectByFilter(appUser);
+        return ResponseUtil.success(PageConvertUtil.grid(appUsers));
     }
 
 }
