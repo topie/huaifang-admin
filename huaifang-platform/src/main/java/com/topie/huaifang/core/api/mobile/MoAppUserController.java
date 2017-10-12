@@ -162,7 +162,7 @@ public class MoAppUserController {
         }
     }
 
-    @RequestMapping(value = "/auth", method = RequestMethod.GET)
+    @RequestMapping(value = "/auth")
     @ResponseBody
     public Result auth(@RequestParam("houseId") Integer houseId, PersonInfo personInfo) {
         Integer userId = SecurityUtil.getCurrentUserId();
