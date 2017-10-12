@@ -86,9 +86,12 @@ public class PartyMembersActivityController {
         for (PartyActivityJoin activityJoin : list) {
             userList.add(activityJoin.getUserId());
         }
-        AppUser appUser = new AppUser();
-        appUser.setUserIds(userList);
-        List<AppUser> appUsers = iAppUserService.selectByFilter(appUser);
+        List<AppUser> appUsers = new ArrayList<>();
+        if (userList.size() > 0) {
+            AppUser appUser = new AppUser();
+            appUser.setUserIds(userList);
+            appUsers = iAppUserService.selectByFilter(appUser);
+        }
         return ResponseUtil.success(PageConvertUtil.grid(appUsers));
     }
 
