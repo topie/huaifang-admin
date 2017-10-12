@@ -181,7 +181,7 @@ public class MoAppUserController {
         HouseInfo houseInfo = iHouseInfoService.selectByKey(houseId);
         personInfo.setpHouseNodeId(houseId);
         personInfo.setpHouseInfo(houseInfo.getAddress() + " " + houseInfo.getRoomNumber());
-        if (personInfo.getpId() > 0) {
+        if (personInfo.getpId() != null) {
             iPersonInfoService.updateNotNull(personInfo);//人口信息
         } else {
             iPersonInfoService.saveNotNull(personInfo);//人口信息
