@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -34,6 +35,7 @@ public class MoMarketLineController {
             @RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum,
             @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize) {
         PageInfo<MarketLine> pageInfo = iMarketLineService.selectByFilterAndPage(marketLine, pageNum, pageSize);
+        if (pageInfo.getPages() < pageNum) return ResponseUtil.success(PageConvertUtil.grid(new ArrayList<>()));
         return ResponseUtil.success(PageConvertUtil.grid(pageInfo));
     }
 

@@ -3,11 +3,12 @@ package com.topie.huaifang.database.core.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
 import javax.persistence.*;
+import java.util.Date;
 
 @Table(name = "d_party_members_activity")
 public class PartyMembersActivity {
+
     /**
      * ID
      */
@@ -78,6 +79,17 @@ public class PartyMembersActivity {
      * 活动内容:editor
      */
     private String content;
+
+    @Transient
+    private Integer total;
+
+    public Integer getTotal() {
+        return total;
+    }
+
+    public void setTotal(Integer total) {
+        this.total = total;
+    }
 
     /**
      * 获取ID

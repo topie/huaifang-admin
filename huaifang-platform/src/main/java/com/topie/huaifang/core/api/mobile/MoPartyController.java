@@ -45,6 +45,12 @@ public class MoPartyController {
             @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize) {
         PageInfo<PartyMembersActivity> pageInfo = iPartyMembersActivityService
                 .selectByFilterAndPage(partyMembersActivity, pageNum, pageSize);
+        for (PartyMembersActivity membersActivity : pageInfo.getList()) {
+            PartyActivityJoin partyActivityJoin = new PartyActivityJoin();
+            partyActivityJoin.setActivityId(membersActivity.getId());
+            membersActivity.setTotal(iPartyActivityJoinService.selectByFilter(partyActivityJoin).size());
+
+        }
         return ResponseUtil.success(PageConvertUtil.grid(pageInfo));
     }
 
@@ -52,8 +58,8 @@ public class MoPartyController {
     @ResponseBody
     public Result activityJoin(@RequestParam(value = "id") Integer id) {
         Integer userId = SecurityUtil.getCurrentUserId();
-        if (userId == null) return ResponseUtil.error(401,"未登录");
-         AppUser appUser = iAppUserService.selectByPlatformId(userId);
+        if (userId == null) return ResponseUtil.error(401, "未登录");
+        AppUser appUser = iAppUserService.selectByPlatformId(userId);
         if (appUser == null) return ResponseUtil.error("用户不存在");
         PartyActivityJoin partyActivityJoin = new PartyActivityJoin();
         partyActivityJoin.setActivityId(id);
@@ -69,8 +75,8 @@ public class MoPartyController {
     @ResponseBody
     public Result cancelJoin(@RequestParam(value = "id") Integer id) {
         Integer userId = SecurityUtil.getCurrentUserId();
-        if (userId == null) return ResponseUtil.error(401,"未登录");
-         AppUser appUser = iAppUserService.selectByPlatformId(userId);
+        if (userId == null) return ResponseUtil.error(401, "未登录");
+        AppUser appUser = iAppUserService.selectByPlatformId(userId);
         if (appUser == null) return ResponseUtil.error("用户不存在");
         PartyActivityJoin partyActivityJoin = new PartyActivityJoin();
         partyActivityJoin.setActivityId(id);
