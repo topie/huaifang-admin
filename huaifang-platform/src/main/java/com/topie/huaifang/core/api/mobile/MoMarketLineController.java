@@ -41,7 +41,8 @@ public class MoMarketLineController {
     @ResponseBody
     public Result post(@RequestBody MarketLine marketLine) {
         AppUser appUser = iAppUserService.selectByPlatformId(SecurityUtil.getCurrentUserId());
-        if (appUser == null) return ResponseUtil.error(401,"未登录");
+        if (appUser == null) return ResponseUtil.error(401, "未登录");
+        System.out.println(appUser.getNickname()+"=========");
         marketLine.setAddUserId(appUser.getId());
         marketLine.setAddUserName(appUser.getNickname());
         marketLine.setAddTime(new Date());
