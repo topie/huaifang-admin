@@ -163,21 +163,29 @@ public class MoAppUserController {
     @RequestMapping(value = "/auth")
     @ResponseBody
     public Result auth(@RequestBody AuthDto authDto) {
-        PersonInfo personInfo = new PersonInfo();
-        personInfo.setpName(authDto.getpName());
-        personInfo.setpIdentifyNumber(authDto.getpIdentifyNumber());
-        personInfo.setpPersonType(authDto.getpPersonType());
-        Integer houseId = authDto.getHouseId();
         Integer userId = SecurityUtil.getCurrentUserId();
         if (userId == null) return ResponseUtil.error(401, "未登录");
         AppUser appUser = iAppUserService.selectByPlatformId(userId);
         if (appUser == null) return ResponseUtil.error("用户不存在");
+        AuthUser authUser = iAuthUserService.selectByKey(appUser.getId());
+        PersonInfo personInfo = new PersonInfo();
+        if (authUser != null && authUser.getPersonId() != null) {
+            personInfo = iPersonInfoService.selectByKey(personInfo.getpId());
+        }
+        personInfo.setpName(authDto.getpName());
+        personInfo.setpIdentifyNumber(authDto.getpIdentifyNumber());
+        personInfo.setpPersonType(authDto.getpPersonType());
+        Integer houseId = authDto.getHouseId();
         personInfo.setpImportTime(new Date());
         personInfo.setpMobilePhone(appUser.getMobilePhone());
         HouseInfo houseInfo = iHouseInfoService.selectByKey(houseId);
         personInfo.setpHouseNodeId(houseId);
         personInfo.setpHouseInfo(houseInfo.getAddress() + " " + houseInfo.getRoomNumber());
-        iPersonInfoService.saveNotNull(personInfo);//人口信息
+        if (personInfo.getpId() > 0) {
+            iPersonInfoService.updateNotNull(personInfo);//人口信息
+        } else {
+            iPersonInfoService.saveNotNull(personInfo);//人口信息
+        }
         if ("租户".equals(personInfo.getpPersonType())) {
             PersonInfoRent personInfoRent = new PersonInfoRent();
             personInfoRent.setrPersonId(personInfo.getpId());
@@ -193,10 +201,11 @@ public class MoAppUserController {
             personInfoLive.setlName(personInfo.getpName());
             iPersonInfoLiveService.saveNotNull(personInfoLive);
         }
-        AuthUser authUser = iAuthUserService.selectByKey(appUser.getId());
-        authUser.setHouseId(houseId);
-        authUser.setPersonId(personInfo.getpId());
-        iAuthUserService.updateNotNull(authUser);//认证关系
+        if (authUser != null) {
+            authUser.setHouseId(houseId);
+            authUser.setPersonId(personInfo.getpId());
+            iAuthUserService.updateNotNull(authUser);//认证关系
+        }
         appUser.setStatus(1);
         appUser.setRealname(personInfo.getpName());
         appUser.setNickname(personInfo.getpName());
