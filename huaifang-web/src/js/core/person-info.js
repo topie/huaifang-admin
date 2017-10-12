@@ -239,53 +239,52 @@
                             destroy: true
                         }).show();
                         var form = modal.$body.orangeForm({
-                                id: "bind_form",
-                                name: "bind_form",
-                                method: "POST",
-                                action: App.href + "/api/core/personInfo/bindHouse",
-                                ajaxSubmit: true,
-                                ajaxSuccess: function () {
+                            id: "bind_form",
+                            name: "bind_form",
+                            method: "POST",
+                            action: App.href + "/api/core/personInfo/bindHouse",
+                            ajaxSubmit: true,
+                            ajaxSuccess: function () {
+                                modal.hide();
+                                grid.reload();
+                            },
+                            submitText: "保存",//保存按钮的文本
+                            showReset: true,//是否显示重置按钮
+                            resetText: "重置",//重置按钮文本
+                            isValidate: true,//开启验证
+                            buttons: [{
+                                type: 'button',
+                                text: '关闭',
+                                handle: function () {
                                     modal.hide();
                                     grid.reload();
-                                },
-                                submitText: "保存",//保存按钮的文本
-                                showReset: true,//是否显示重置按钮
-                                resetText: "重置",//重置按钮文本
-                                isValidate: true,//开启验证
-                                buttons: [{
-                                    type: 'button',
-                                    text: '关闭',
-                                    handle: function () {
-                                        modal.hide();
-                                        grid.reload();
+                                }
+                            }],
+                            buttonsAlign: "center",
+                            items: [
+                                {
+                                    type: 'tree',
+                                    label: '房屋',
+                                    name: 'houseId',
+                                    id: 'houseId',
+                                    expandAll: true,
+                                    chkStyle: 'radio',
+                                    url: App.href + "/api/core/houseInfo/treeNodes",
+                                    rule: {
+                                        required: true,
+                                        max: -1
+                                    },
+                                    message: {
+                                        required: "必选",
+                                        max: "必须是房屋节点"
                                     }
-                                }],
-                                buttonsAlign: "center",
-                                items: [
-                                    {
-                                        type: 'tree',
-                                        label: '房屋',
-                                        name: 'houseId',
-                                        id: 'houseId',
-                                        expandAll: true,
-                                        chkStyle: 'radio',
-                                        url: App.href + "/api/core/houseInfo/treeNodes?personId=" + data.pId,
-                                        rule: {
-                                            required: true,
-                                            max: -1
-                                        },
-                                        message: {
-                                            required: "必选",
-                                            max: "必须是房屋节点"
-                                        }
-                                    }, {
-                                        type: 'hidden',
-                                        name: 'personId',
-                                        value: data.pId
-                                    }
-                                ]
-                            })
-                        ;
+                                }, {
+                                    type: 'hidden',
+                                    name: 'personId'
+                                }
+                            ]
+                        });
+                        form.loadRemote(App.href + "/api/core/personInfo/loadBindHouse?personId=" + data.pId);
                     }
                 }
             ],

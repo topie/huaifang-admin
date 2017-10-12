@@ -24,7 +24,8 @@ public class AuthUserServiceImpl extends BaseService<AuthUser> implements IAuthU
     public List<AuthUser> selectByFilter(AuthUser authUser) {
         Example example = new Example(AuthUser.class);
         Example.Criteria criteria = example.createCriteria();
-        if (authUser.getHouseId() != null) criteria.andEqualTo("personId", authUser.getPersonId());
+        if (authUser.getUserId() != null) criteria.andEqualTo("userId", authUser.getUserId());
+        if (authUser.getPersonId() != null) criteria.andEqualTo("personId", authUser.getPersonId());
         if (authUser.getHouseId() != null) criteria.andEqualTo("houseId", authUser.getHouseId());
         if (authUser.getCompanyId() != null) criteria.andEqualTo("companyId", authUser.getCompanyId());
         if (authUser.getPartyMemberId() != null) criteria.andEqualTo("partyMemberId", authUser.getPartyMemberId());

@@ -17,9 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by chenguojun on 2017/4/19.
@@ -197,7 +195,6 @@ public class PersonInfoController {
         } else {
             return ResponseUtil.success();
         }
-
     }
 
     @RequestMapping(value = "/loadRentByAppUser/{id}", method = RequestMethod.GET)
@@ -229,7 +226,6 @@ public class PersonInfoController {
         } else {
             return ResponseUtil.success();
         }
-
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
@@ -243,11 +239,29 @@ public class PersonInfoController {
         return ResponseUtil.success();
     }
 
+    @RequestMapping(value = "/loadBindHouse", method = RequestMethod.GET)
+    @ResponseBody
+    public Result loadBindHouse(@RequestParam(value = "personId") Integer personId) {
+        Map result = new HashMap<>();
+        result.put("personId", personId);
+        AuthUser cu = new AuthUser();
+        if (personId != null) {
+            AuthUser authUser = new AuthUser();
+            authUser.setPersonId(personId);
+            List<AuthUser> authUsers = iAuthUserService.selectByFilter(authUser);
+            if (CollectionUtils.isNotEmpty(authUsers)) {
+                cu = authUsers.get(0);
+                result.put("houseId", -cu.getHouseId());
+            }
+        }
+        return ResponseUtil.success(result);
+    }
+
     @RequestMapping(value = "/bindHouse")
     @ResponseBody
     public Result bindHouse(@RequestParam(value = "personId") Integer personId,
             @RequestParam(value = "houseId") Integer houseId) {
-        if (houseId > 0) ResponseUtil.error("请选择房屋节点绑定");
+        if (houseId != null && houseId > 0) ResponseUtil.error("请选择房屋节点绑定");
         houseId = -houseId;
         AuthUser authUser = new AuthUser();
         authUser.setPersonId(personId);
