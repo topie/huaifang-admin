@@ -198,6 +198,44 @@
 
                 }
             }, {
+                text: "查看绑定用户",
+                cls: "btn-info btn-sm",
+                handle: function (index, data) {
+                    var modal = $.orangeModal({
+                        id: "bindUsers",
+                        title: "绑定用户",
+                        destroy: true
+                    }).show();
+                    modal.$body.orangeGrid({
+                        url: App.href + "/api/core/houseInfo/bindUsers?id="+data.id,
+                        contentType: "table",
+                        contentTypeItems: "table,card",
+                        pageNum: 1,//当前页码
+                        pageSize: 15,//每页显示条数
+                        idField: "id",//id域指定
+                        headField: "nickname",
+                        showCheck: true,//是否显示checkbox
+                        checkboxWidth: "3%",
+                        showIndexNum: false,
+                        indexNumWidth: "5%",
+                        pageSelect: [2, 15, 30, 50],
+                        columns: [
+                            {
+                                title: "昵称",
+                                field: "nickname"
+                            },
+                            {
+                                title: "姓名",
+                                field: "realname"
+                            },
+                            {
+                                title: "手机",
+                                field: "mobilePhone"
+                            }
+                        ]
+                    });
+                }
+            }, {
                 text: "删除",
                 cls: "btn-danger btn-sm",
                 handle: function (index, data) {
