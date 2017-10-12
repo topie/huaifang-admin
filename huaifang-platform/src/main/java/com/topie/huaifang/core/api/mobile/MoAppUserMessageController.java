@@ -42,7 +42,7 @@ public class MoAppUserMessageController {
             @RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum,
             @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize) {
         AppUser appUser = iAppUserService.selectByPlatformId(SecurityUtil.getCurrentUserId());
-        if (appUser == null) return ResponseUtil.error("未登录");
+        if (appUser == null) return ResponseUtil.error(401,"未登录");
         appUserMessage.setToUserId(appUser.getId());
         if(time>0){
             appUserMessage.setSendTime(DateUtil.getDateByMillionSecond(time));

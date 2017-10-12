@@ -34,7 +34,7 @@ public class MoAdviceBoxController {
             @RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum,
             @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize) {
         AppUser appUser = iAppUserService.selectByPlatformId(SecurityUtil.getCurrentUserId());
-        if (appUser == null) return ResponseUtil.error("未登录");
+        if (appUser == null) return ResponseUtil.error(401,"未登录");
         adviceBox.setContactUserId(appUser.getId());
         PageInfo<AdviceBox> pageInfo = iAdviceBoxService.selectByFilterAndPage(adviceBox, pageNum, pageSize);
         return ResponseUtil.success(PageConvertUtil.grid(pageInfo));
@@ -44,7 +44,7 @@ public class MoAdviceBoxController {
     @ResponseBody
     public Result post(@RequestBody AdviceBox adviceBox) {
         AppUser appUser = iAppUserService.selectByPlatformId(SecurityUtil.getCurrentUserId());
-        if (appUser == null) return ResponseUtil.error("未登录");
+        if (appUser == null) return ResponseUtil.error(401,"未登录");
         adviceBox.setContactUserId(appUser.getId());
         adviceBox.setMessageTime(new Date());
         adviceBox.setStatus("未处理");

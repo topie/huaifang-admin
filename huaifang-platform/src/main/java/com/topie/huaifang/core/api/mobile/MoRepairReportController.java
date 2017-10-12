@@ -40,7 +40,7 @@ public class MoRepairReportController {
             @RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum,
             @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize) {
         AppUser appUser = iAppUserService.selectByPlatformId(SecurityUtil.getCurrentUserId());
-        if (appUser == null) return ResponseUtil.error("未登录");
+        if (appUser == null) return ResponseUtil.error(401,"未登录");
         repairReport.setContactUserId(appUser.getId());
         PageInfo<RepairReport> pageInfo = iRepairReportService.selectByFilterAndPage(repairReport, pageNum, pageSize);
         return ResponseUtil.success(PageConvertUtil.grid(pageInfo));
@@ -50,7 +50,7 @@ public class MoRepairReportController {
     @ResponseBody
     public Result post(@RequestBody RepairReport repairReport) {
         AppUser appUser = iAppUserService.selectByPlatformId(SecurityUtil.getCurrentUserId());
-        if (appUser == null) return ResponseUtil.error("未登录");
+        if (appUser == null) return ResponseUtil.error(401,"未登录");
         repairReport.setContactUserId(appUser.getId());
         repairReport.setStatus("未处理");
         int result = iRepairReportService.saveNotNull(repairReport);
@@ -70,7 +70,7 @@ public class MoRepairReportController {
     @ResponseBody
     public Result processPost(@RequestBody RepairReportProcess repairReportProcess) {
         AppUser appUser = iAppUserService.selectByPlatformId(SecurityUtil.getCurrentUserId());
-        if (appUser == null) return ResponseUtil.error("未登录");
+        if (appUser == null) return ResponseUtil.error(401,"未登录");
         repairReportProcess.setContactUserId(appUser.getId());
         repairReportProcess.setProcessTime(new Date());
         iRepairReportProcessService.saveNotNull(repairReportProcess);

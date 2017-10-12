@@ -47,7 +47,7 @@ public class MoCompanyInfoController {
     @ResponseBody
     public Result myCompany() {
         Integer userId = SecurityUtil.getCurrentUserId();
-        if (userId == null) return ResponseUtil.error("未登录");
+        if (userId == null) return ResponseUtil.error(401,"未登录");
         AppUser appUser = iAppUserService.selectByPlatformId(userId);
         if (appUser == null) return ResponseUtil.error("用户不存在");
         AuthUser authUser = iAuthUserService.selectByKey(appUser.getId());
@@ -62,7 +62,7 @@ public class MoCompanyInfoController {
     @ResponseBody
     public Result auth(@RequestParam("companyId") Integer companyId) {
         Integer userId = SecurityUtil.getCurrentUserId();
-        if (userId == null) return ResponseUtil.error("未登录");
+        if (userId == null) return ResponseUtil.error(401,"未登录");
         AppUser appUser = iAppUserService.selectByPlatformId(userId);
         if (appUser == null) return ResponseUtil.error("用户不存在");
         AuthUser authUser = iAuthUserService.selectByKey(appUser.getId());

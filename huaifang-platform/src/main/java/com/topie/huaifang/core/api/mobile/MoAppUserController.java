@@ -94,7 +94,7 @@ public class MoAppUserController {
     @ResponseBody
     public Result addFriend(@RequestParam(value = "id") Integer id) {
         Integer userId = SecurityUtil.getCurrentUserId();
-        if (userId == null) return ResponseUtil.error("未登录");
+        if (userId == null) return ResponseUtil.error(401,"未登录");
         AppUser appUser = iAppUserService.selectByPlatformId(userId);
         if (appUser == null) return ResponseUtil.error("用户不存在");
         iAppUserService.insertToAddFriend(appUser.getId(), id);
@@ -108,7 +108,7 @@ public class MoAppUserController {
     public Result sendMessage(@RequestParam(value = "userId") Integer userId,
             @RequestParam(value = "content") String content) {
         Integer cUserId = SecurityUtil.getCurrentUserId();
-        if (userId == null) return ResponseUtil.error("未登录");
+        if (userId == null) return ResponseUtil.error(401,"未登录");
         AppUser appUser = iAppUserService.selectByPlatformId(cUserId);
         if (appUser == null) return ResponseUtil.error("用户不存在");
         iAppUserMessageService
@@ -140,7 +140,7 @@ public class MoAppUserController {
     @ResponseBody
     public Result authInfo() {
         Integer userId = SecurityUtil.getCurrentUserId();
-        if (userId == null) return ResponseUtil.error("未登录");
+        if (userId == null) return ResponseUtil.error(401,"未登录");
         AppUser appUser = iAppUserService.selectByPlatformId(userId);
         if (appUser == null) return ResponseUtil.error("用户不存在");
         if (appUser.getStatus() != 2) {
@@ -166,7 +166,7 @@ public class MoAppUserController {
     @ResponseBody
     public Result auth(@RequestParam("houseId") Integer houseId, PersonInfo personInfo) {
         Integer userId = SecurityUtil.getCurrentUserId();
-        if (userId == null) return ResponseUtil.error("未登录");
+        if (userId == null) return ResponseUtil.error(401,"未登录");
         AppUser appUser = iAppUserService.selectByPlatformId(userId);
         if (appUser == null) return ResponseUtil.error("用户不存在");
         personInfo.setpImportTime(new Date());

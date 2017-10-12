@@ -74,7 +74,7 @@ public class MoQuestionController {
     @ResponseBody
     public Result post(@RequestBody QuestionAnswerDto questionAnswerDto) {
         AppUser appUser = iAppUserService.selectByPlatformId(SecurityUtil.getCurrentUserId());
-        if (appUser == null) return ResponseUtil.error("未登录");
+        if (appUser == null) return ResponseUtil.error(401,"未登录");
         for (QuestionItemDto questionItemDto : questionAnswerDto.getItems()) {
             QuestionnaireResult result = new QuestionnaireResult();
             result.setInfoId(questionAnswerDto.getInfoId());

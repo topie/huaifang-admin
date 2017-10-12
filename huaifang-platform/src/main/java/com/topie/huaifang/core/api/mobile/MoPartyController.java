@@ -52,7 +52,7 @@ public class MoPartyController {
     @ResponseBody
     public Result activityJoin(@RequestParam(value = "id") Integer id) {
         Integer userId = SecurityUtil.getCurrentUserId();
-        if (userId == null) return ResponseUtil.error("未登录");
+        if (userId == null) return ResponseUtil.error(401,"未登录");
          AppUser appUser = iAppUserService.selectByPlatformId(userId);
         if (appUser == null) return ResponseUtil.error("用户不存在");
         PartyActivityJoin partyActivityJoin = new PartyActivityJoin();
@@ -69,7 +69,7 @@ public class MoPartyController {
     @ResponseBody
     public Result cancelJoin(@RequestParam(value = "id") Integer id) {
         Integer userId = SecurityUtil.getCurrentUserId();
-        if (userId == null) return ResponseUtil.error("未登录");
+        if (userId == null) return ResponseUtil.error(401,"未登录");
          AppUser appUser = iAppUserService.selectByPlatformId(userId);
         if (appUser == null) return ResponseUtil.error("用户不存在");
         PartyActivityJoin partyActivityJoin = new PartyActivityJoin();

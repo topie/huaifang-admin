@@ -65,7 +65,7 @@ public class MoAppTimeLineController {
     @ResponseBody
     public Result like(@RequestParam(value = "id") Integer id) {
         AppUser appUser = iAppUserService.selectByPlatformId(SecurityUtil.getCurrentUserId());
-        if (appUser == null) return ResponseUtil.error("未登录");
+        if (appUser == null) return ResponseUtil.error(401,"未登录");
         AppTimeLineLike appTimeLineLike = new AppTimeLineLike();
         appTimeLineLike.setLineId(id);
         appTimeLineLike.setUserId(appUser.getId());
@@ -79,7 +79,7 @@ public class MoAppTimeLineController {
     @ResponseBody
     public Result unlike(@RequestParam(value = "id") Integer id) {
         AppUser appUser = iAppUserService.selectByPlatformId(SecurityUtil.getCurrentUserId());
-        if (appUser == null) return ResponseUtil.error("未登录");
+        if (appUser == null) return ResponseUtil.error(401,"未登录");
         AppTimeLineLike appTimeLineLike = new AppTimeLineLike();
         appTimeLineLike.setLineId(id);
         appTimeLineLike.setUserId(appUser.getId());
@@ -94,7 +94,7 @@ public class MoAppTimeLineController {
     @ResponseBody
     public Result comment(@RequestBody AppTimeLineComment appTimeLineComment) {
         AppUser appUser = iAppUserService.selectByPlatformId(SecurityUtil.getCurrentUserId());
-        if (appUser == null) return ResponseUtil.error("未登录");
+        if (appUser == null) return ResponseUtil.error(401,"未登录");
         appTimeLineComment.setUserId(appUser.getId());
         appTimeLineComment.setUserName(appUser.getNickname());
         appTimeLineComment.setCommentTime(new Date());

@@ -42,7 +42,7 @@ public class MoCommonController {
     public Result uploadFile(HttpServletRequest request,
             @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
         Integer userId = SecurityUtil.getCurrentUserId();
-        if (userId == null) return ResponseUtil.error("未登录");
+        if (userId == null) return ResponseUtil.error(401,"未登录");
         AppUser appUser = iAppUserService.selectByPlatformId(userId);
         if (appUser == null) return ResponseUtil.error("用户不存在");
         try {
@@ -72,7 +72,7 @@ public class MoCommonController {
     public Result uploadImage(HttpServletRequest request,
             @RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
         Integer userId = SecurityUtil.getCurrentUserId();
-        if (userId == null) return ResponseUtil.error("未登录");
+        if (userId == null) return ResponseUtil.error(401,"未登录");
         AppUser appUser = iAppUserService.selectByPlatformId(userId);
         if (appUser == null) return ResponseUtil.error("用户不存在");
         try {
@@ -102,7 +102,7 @@ public class MoCommonController {
     public Result uploadFiles(HttpServletRequest request,
             @RequestParam(value = "files[]", required = false) MultipartFile[] file) throws Exception {
         Integer userId = SecurityUtil.getCurrentUserId();
-        if (userId == null) return ResponseUtil.error("未登录");
+        if (userId == null) return ResponseUtil.error(401,"未登录");
         AppUser appUser = iAppUserService.selectByPlatformId(userId);
         if (appUser == null) return ResponseUtil.error("用户不存在");
         if (file.length > 0) {
