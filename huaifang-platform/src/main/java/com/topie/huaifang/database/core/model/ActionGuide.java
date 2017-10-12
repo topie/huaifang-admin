@@ -112,6 +112,25 @@ public class ActionGuide {
     @Column(name = "read_count")
     private Integer readCount;
 
+    @Transient
+    private String allContent;
+
+    public String getAllContent() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("办事条件:<br>").append(actionCondition).append("<br>");
+        sb.append("办事材料:<br>").append(actionMaterial).append("<br>");;
+        sb.append("办事地址:<br>").append(actionAddress).append("<br>");;
+        sb.append("流程:<br>").append(actionFlow).append("<br>");
+        sb.append("时间范围:<br>").append(actionBegin).append("-").append(actionEnd).append("<br>");
+        sb.append("办事费用:<br>").append(actionFee).append("<br>");
+        sb.append("办事依据:<br>").append(actionYiju).append("<br>");
+        return sb.toString();
+    }
+
+    public void setAllContent(String allContent) {
+        this.allContent = allContent;
+    }
+
     /**
      * 获取ID:hidden
      *
