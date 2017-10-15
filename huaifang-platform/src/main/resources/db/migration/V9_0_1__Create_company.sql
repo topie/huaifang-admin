@@ -9,7 +9,7 @@ CREATE TABLE d_company_info (
   yingyezhizhao VARCHAR(255)               DEFAULT ''
   COMMENT '营业执照:image',
   company_type  VARCHAR(64)  NOT NULL      DEFAULT ''
-  COMMENT '企业类型:select:[有限责任公司]',
+  COMMENT '企业类型:select:[有限责任公司,股份有限公司]',
   farendaibiao  VARCHAR(255)               DEFAULT ''
   COMMENT '法人代表',
   zhucezijin    VARCHAR(32)  NOT NULL      DEFAULT ''

@@ -130,7 +130,24 @@ public class MoAppUserController {
     @RequestMapping(value = "/currentAppUser", method = RequestMethod.GET)
     @ResponseBody
     public Result currentAppUser() {
+        Map result = new HashMap();
         AppUser appUser = iAppUserService.selectByPlatformId(SecurityUtil.getCurrentUserId());
+        result.put("base", appUser);
+        if (appUser.getStatus() == 2) {
+            Map m = new HashMap<>();
+            AuthUser authUser = iAuthUserService.selectByKey(appUser.getId());
+            PersonInfo personInfo = iPersonInfoService.selectByKey(authUser.getPersonId());
+            HouseInfo houseInfo = iHouseInfoService.selectByKey(authUser.getHouseId());
+            m.put("xq", houseInfo.getXq());
+            m.put("lh", houseInfo.getLh());
+            m.put("dy", houseInfo.getDy());
+            m.put("lc", houseInfo.getLc());
+            m.put("mp", houseInfo.getRoomNumber());
+            m.put("name", personInfo.getpName());
+            m.put("idn", personInfo.getpIdentifyNumber());
+            m.put("sf", personInfo.getpPersonType());
+            result.put("shenfen", m);
+        }
         return ResponseUtil.success(appUser);
     }
 

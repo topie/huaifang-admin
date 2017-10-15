@@ -133,7 +133,7 @@
                             if (result) {
                                 var requestUrl = App.href + "/api/core/yellowPage/delete";
                                 $.ajax({
-                                    type: "POST",
+                                    type: "GET",
                                     dataType: "json",
                                     data: {
                                         id: data.id

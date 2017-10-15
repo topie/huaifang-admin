@@ -18,7 +18,7 @@
         page: function (title) {
             App.content.empty();
             App.title(title);
-            var content = $('<div id="main"><img style="padding: 10px 10px 10px 10px;" height="680" src="cdn/img/huaifang.jpg"></div>');
+            var content = $('<div id="main"><img style="padding: 10px 10px 10px 10px; width: 100%" height="680" src="cdn/img/huaifang.jpg"></div>');
             App.content.append(content);
             //initEvents();
         }
