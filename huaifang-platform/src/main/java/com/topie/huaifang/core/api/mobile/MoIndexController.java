@@ -74,8 +74,8 @@ public class MoIndexController {
     @RequestMapping(value = "/news", method = RequestMethod.GET)
     @ResponseBody
     public Result news() {
-        Map result = new HashMap<>();
-
+        List data = new ArrayList();
+        Map result1 = new HashMap<>();
         QuestionnaireInfo questionnaireInfo = new QuestionnaireInfo();
         PageInfo<QuestionnaireInfo> pageInfo = iQuestionnaireInfoService.selectByFilterAndPage(questionnaireInfo, 1, 3);
         List<Map> list1 = new ArrayList<>();
@@ -85,7 +85,11 @@ public class MoIndexController {
             m.put("title", info.getName());
             list1.add(m);
         }
-        result.put("1", list1);
+        result1.put("type", 1);
+        result1.put("list", list1);
+        data.add(result1);
+
+        Map result2 = new HashMap<>();
         Notice notice = new Notice();
         notice.setIsOnline(true);
         notice.setType(0);
@@ -97,8 +101,11 @@ public class MoIndexController {
             m.put("title", n.getTitle());
             list2.add(m);
         }
-        result.put("2", list2);
+        result2.put("type", 2);
+        result2.put("list", list2);
+        data.add(result2);
 
+        Map result3 = new HashMap<>();
         notice.setType(1);
         pageInfo2 = iNoticeService.selectByFilterAndPage(notice, 1, 3);
         List<Map> list3 = new ArrayList<>();
@@ -108,8 +115,11 @@ public class MoIndexController {
             m.put("title", n.getTitle());
             list3.add(m);
         }
-        result.put("3", list3);
-        return ResponseUtil.success(result);
+        result3.put("type", 3);
+        result3.put("list", list3);
+        data.add(result3);
+
+        return ResponseUtil.success(data);
     }
 
     @RequestMapping(value = "/userInfo", method = RequestMethod.GET)
