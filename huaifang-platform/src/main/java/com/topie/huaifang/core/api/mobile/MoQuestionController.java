@@ -53,6 +53,14 @@ public class MoQuestionController {
     @RequestMapping(value = "/item/list", method = RequestMethod.GET)
     @ResponseBody
     public Result itemList(QuestionnaireItem questionnaireItem) {
+        AppUser appUser = iAppUserService.selectByPlatformId(SecurityUtil.getCurrentUserId());
+        if (appUser == null) return ResponseUtil.error(401, "未登录");
+        QuestionnaireResult result = new QuestionnaireResult();
+        result.setInfoId(questionnaireItem.getInfoId());
+        result.setUserId(appUser.getId());
+        if (iQuestionnaireResultService.selectByFilter(result).size() > 0) {
+            return ResponseUtil.error("已参加过问卷调查");
+        }
         List<QuestionnaireItem> list = iQuestionnaireItemService.selectByFilter(questionnaireItem);
         for (QuestionnaireItem item : list) {
             QuestionnaireOption o = new QuestionnaireOption();
@@ -74,7 +82,7 @@ public class MoQuestionController {
     @ResponseBody
     public Result post(@RequestBody QuestionAnswerDto questionAnswerDto) {
         AppUser appUser = iAppUserService.selectByPlatformId(SecurityUtil.getCurrentUserId());
-        if (appUser == null) return ResponseUtil.error(401,"未登录");
+        if (appUser == null) return ResponseUtil.error(401, "未登录");
         for (QuestionItemDto questionItemDto : questionAnswerDto.getItems()) {
             QuestionnaireResult result = new QuestionnaireResult();
             result.setInfoId(questionAnswerDto.getInfoId());
