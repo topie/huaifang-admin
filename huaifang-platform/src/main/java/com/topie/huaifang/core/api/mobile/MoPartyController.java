@@ -45,13 +45,42 @@ public class MoPartyController {
             @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize) {
         PageInfo<PartyMembersActivity> pageInfo = iPartyMembersActivityService
                 .selectByFilterAndPage(partyMembersActivity, pageNum, pageSize);
-        for (PartyMembersActivity membersActivity : pageInfo.getList()) {
-            PartyActivityJoin partyActivityJoin = new PartyActivityJoin();
-            partyActivityJoin.setActivityId(membersActivity.getId());
-            membersActivity.setTotal(iPartyActivityJoinService.selectByFilter(partyActivityJoin).size());
-
-        }
         return ResponseUtil.success(PageConvertUtil.grid(pageInfo));
+    }
+
+    @RequestMapping(value = "/activity/detail", method = RequestMethod.GET)
+    @ResponseBody
+    public Result activityDetail(@RequestParam(value = "id") Integer id) {
+        Integer userId = SecurityUtil.getCurrentUserId();
+        if (userId == null) return ResponseUtil.error(401, "未登录");
+        AppUser appUser = iAppUserService.selectByPlatformId(userId);
+        if (appUser == null) return ResponseUtil.error("用户不存在");
+        PartyMembersActivity partyMembersActivity = iPartyMembersActivityService.selectByKey(id);
+        PartyActivityJoin partyActivityJoin = new PartyActivityJoin();
+        partyActivityJoin.setActivityId(partyMembersActivity.getId());
+        partyMembersActivity.setTotal(iPartyActivityJoinService.selectByFilter(partyActivityJoin).size());
+        partyActivityJoin.setUserId(appUser.getId());
+        if (iPartyActivityJoinService.selectByFilter(partyActivityJoin).size() > 0) {
+            partyMembersActivity.setHasJoin(true);
+        } else {
+            partyMembersActivity.setHasJoin(false);
+        }
+        return ResponseUtil.success(partyMembersActivity);
+    }
+
+    @RequestMapping(value = "/activity/post", method = RequestMethod.POST)
+    @ResponseBody
+    public Result activityPost(PartyMembersActivity partyMembersActivity) {
+        Integer userId = SecurityUtil.getCurrentUserId();
+        if (userId == null) return ResponseUtil.error(401, "未登录");
+        AppUser appUser = iAppUserService.selectByPlatformId(userId);
+        if (appUser == null) return ResponseUtil.error("用户不存在");
+        partyMembersActivity.setTotal(0);
+        partyMembersActivity.setStatus(1);
+        partyMembersActivity.setPublishUserId(appUser.getId());
+        partyMembersActivity.setPublishUser(appUser.getRealname());
+        iPartyMembersActivityService.saveNotNull(partyMembersActivity);
+        return ResponseUtil.success();
     }
 
     @RequestMapping(value = "/activity/join", method = RequestMethod.GET)
@@ -114,6 +143,8 @@ public class MoPartyController {
     @ResponseBody
     public Result load(@RequestParam(value = "id") Integer id) {
         PartyMembersBusiness partyMembersBusiness = iPartyMembersBusinessService.selectByKey(id);
+        partyMembersBusiness.setReadCount(partyMembersBusiness.getReadCount() + 1);
+        iPartyMembersBusinessService.updateNotNull(partyMembersBusiness);
         return ResponseUtil.success(partyMembersBusiness);
     }
 

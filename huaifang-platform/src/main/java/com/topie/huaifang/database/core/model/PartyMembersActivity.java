@@ -63,6 +63,9 @@ public class PartyMembersActivity {
     @Column(name = "publish_user")
     private String publishUser;
 
+    @Column(name = "publish_user_id")
+    private Integer publishUserId;
+
     /**
      * 发布时间:datetime
      */
@@ -82,6 +85,25 @@ public class PartyMembersActivity {
 
     @Transient
     private Integer total;
+
+    @Transient
+    private Boolean hasJoin;
+
+    public Boolean getHasJoin() {
+        return hasJoin;
+    }
+
+    public void setHasJoin(Boolean hasJoin) {
+        this.hasJoin = hasJoin;
+    }
+
+    public Integer getPublishUserId() {
+        return publishUserId;
+    }
+
+    public void setPublishUserId(Integer publishUserId) {
+        this.publishUserId = publishUserId;
+    }
 
     public Integer getTotal() {
         return total;

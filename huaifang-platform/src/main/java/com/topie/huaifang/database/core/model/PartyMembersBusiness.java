@@ -3,11 +3,12 @@ package com.topie.huaifang.database.core.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
 import javax.persistence.*;
+import java.util.Date;
 
 @Table(name = "d_party_members_business")
 public class PartyMembersBusiness {
+
     /**
      * ID
      */
@@ -47,6 +48,17 @@ public class PartyMembersBusiness {
      * 内容:editor
      */
     private String content;
+
+    @Column(name = "read_count")
+    private Integer readCount;
+
+    public Integer getReadCount() {
+        return readCount;
+    }
+
+    public void setReadCount(Integer readCount) {
+        this.readCount = readCount;
+    }
 
     /**
      * 获取ID
