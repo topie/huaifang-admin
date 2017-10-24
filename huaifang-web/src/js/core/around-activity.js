@@ -4,10 +4,10 @@
 ;
 (function ($, window, document, undefined) {
     var uploadMapping = {
-        "/api/core/partyMembersActivity/list": "corePartyMembersActivity"
+        "/api/core/aroundActivity/list": "coreAroundActivity"
     };
     App.requestMapping = $.extend({}, window.App.requestMapping, uploadMapping);
-    App.corePartyMembersActivity = {
+    App.coreAroundActivity = {
         page: function (title) {
             window.App.content.empty();
             window.App.title(title);
@@ -15,7 +15,7 @@
                 '<div class="row">' +
                 '<div class="col-md-12" >' +
                 '<div class="panel panel-default" >' +
-                '<div class="panel-heading">党活动管理</div>' +
+                '<div class="panel-heading">发现活动管理</div>' +
                 '<div class="panel-body" id="grid"></div>' +
                 '</div>' +
                 '</div>' +
@@ -28,7 +28,7 @@
     var initEvents = function () {
         var grid;
         var options = {
-            url: App.href + "/api/core/partyMembersActivity/list",
+            url: App.href + "/api/core/aroundActivity/list",
             contentType: "table",
             contentTypeItems: "table,card,list",
             pageNum: 1,//当前页码
@@ -47,8 +47,8 @@
                     width: "5%"
                 },
                 {
-                    title: "活动主题",
-                    field: "topic"
+                    title: "活动标题",
+                    field: "title"
                 },
                 {
                     title: "活动地址",
@@ -72,23 +72,7 @@
                 },
                 {
                     title: "状态",
-                    field: "status",
-                    format: function (i, d) {
-                        switch (d.status) {
-                            case 0 :
-                                return "未上线";
-                                break;
-                            case 1 :
-                                return "进行中";
-                                break;
-                            case 2 :
-                                return "已结束";
-                                break;
-                            default:
-                                return "未上线";
-                                break;
-                        }
-                    }
+                    field: "status"
                 }
             ],
             actionColumnText: "操作",//操作列文本
@@ -99,14 +83,14 @@
                     cls: "btn-primary btn-sm",
                     handle: function (index, d) {
                         var modal = $.orangeModal({
-                            id: "partyMembersActivityForm",
+                            id: "aroundActivityForm",
                             title: "编辑",
                             destroy: true
                         }).show();
                         $.ajax({
                             type: "GET",
                             dataType: "json",
-                            url: App.href + "/api/core/partyMembersActivity/formItems",
+                            url: App.href + "/api/core/aroundActivity/formItems",
                             success: function (data) {
                                 if (data.code === 200) {
                                     var formItems = data.data;
@@ -114,7 +98,7 @@
                                         id: "edit_form",
                                         name: "edit_form",
                                         method: "POST",
-                                        action: App.href + "/api/core/partyMembersActivity/update",
+                                        action: App.href + "/api/core/aroundActivity/update",
                                         ajaxSubmit: true,
                                         rowEleNum: 1,
                                         ajaxSuccess: function () {
@@ -135,7 +119,7 @@
                                         buttonsAlign: "center",
                                         items: formItems
                                     });
-                                    form.loadRemote(App.href + "/api/core/partyMembersActivity/load/" + d.id);
+                                    form.loadRemote(App.href + "/api/core/aroundActivity/load/" + d.id);
                                 } else {
                                     alert(data.message);
                                 }
@@ -152,7 +136,7 @@
                     handle: function (index, data) {
                         bootbox.confirm("确定该操作?", function (result) {
                             if (result) {
-                                var requestUrl = App.href + "/api/core/partyMembersActivity/delete";
+                                var requestUrl = App.href + "/api/core/aroundActivity/delete";
                                 $.ajax({
                                     type: "GET",
                                     dataType: "json",
@@ -184,7 +168,7 @@
                             destroy: true
                         }).show();
                         modal.$body.orangeGrid({
-                            url: App.href + "/api/core/partyMembersActivity/joinUsers?id="+data.id,
+                            url: App.href + "/api/core/aroundActivity/joinUsers?id="+data.id,
                             contentType: "table",
                             contentTypeItems: "table,card",
                             pageNum: 1,//当前页码
@@ -223,7 +207,7 @@
                     handle: function (index, data) {
                         bootbox.confirm("确定该操作?", function (result) {
                             if (result) {
-                                var requestUrl = App.href + "/api/core/partyMembersActivity/online";
+                                var requestUrl = App.href + "/api/core/aroundActivity/online";
                                 $.ajax({
                                     type: "GET",
                                     dataType: "json",
@@ -261,7 +245,7 @@
                         $.ajax({
                             type: "GET",
                             dataType: "json",
-                            url: App.href + "/api/core/partyMembersActivity/formItems",
+                            url: App.href + "/api/core/aroundActivity/formItems",
                             success: function (data) {
                                 if (data.code === 200) {
                                     var formItems = data.data;
@@ -269,7 +253,7 @@
                                         id: "add_form",
                                         name: "add_form",
                                         method: "POST",
-                                        action: App.href + "/api/core/partyMembersActivity/insert",
+                                        action: App.href + "/api/core/aroundActivity/insert",
                                         ajaxSubmit: true,
                                         rowEleNum: 1,
                                         ajaxSuccess: function () {
@@ -308,9 +292,9 @@
                 items: [
                     {
                         type: "text",
-                        label: "主题",
-                        name: "topic",
-                        placeholder: "输入要搜索的主题"
+                        label: "活动标题",
+                        name: "title",
+                        placeholder: "输入要搜索的活动标题"
                     }
                 ]
             }

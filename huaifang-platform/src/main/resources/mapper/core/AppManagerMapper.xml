@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.topie.huaifang.database.core.dao.AppManagerMapper">
+  <resultMap id="BaseResultMap" type="com.topie.huaifang.database.core.model.AppManager">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="system_type" jdbcType="VARCHAR" property="systemType" />
+    <result column="version" jdbcType="VARCHAR" property="version" />
+    <result column="download_url" jdbcType="VARCHAR" property="downloadUrl" />
+    <result column="publish_time" jdbcType="TIMESTAMP" property="publishTime" />
+  </resultMap>
+</mapper>

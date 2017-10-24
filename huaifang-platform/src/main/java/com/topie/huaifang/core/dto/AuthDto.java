@@ -10,6 +10,16 @@ public class AuthDto {
 
     private String pIdentifyNumber;
 
+    private Integer companyId;
+
+    public Integer getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
+    }
+
     public Integer getHouseId() {
         return houseId;
     }

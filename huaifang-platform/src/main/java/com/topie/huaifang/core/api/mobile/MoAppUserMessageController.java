@@ -38,22 +38,19 @@ public class MoAppUserMessageController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
     public Result list(AppUserMessage appUserMessage,
-            @RequestParam(value = "time",required = false,defaultValue = "0") Long time,
+            @RequestParam(value = "time", required = false, defaultValue = "0") Long time,
             @RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum,
             @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize) {
         AppUser appUser = iAppUserService.selectByPlatformId(SecurityUtil.getCurrentUserId());
-        if (appUser == null) return ResponseUtil.error(401,"未登录");
+        if (appUser == null) return ResponseUtil.error(401, "未登录");
         appUserMessage.setToUserId(appUser.getId());
-        if(time>0){
+        if (time > 0) {
             appUserMessage.setSendTime(DateUtil.getDateByMillionSecond(time));
         }
         PageInfo<AppUserMessage> pageInfo = iAppUserMessageService
                 .selectByFilterAndPage(appUserMessage, pageNum, pageSize);
         Map extra = new HashMap();
         extra.put("time", new Date().getTime());
-        extra.put("me", appUser);
-        AppUser toUser = iAppUserService.selectByKey(appUserMessage.getFromUserId());
-        extra.put("friend", toUser);
         return ResponseUtil.success(PageConvertUtil.grid(pageInfo, extra));
     }
 
@@ -64,6 +61,7 @@ public class MoAppUserMessageController {
         appUserMessage.setSendTime(new Date());
         appUserMessage.setIsRead(0);
         appUserMessage.setFromUserId(appUser.getId());
+        appUserMessage.setFromUserName(appUser.getNickname());
         appUserMessage.setHeadImage(appUser.getHeadImage());
         int result = iAppUserMessageService.saveNotNull(appUserMessage);
         String title = appUserMessage.getContent();

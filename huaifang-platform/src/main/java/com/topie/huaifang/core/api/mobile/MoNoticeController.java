@@ -40,6 +40,8 @@ public class MoNoticeController {
     @ResponseBody
     public Result detail(@RequestParam(value = "id") Integer id) {
         Notice notice = iNoticeService.selectByKey(id);
+        notice.setReadCount(notice.getReadCount()+1);
+        iNoticeService.updateNotNull(notice);
         return ResponseUtil.success(notice);
     }
 }

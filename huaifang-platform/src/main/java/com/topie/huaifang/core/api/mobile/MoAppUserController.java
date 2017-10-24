@@ -50,6 +50,9 @@ public class MoAppUserController {
     @Autowired
     private IHouseInfoService iHouseInfoService;
 
+    @Autowired
+    private ICompanyInfoService iCompanyInfoService;
+
     @RequestMapping(value = "/friends", method = RequestMethod.GET)
     @ResponseBody
     public Result friends() {
@@ -165,6 +168,7 @@ public class MoAppUserController {
             AuthUser authUser = iAuthUserService.selectByKey(appUser.getId());
             PersonInfo personInfo = iPersonInfoService.selectByKey(authUser.getPersonId());
             HouseInfo houseInfo = iHouseInfoService.selectByKey(authUser.getHouseId());
+            CompanyInfo companyInfo = iCompanyInfoService.selectByKey(authUser.getCompanyId());
             result.put("xq", houseInfo.getXq());
             result.put("lh", houseInfo.getLh());
             result.put("dy", houseInfo.getDy());
@@ -173,6 +177,7 @@ public class MoAppUserController {
             result.put("name", personInfo.getpName());
             result.put("idn", personInfo.getpIdentifyNumber());
             result.put("sf", personInfo.getpPersonType());
+            result.put("company", companyInfo.getCompanyName());
             return ResponseUtil.success(result);
         }
     }
@@ -219,6 +224,7 @@ public class MoAppUserController {
             iPersonInfoLiveService.saveNotNull(personInfoLive);
         }
         if (authUser != null) {
+            authUser.setCompanyId(authDto.getCompanyId());
             authUser.setHouseId(houseId);
             authUser.setPersonId(personInfo.getpId());
             iAuthUserService.updateNotNull(authUser);//认证关系

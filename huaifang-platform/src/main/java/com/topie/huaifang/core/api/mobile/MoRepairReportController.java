@@ -66,12 +66,14 @@ public class MoRepairReportController {
         return ResponseUtil.success(PageConvertUtil.grid(list));
     }
 
-    @RequestMapping(value = "/process/post", method = RequestMethod.GET)
+    @RequestMapping(value = "/process/complete", method = RequestMethod.GET)
     @ResponseBody
-    public Result processPost(@RequestBody RepairReportProcess repairReportProcess) {
+    public Result processComplete(@RequestBody RepairReportProcess repairReportProcess) {
         AppUser appUser = iAppUserService.selectByPlatformId(SecurityUtil.getCurrentUserId());
         if (appUser == null) return ResponseUtil.error(401,"未登录");
+        repairReportProcess.setContactPhone(appUser.getMobilePhone());
         repairReportProcess.setContactUserId(appUser.getId());
+        repairReportProcess.setStatus("已完成");
         repairReportProcess.setProcessTime(new Date());
         iRepairReportProcessService.saveNotNull(repairReportProcess);
         return ResponseUtil.success();
