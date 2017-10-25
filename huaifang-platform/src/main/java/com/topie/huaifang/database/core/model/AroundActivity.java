@@ -93,6 +93,7 @@ public class AroundActivity {
      */
     private String content;
 
+    @Transient
     private Integer total;
 
     private Integer publishUserId;
