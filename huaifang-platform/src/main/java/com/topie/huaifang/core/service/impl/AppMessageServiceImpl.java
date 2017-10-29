@@ -69,16 +69,18 @@ public class AppMessageServiceImpl extends BaseService<AppMessage> implements IA
             updateNotNull(a);
         } else {
             a = new AppMessage();
-            AppUser appUser = iAppUserService.selectByPlatformId(fromUserId);
-            a.setType(1);
-            a.setFromUserId(fromUserId);
-            a.setIcon(appUser.getHeadImage());
-            a.setToUserId(toUserId);
-            a.setIsRead(0);
-            a.setTitle(title);
-            a.setCreateTime(new Date());
-            a.setEventTime(new Date());
-            saveNotNull(a);
+            AppUser appUser = iAppUserService.selectByKey(fromUserId);
+            if (appUser != null) {
+                a.setType(1);
+                a.setFromUserId(fromUserId);
+                a.setIcon(appUser.getHeadImage());
+                a.setToUserId(toUserId);
+                a.setIsRead(0);
+                a.setTitle(title);
+                a.setCreateTime(new Date());
+                a.setEventTime(new Date());
+                saveNotNull(a);
+            }
         }
 
     }

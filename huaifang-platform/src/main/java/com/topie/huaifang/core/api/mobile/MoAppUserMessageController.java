@@ -63,11 +63,11 @@ public class MoAppUserMessageController {
         appUserMessage.setFromUserId(appUser.getId());
         appUserMessage.setFromUserName(appUser.getNickname());
         appUserMessage.setHeadImage(appUser.getHeadImage());
-        int result = iAppUserMessageService.saveNotNull(appUserMessage);
+        iAppUserMessageService.saveNotNull(appUserMessage);
         String title = appUserMessage.getContent();
         if (title.length() > 15) title = title.substring(0, 14) + "...";
         iAppMessageService.sentUserAppMessage(appUser.getId(), appUserMessage.getToUserId(), title);
-        return result > 0 ? ResponseUtil.success() : ResponseUtil.error();
+        return ResponseUtil.success(appUserMessage);
     }
 
 }
