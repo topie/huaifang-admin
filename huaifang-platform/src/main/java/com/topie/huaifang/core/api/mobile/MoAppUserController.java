@@ -145,7 +145,8 @@ public class MoAppUserController {
         if (StringUtils.isNotEmpty(nickName)) {
             appUser.setNickname(nickName);
         }
-        return ResponseUtil.success();
+        iAppUserService.updateNotNull(appUser);
+        return ResponseUtil.success(appUser);
     }
 
     @RequestMapping(value = "/currentAppUser", method = RequestMethod.GET)
