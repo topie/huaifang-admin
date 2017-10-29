@@ -60,17 +60,18 @@ public class AppMessageServiceImpl extends BaseService<AppMessage> implements IA
     public void sentUserAppMessage(Integer fromUserId, Integer toUserId, String title) {
         AppMessage a = new AppMessage();
         a.setFromUserId(fromUserId);
-        a.setToUserId(toUserId);
-        a = appMessageMapper.selectOne(a);
-        if (a != null) {
-            a.setIsRead(0);
-            a.setEventTime(new Date());
-            a.setTitle(title);
-            updateNotNull(a);
-        } else {
-            a = new AppMessage();
-            AppUser appUser = iAppUserService.selectByKey(fromUserId);
-            if (appUser != null) {
+        AppUser appUser = iAppUserService.selectByKey(fromUserId);
+        if (appUser != null) {
+            a.setFromUserName(appUser.getNickname());
+            a.setToUserId(toUserId);
+            a = appMessageMapper.selectOne(a);
+            if (a != null) {
+                a.setIsRead(0);
+                a.setEventTime(new Date());
+                a.setTitle(title);
+                updateNotNull(a);
+            } else {
+                a = new AppMessage();
                 a.setType(1);
                 a.setFromUserId(fromUserId);
                 a.setIcon(appUser.getHeadImage());
@@ -82,7 +83,6 @@ public class AppMessageServiceImpl extends BaseService<AppMessage> implements IA
                 saveNotNull(a);
             }
         }
-
     }
 
 }

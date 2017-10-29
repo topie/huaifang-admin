@@ -35,6 +35,12 @@ public class AppMessage {
     private Integer fromUserId;
 
     /**
+     * 用户昵称
+     */
+    @Column(name = "from_user_name")
+    private String fromUserName;
+
+    /**
      * 接收消息用户ID
      */
     @Column(name = "to_user_id")
@@ -66,6 +72,14 @@ public class AppMessage {
      */
     @Column(name = "is_read")
     private Integer isRead;
+
+    public String getFromUserName() {
+        return fromUserName;
+    }
+
+    public void setFromUserName(String fromUserName) {
+        this.fromUserName = fromUserName;
+    }
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
     public Date getEventTime() {
