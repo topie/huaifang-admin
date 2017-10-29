@@ -130,19 +130,21 @@ public class MoIndexController {
         result.put("base", appUser);
         result.put("status", appUser.getStatus());
         if (appUser.getStatus() == 2) {
-            Map m = new HashMap<>();
             AuthUser authUser = iAuthUserService.selectByKey(appUser.getId());
             PersonInfo personInfo = iPersonInfoService.selectByKey(authUser.getPersonId());
             HouseInfo houseInfo = iHouseInfoService.selectByKey(authUser.getHouseId());
-            m.put("xq", houseInfo.getXq());
-            m.put("lh", houseInfo.getLh());
-            m.put("dy", houseInfo.getDy());
-            m.put("lc", houseInfo.getLc());
-            m.put("mp", houseInfo.getRoomNumber());
-            m.put("name", personInfo.getpName());
-            m.put("idn", personInfo.getpIdentifyNumber());
-            m.put("sf", personInfo.getpPersonType());
-            result.put("shenfen", m);
+            if(authUser!=null && personInfo!=null && houseInfo!=null){
+                Map m = new HashMap<>();
+                m.put("xq", houseInfo.getXq());
+                m.put("lh", houseInfo.getLh());
+                m.put("dy", houseInfo.getDy());
+                m.put("lc", houseInfo.getLc());
+                m.put("mp", houseInfo.getRoomNumber());
+                m.put("name", personInfo.getpName());
+                m.put("idn", personInfo.getpIdentifyNumber());
+                m.put("sf", personInfo.getpPersonType());
+                result.put("shenfen", m);
+            }
         }
         return ResponseUtil.success(result);
     }
