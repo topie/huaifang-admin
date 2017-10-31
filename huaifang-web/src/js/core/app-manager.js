@@ -27,7 +27,6 @@
     };
     var initEvents = function () {
         var grid;
-        var tree;
         var options = {
             url: App.href + "/api/core/appManager/list",
             contentType: "table",
@@ -53,6 +52,13 @@
                 {
                     title: "发布时间",
                     field: "publishTime"
+                },
+                {
+                    title: "是否当前版本",
+                    field: "current",
+                    format: function (i, d) {
+                        return d.current === 1 ? '是' : '否';
+                    }
                 }
             ],
             actionColumnText: "操作",//操作列文本
@@ -74,6 +80,12 @@
                             success: function (data) {
                                 if (data.code === 200) {
                                     var formItems = data.data;
+                                    var items = [];
+                                    $.each(formItems, function (i, d) {
+                                        if (d.name == 'downloadUrl')
+                                            d.type = 'text';
+                                        items.push(d);
+                                    });
                                     var form = modal.$body.orangeForm({
                                         id: "edit_form",
                                         name: "edit_form",
@@ -96,7 +108,7 @@
                                             }
                                         }],
                                         buttonsAlign: "center",
-                                        items: formItems
+                                        items: items
                                     });
                                     form.loadRemote(App.href + "/api/core/appManager/load/" + d.id);
                                 } else {
@@ -138,10 +150,35 @@
                         });
                     }
                 }, {
-                    text: "下载",
-                    cls: "btn-danger btn-sm",
+                    text: "设置为当前",
+                    visible: function (i, d) {
+                        return d.current !== 1;
+                    },
+                    cls: "btn-info btn-sm",
                     handle: function (index, data) {
-                        window.open(App.href + data.downloadUrl);
+                        bootbox.confirm("确定该操作?", function (result) {
+                            if (result) {
+                                var requestUrl = App.href + "/api/core/appManager/current";
+                                $.ajax({
+                                    type: "POST",
+                                    dataType: "json",
+                                    data: {
+                                        id: data.id
+                                    },
+                                    url: requestUrl,
+                                    success: function (data) {
+                                        if (data.code === 200) {
+                                            grid.reload();
+                                        } else {
+                                            alert(data.message);
+                                        }
+                                    },
+                                    error: function (e) {
+                                        alert("请求异常。");
+                                    }
+                                });
+                            }
+                        });
                     }
                 }
             ],
@@ -163,6 +200,12 @@
                             success: function (data) {
                                 if (data.code === 200) {
                                     var formItems = data.data;
+                                    var items = [];
+                                    $.each(formItems, function (i, d) {
+                                        if (d.name == 'downloadUrl')
+                                            d.type = 'text';
+                                        items.push(d);
+                                    });
                                     var form = modal.$body.orangeForm({
                                         id: "add_form",
                                         name: "add_form",
@@ -186,7 +229,7 @@
                                             }
                                         }],
                                         buttonsAlign: "center",
-                                        items: formItems
+                                        items: items
                                     });
                                 } else {
                                     alert(data.message);
@@ -211,7 +254,7 @@
                             {
                                 text: '全部',
                                 value: ''
-                            },{
+                            }, {
                                 text: '苹果',
                                 value: 'ios'
                             }, {
