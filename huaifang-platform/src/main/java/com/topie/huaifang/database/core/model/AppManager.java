@@ -35,12 +35,23 @@ public class AppManager {
 
     private Integer current;
 
+    @Column(name = "force_update")
+    private Integer forceUpdate;
+
     /**
      * 发布时间
      */
     @Column(name = "publish_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date publishTime;
+
+    public Integer getForceUpdate() {
+        return forceUpdate;
+    }
+
+    public void setForceUpdate(Integer forceUpdate) {
+        this.forceUpdate = forceUpdate;
+    }
 
     public Integer getCurrent() {
         return current;
