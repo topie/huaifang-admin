@@ -59,6 +59,16 @@ public class AppManagerController {
         return ResponseUtil.success();
     }
 
+    @RequestMapping(value = "/current", method = RequestMethod.POST)
+    @ResponseBody
+    public Result current(@RequestParam(value = "id") Integer id) {
+        AppManager appManager = iAppManagerService.selectByKey(id);
+        appManager.setCurrent(1);
+        iAppManagerService.updateNotNull(appManager);
+        iAppManagerService.updateToNotCurrent(appManager.getSystemType(),appManager.getId());
+        return ResponseUtil.success();
+    }
+
     @RequestMapping(value = "/load/{id}", method = RequestMethod.GET)
     @ResponseBody
     public Result load(@PathVariable(value = "id") Integer id) {

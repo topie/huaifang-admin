@@ -33,12 +33,22 @@ public class AppManager {
     @Column(name = "download_url")
     private String downloadUrl;
 
+    private Integer current;
+
     /**
      * 发布时间
      */
     @Column(name = "publish_time")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date publishTime;
+
+    public Integer getCurrent() {
+        return current;
+    }
+
+    public void setCurrent(Integer current) {
+        this.current = current;
+    }
 
     /**
      * 获取ID

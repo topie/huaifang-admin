@@ -14,4 +14,6 @@ public interface IAppManagerService extends IService<AppManager> {
     PageInfo<AppManager> selectByFilterAndPage(AppManager appManager, int pageNum, int pageSize);
 
     List<AppManager> selectByFilter(AppManager appManager);
+
+    void updateToNotCurrent(String systemType, Integer id);
 }
