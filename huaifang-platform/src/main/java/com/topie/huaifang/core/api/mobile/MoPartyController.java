@@ -45,6 +45,11 @@ public class MoPartyController {
             @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize) {
         PageInfo<PartyMembersActivity> pageInfo = iPartyMembersActivityService
                 .selectByFilterAndPage(partyMembersActivity, pageNum, pageSize);
+        for (PartyMembersActivity membersActivity : pageInfo.getList()) {
+            PartyActivityJoin partyActivityJoin = new PartyActivityJoin();
+            partyActivityJoin.setActivityId(membersActivity.getId());
+            membersActivity.setTotal(iPartyActivityJoinService.selectByFilter(partyActivityJoin).size());
+        }
         return ResponseUtil.success(PageConvertUtil.grid(pageInfo));
     }
 
