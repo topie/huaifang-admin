@@ -15,7 +15,7 @@ public class PageConvertUtil {
     public static Map grid(PageInfo<?> info) {
         Map map = new HashMap();
         map.put("total", info.getTotal());
-        if (info.getPageNum() >= info.getPages()) {
+        if (info.getPageNum() >= info.getLastPage()) {
             map.put("data", new ArrayList<>());
         } else {
             map.put("data", info.getList());
@@ -26,7 +26,7 @@ public class PageConvertUtil {
     public static Map grid(PageInfo<?> info, Object extra) {
         Map map = new HashMap();
         map.put("total", info.getTotal());
-        if (info.getPageNum() >= info.getPages()) {
+        if (info.getPageNum() >= info.getLastPage()) {
             map.put("data", new ArrayList<>());
         } else {
             map.put("data", info.getList());
