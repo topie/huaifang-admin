@@ -61,6 +61,7 @@ public class MoAppTimeLineController {
         if (appUser == null) return ResponseUtil.error(401, "未登录");
         appTimeLine.setAddUserId(appUser.getId());
         appTimeLine.setAddUserName(appUser.getNickname());
+        appTimeLine.setId(null);
         int result = iAppTimeLineService.saveNotNull(appTimeLine);
         return result > 0 ? ResponseUtil.success() : ResponseUtil.error();
     }

@@ -207,9 +207,9 @@
                 items: [
                     {
                         type: "text",
-                        label: "房屋编号",
-                        name: "houseNo",
-                        placeholder: "输入要搜索的房屋编号"
+                        label: "标题",
+                        name: "title",
+                        placeholder: "输入要搜索的标题"
                     }
                 ]
             }
