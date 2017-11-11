@@ -153,7 +153,7 @@ public class MoIndexController {
     @ResponseBody
     public Result head() {
         Map result = new HashMap();
-        result.put("head", "upload/head.jpg");
+        result.put("head", "/upload/head.jpg");
         return ResponseUtil.success(result);
     }
 

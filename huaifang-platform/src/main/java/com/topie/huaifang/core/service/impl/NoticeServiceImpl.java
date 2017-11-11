@@ -50,8 +50,12 @@ public class NoticeServiceImpl extends BaseService<Notice> implements INoticeSer
                 criteria.andLessThanOrEqualTo("pTime", dateArr[1].trim());
             }
         }
-        if (StringUtils.isNotEmpty(notice.getSortWithOutOrderBy()))
+        if (StringUtils.isNotEmpty(notice.getSortWithOutOrderBy())){
             example.setOrderByClause(notice.getSortWithOutOrderBy());
+        }else{
+            example.setOrderByClause("p_time desc");
+        }
+
         return getMapper().selectByExample(example);
     }
 

@@ -50,6 +50,10 @@ public class MoAppTimeLineController {
             comment.setLineId(timeLine.getId());
             List<AppTimeLineComment> commentList = iAppTimeLineCommentService.selectByFilter(comment);
             timeLine.setComments(commentList);
+            AppTimeLineLike appTimeLineLike = new AppTimeLineLike();
+            appTimeLineLike.setLineId(timeLine.getId());
+            List<AppTimeLineLike> likeList = iAppTimeLineLikeService.selectByFilter(appTimeLineLike);
+            timeLine.setLikes(likeList);
         }
         return ResponseUtil.success(PageConvertUtil.grid(pageInfo));
     }
