@@ -8,8 +8,8 @@ import com.topie.huaifang.core.service.IAppUserService;
 import com.topie.huaifang.core.service.IAroundActivityJoinService;
 import com.topie.huaifang.core.service.IAroundActivityService;
 import com.topie.huaifang.database.core.model.AppUser;
-import com.topie.huaifang.database.core.model.AroundActivityJoin;
 import com.topie.huaifang.database.core.model.AroundActivity;
+import com.topie.huaifang.database.core.model.AroundActivityJoin;
 import com.topie.huaifang.security.utils.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,6 +43,11 @@ public class MoAroundActivityController {
             @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize) {
         PageInfo<AroundActivity> pageInfo = iAroundActivityService
                 .selectByFilterAndPage(aroundActivity, pageNum, pageSize);
+        for (AroundActivity activity : pageInfo.getList()) {
+            AroundActivityJoin aroundActivityJoin = new AroundActivityJoin();
+            aroundActivityJoin.setActivityId(aroundActivity.getId());
+            activity.setTotal(iAroundActivityJoinService.selectByFilter(aroundActivityJoin).size());
+        }
         return ResponseUtil.success(PageConvertUtil.grid(pageInfo));
     }
 
