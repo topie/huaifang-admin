@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,6 +46,9 @@ public class MoPartyController {
             @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize) {
         PageInfo<PartyMembersActivity> pageInfo = iPartyMembersActivityService
                 .selectByFilterAndPage(partyMembersActivity, pageNum, pageSize);
+        if(pageNum>pageInfo.getPages()){
+            return ResponseUtil.success(PageConvertUtil.grid(new ArrayList<>()));
+        }
         for (PartyMembersActivity membersActivity : pageInfo.getList()) {
             PartyActivityJoin partyActivityJoin = new PartyActivityJoin();
             partyActivityJoin.setActivityId(membersActivity.getId());

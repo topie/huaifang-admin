@@ -51,7 +51,12 @@ public class MoAppUserMessageController {
                 .selectByFilterAndPage(appUserMessage, pageNum, pageSize);
         Map extra = new HashMap();
         extra.put("time", new Date().getTime());
-        return ResponseUtil.success(PageConvertUtil.grid(pageInfo, extra));
+        if (pageNum > pageInfo.getPages()) {
+            return ResponseUtil.success(PageConvertUtil.grid(new PageInfo<>(), extra));
+        } else {
+            return ResponseUtil.success(PageConvertUtil.grid(pageInfo, extra));
+        }
+
     }
 
     @RequestMapping(value = "/send", method = RequestMethod.POST)

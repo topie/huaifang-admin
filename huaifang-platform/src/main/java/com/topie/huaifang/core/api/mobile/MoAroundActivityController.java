@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,6 +44,9 @@ public class MoAroundActivityController {
             @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize) {
         PageInfo<AroundActivity> pageInfo = iAroundActivityService
                 .selectByFilterAndPage(aroundActivity, pageNum, pageSize);
+        if (pageNum > pageInfo.getPages()) {
+            return ResponseUtil.success(PageConvertUtil.grid(new ArrayList<>()));
+        }
         for (AroundActivity activity : pageInfo.getList()) {
             AroundActivityJoin aroundActivityJoin = new AroundActivityJoin();
             aroundActivityJoin.setActivityId(aroundActivity.getId());

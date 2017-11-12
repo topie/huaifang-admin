@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
+
 /**
  * Created by chenguojun on 2017/4/19.
  */
@@ -30,6 +32,9 @@ public class MoNoticeController {
             @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize) {
         notice.setIsOnline(true);
         PageInfo<Notice> pageInfo = iNoticeService.selectByFilterAndPage(notice, pageNum, pageSize);
+        if(pageNum>pageInfo.getPages()){
+            return ResponseUtil.success(PageConvertUtil.grid(new ArrayList<>()));
+        }
         for (Notice item : pageInfo.getList()) {
             item.setContent(null);
         }

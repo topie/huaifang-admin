@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -45,6 +46,9 @@ public class MoAppTimeLineController {
             @RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum,
             @RequestParam(value = "pageSize", required = false, defaultValue = "1000") int pageSize) {
         PageInfo<AppTimeLine> pageInfo = iAppTimeLineService.selectByFilterAndPage(appTimeLine, pageNum, pageSize);
+        if(pageNum>pageInfo.getPages()){
+            return ResponseUtil.success(PageConvertUtil.grid(new ArrayList<>()));
+        }
         for (AppTimeLine timeLine : pageInfo.getList()) {
             AppTimeLineComment comment = new AppTimeLineComment();
             comment.setLineId(timeLine.getId());

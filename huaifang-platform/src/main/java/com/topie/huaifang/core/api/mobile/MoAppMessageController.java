@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
+
 /**
  * Created by chenguojun on 2017/4/19.
  */
@@ -40,6 +42,9 @@ public class MoAppMessageController {
         if (appUser == null) return ResponseUtil.error("用户信息不存在");
         appMessage.setToUserId(appUser.getId());
         PageInfo<AppMessage> pageInfo = iAppMessageService.selectByFilterAndPage(appMessage, pageNum, pageSize);
+        if(pageNum>pageInfo.getPages()){
+            return ResponseUtil.success(PageConvertUtil.grid(new ArrayList<>()));
+        }
         for (AppMessage item : pageInfo.getList()) {
             item.setContent(null);
         }
