@@ -29,6 +29,9 @@ public class LibraryBookServiceImpl extends BaseService<LibraryBook> implements 
     public List<LibraryBook> selectByFilter(LibraryBook libraryBook) {
         Example example = new Example(LibraryBook.class);
         Example.Criteria criteria = example.createCriteria();
+        if(StringUtils.isNotEmpty(libraryBook.getCategory())){
+            criteria.andEqualTo("category",  libraryBook.getCategory());
+        }
         if (StringUtils.isNotEmpty(libraryBook.getAuthor()))
             criteria.andLike("author", "%" + libraryBook.getAuthor() + "%");
         if (StringUtils.isNotEmpty(libraryBook.getBookName()))
