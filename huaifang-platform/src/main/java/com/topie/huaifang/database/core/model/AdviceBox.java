@@ -44,6 +44,12 @@ public class AdviceBox {
     private String messageContent;
 
     /**
+     * 回复内容:textarea
+     */
+    @Column(name = "reply_content")
+    private String replyContent;
+
+    /**
      * 留言时间:datetime
      */
     @Column(name = "message_time")
@@ -79,6 +85,14 @@ public class AdviceBox {
      * 状态:skip
      */
     private String status;
+
+    public String getReplyContent() {
+        return replyContent;
+    }
+
+    public void setReplyContent(String replyContent) {
+        this.replyContent = replyContent;
+    }
 
     public String getContactEmail() {
         return contactEmail;
