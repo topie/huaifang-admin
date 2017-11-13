@@ -100,8 +100,6 @@ public class MoAppUserController {
         AppUser appUser = iAppUserService.selectByPlatformId(userId);
         if (appUser == null) return ResponseUtil.error("用户不存在");
         iAppUserService.insertToAddFriend(appUser.getId(), id);
-        iAppMessageService.sendSystemAppMessage(id, appUser.getHeadImage(), appUser.getNickname() + "添加您为好友",
-                appUser.getNickname() + "添加您为好友");
         return ResponseUtil.success();
     }
 
