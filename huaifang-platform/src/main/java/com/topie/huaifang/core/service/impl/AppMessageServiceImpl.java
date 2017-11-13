@@ -71,6 +71,7 @@ public class AppMessageServiceImpl extends BaseService<AppMessage> implements IA
                 a.setFromUserName(appUser.getNickname());
                 a.setIsRead(0);
                 a.setEventTime(new Date());
+                a.setCreateTime(new Date());
                 a.setTitle(title);
                 updateNotNull(a);
             } else {
