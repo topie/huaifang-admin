@@ -44,6 +44,7 @@ public class MoAppUserMessageController {
         AppUser appUser = iAppUserService.selectByPlatformId(SecurityUtil.getCurrentUserId());
         if (appUser == null) return ResponseUtil.error(401, "未登录");
         appUserMessage.setToUserId(appUser.getId());
+        appUserMessage.setFromUserId(appUser.getId());
         if (time > 0) {
             appUserMessage.setSendTime(DateUtil.getDateByMillionSecond(time));
         }
