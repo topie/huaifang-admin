@@ -10,7 +10,6 @@ import com.topie.huaifang.database.core.model.AppMessage;
 import com.topie.huaifang.database.core.model.AppUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tk.mybatis.mapper.entity.Example;
 
 import java.util.Date;
 import java.util.List;
@@ -33,12 +32,7 @@ public class AppMessageServiceImpl extends BaseService<AppMessage> implements IA
 
     @Override
     public List<AppMessage> selectByFilter(AppMessage appMessage) {
-        Example example = new Example(AppMessage.class);
-        Example.Criteria criteria = example.createCriteria();
-        if (appMessage.getToUserId() != null) criteria.andEqualTo("toUserId", appMessage.getToUserId());
-        if (appMessage.getCreateTime() != null)
-            criteria.andGreaterThanOrEqualTo("createTime", appMessage.getCreateTime());
-        return getMapper().selectByExample(example);
+        return appMessageMapper.selectByFilter(appMessage);
     }
 
     @Override

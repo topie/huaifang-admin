@@ -18,4 +18,7 @@
         <result column="content" property="content" jdbcType="VARCHAR"/>
         <result column="is_read" property="isRead" jdbcType="TINYINT"/>
     </resultMap>
+    <select id="selectByFilter" resultMap="BaseResultMap">
+        select * from d_app_message where to_user_id=#{toUserId} or from_user_id=#{toUserId}
+    </select>
 </mapper>
