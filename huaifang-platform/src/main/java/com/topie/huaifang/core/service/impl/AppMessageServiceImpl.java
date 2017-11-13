@@ -40,7 +40,7 @@ public class AppMessageServiceImpl extends BaseService<AppMessage> implements IA
         }
         if (appMessage.getCreateTime() != null)
             criteria.andGreaterThanOrEqualTo("createTime", appMessage.getCreateTime());
-        example.setOrderByClause("create_time desc");
+        example.setOrderByClause("event_time desc");
         return getMapper().selectByExample(example);
     }
 
