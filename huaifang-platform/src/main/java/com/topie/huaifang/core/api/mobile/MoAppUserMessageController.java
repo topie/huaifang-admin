@@ -73,6 +73,7 @@ public class MoAppUserMessageController {
         String title = appUserMessage.getContent();
         if (title.length() > 15) title = title.substring(0, 14) + "...";
         iAppMessageService.sentUserAppMessage(appUser.getId(), appUserMessage.getToUserId(), title);
+        iAppMessageService.sentUserAppMessage(appUserMessage.getToUserId(), appUser.getId(), title);
         return ResponseUtil.success(appUserMessage);
     }
 
