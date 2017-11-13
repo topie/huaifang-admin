@@ -42,6 +42,15 @@ public class MoAroundActivityController {
     public Result activityList(AroundActivity aroundActivity,
             @RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum,
             @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize) {
+        Integer userId = SecurityUtil.getCurrentUserId();
+        if (userId == null) return ResponseUtil.error(401, "未登录");
+        AppUser appUser = iAppUserService.selectByPlatformId(userId);
+        if (appUser == null) return ResponseUtil.error("用户不存在");
+        String type = aroundActivity.getType();
+        aroundActivity.setType(null);
+        if ("2".equals(type)) {
+            aroundActivity.setPublishUserId(appUser.getId());
+        }
         PageInfo<AroundActivity> pageInfo = iAroundActivityService
                 .selectByFilterAndPage(aroundActivity, pageNum, pageSize);
         if (pageNum > pageInfo.getPages()) {
