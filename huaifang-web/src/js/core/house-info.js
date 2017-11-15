@@ -15,7 +15,7 @@
                 '<div class="row">' +
                 '<div class="col-md-3" >' +
                 '<div class="panel panel-default" >' +
-                '<div class="panel-heading">房屋管理' +
+                '<div class="panel-heading">房屋信息管理' +
                 '<div class="pull-right">' +
                 '<div class="btn-group">' +
                 '<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">' +

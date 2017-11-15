@@ -15,7 +15,7 @@
                 '<div class="row">' +
                 '<div class="col-md-12" >' +
                 '<div class="panel panel-default" >' +
-                '<div class="panel-heading">村务公开管理</div>' +
+                '<div class="panel-heading">居务公开管理</div>' +
                 '<div class="panel-body" id="grid"></div>' +
                 '</div>' +
                 '</div>' +

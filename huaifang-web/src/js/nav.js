@@ -11,6 +11,7 @@
         "showTaskInfo": showTaskInfo
     };
     App.menusMapping = {};
+
     function toggleMenu() {
         var toggle = $.cookie('bi-menu-toggle');
         if (toggle == undefined) {
@@ -209,11 +210,11 @@
             ele += "<ul class='nav nav-second-level collapse'>";
             $.each(subMenus, function (i, m) {
                 ele += ('<li data-level="sub">'
-                + '<a data-url="' + m.action
-                + '" data-title="' + m.functionName
-                + '" href="javascript:void(0);"><i class="' + (m.icon == null ? "glyphicon glyphicon-list" : m.icon) + '"></i> '
-                + m.functionName
-                + '</a>');
+                    + '<a data-url="' + m.action
+                    + '" data-title="' + m.functionName
+                    + '" href="javascript:void(0);"><i class="' + (m.icon == null ? "glyphicon glyphicon-list" : m.icon) + '"></i> '
+                    + m.functionName
+                    + '</a>');
                 var sMenus = getSubMenu(menus, m.id);
                 ele = thirdMenu(ele, sMenus);
                 ele += '</li>';
@@ -228,11 +229,11 @@
             ele += "<ul style='z-index: 10000;' class='dropdown-menu animated flipInX'>";
             $.each(subMenus, function (i, m) {
                 ele += ('<li data-level="sub">'
-                + '<a data-url="' + m.action
-                + '" data-title="' + m.functionName
-                + '" href="/index.html?u=' + m.action + '"><i class="' + (m.icon == null ? "glyphicon glyphicon-list" : m.icon) + '"></i> '
-                + m.functionName
-                + '</a>');
+                    + '<a data-url="' + m.action
+                    + '" data-title="' + m.functionName
+                    + '" href="/index.html?u=' + m.action + '"><i class="' + (m.icon == null ? "glyphicon glyphicon-list" : m.icon) + '"></i> '
+                    + m.functionName
+                    + '</a>');
                 ele += '</li>';
             });
             ele += "</ul>";
@@ -245,11 +246,11 @@
             ele += "<ul class='nav nav-third-level collapse'>";
             $.each(subMenus, function (i, m) {
                 ele += ('<li data-level="sub">'
-                + '<a data-url="' + m.action
-                + '" data-title="' + m.functionName
-                + '" href="javascript:void(0);"><i class="' + (m.icon == null ? "glyphicon glyphicon-list" : m.icon) + '"></i> '
-                + m.functionName
-                + '</a>');
+                    + '<a data-url="' + m.action
+                    + '" data-title="' + m.functionName
+                    + '" href="javascript:void(0);"><i class="' + (m.icon == null ? "glyphicon glyphicon-list" : m.icon) + '"></i> '
+                    + m.functionName
+                    + '</a>');
                 ele += '</li>';
             });
             ele += "</ul>";
@@ -407,14 +408,6 @@
                                 $(ul).append(li);
                             }
                         });
-                        // $(ul).find("li[class!=dropdown] > a")
-                        //     .each(function () {
-                        //             var url = $(this).attr("data-url");
-                        //             $(this).on("click", function () {
-                        //                 window.location.href = App.href + '/index.html?u=' + url;
-                        //             });
-                        //         }
-                        //     );
                         refreshHref(ul);
                     } else if (result.code === 401) {
                         bootbox.alert("token失效,请登录!");
@@ -446,6 +439,7 @@
                 a.parent().parent().removeClass("collapse").addClass("in");
             }
             if (f != undefined) {
+
                 App[f].page(title);
             } else {
                 loadCommonMenu(url, title);
