@@ -44,6 +44,8 @@
                     format: function (i, d) {
                         if (d.type == 1) {
                             return '物业公告';
+                        } else if (d.type == 2) {
+                            return '村务公告';
                         } else {
                             return '社区公告';
                         }
@@ -204,6 +206,10 @@
                                         {
                                             text: '物业公告',
                                             value: 1
+                                        },
+                                        {
+                                            text: '村务公告',
+                                            value: 2
                                         }
                                     ],
                                     rule: {
@@ -422,6 +428,10 @@
                                         {
                                             text: '物业公告',
                                             value: 1
+                                        },
+                                        {
+                                            text: '村务公告',
+                                            value: 2
                                         }
                                     ],
                                     rule: {
@@ -506,6 +516,10 @@
                             {
                                 text: '物业公告',
                                 value: 1
+                            },
+                            {
+                                text: '村务公告',
+                                value: 2
                             }
                         ]
                     },
