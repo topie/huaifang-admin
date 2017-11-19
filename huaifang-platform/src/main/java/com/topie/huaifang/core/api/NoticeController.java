@@ -8,7 +8,6 @@ import com.topie.huaifang.common.utils.Result;
 import com.topie.huaifang.core.service.IAppUserService;
 import com.topie.huaifang.core.service.INoticeService;
 import com.topie.huaifang.core.service.ITagService;
-import com.topie.huaifang.database.core.model.AppUser;
 import com.topie.huaifang.database.core.model.Notice;
 import com.topie.huaifang.database.core.model.Tag;
 import com.topie.huaifang.security.utils.SecurityUtil;
@@ -42,16 +41,6 @@ public class NoticeController {
     public Result list(Notice notice,
             @RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum,
             @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize) {
-        AppUser appUser = iAppUserService.selectByPlatformId(SecurityUtil.getCurrentUserId());
-        List<Integer> tagIds = new ArrayList<>();
-        tagIds.add(0);
-        if (appUser != null) {
-            List<Integer> list = iTagService.selectTagIdsByUserId(appUser.getId());
-            for (Integer id : list) {
-                tagIds.add(id);
-            }
-        }
-        notice.setTagIds(tagIds);
         PageInfo<Notice> pageInfo = iNoticeService.selectByFilterAndPage(notice, pageNum, pageSize);
         return ResponseUtil.success(PageConvertUtil.grid(pageInfo));
     }
