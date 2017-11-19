@@ -13,3 +13,8 @@ COMMENT '是否强制更新:select:[0#否,1#是]';
 ALTER TABLE d_advice_box
   ADD COLUMN reply_content VARCHAR(255) DEFAULT ''
 COMMENT '回复内容:textarea';
+
+
+ALTER TABLE d_notice
+  ADD COLUMN tag_id INT(11) DEFAULT 0
+COMMENT '可见标签ID';

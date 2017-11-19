@@ -30,6 +30,7 @@ public class NoticeServiceImpl extends BaseService<Notice> implements INoticeSer
         Example.Criteria criteria = example.createCriteria();
         if (StringUtils.isNotEmpty(notice.getTitle())) criteria.andLike("title", "%" + notice.getTitle() + "%");
         if (notice.getType() != null) criteria.andEqualTo("type", notice.getType());
+        if (notice.getTagIds() != null) criteria.andIn("tagId", notice.getTagIds());
         if (notice.getPosition() != null) criteria.andEqualTo("position", notice.getPosition());
         if (notice.getIsOnline() != null) criteria.andEqualTo("isOnline", notice.getIsOnline());
         if (StringUtils.isNotEmpty(notice.getPeriodC())) {
@@ -50,9 +51,9 @@ public class NoticeServiceImpl extends BaseService<Notice> implements INoticeSer
                 criteria.andLessThanOrEqualTo("pTime", dateArr[1].trim());
             }
         }
-        if (StringUtils.isNotEmpty(notice.getSortWithOutOrderBy())){
+        if (StringUtils.isNotEmpty(notice.getSortWithOutOrderBy())) {
             example.setOrderByClause(notice.getSortWithOutOrderBy());
-        }else{
+        } else {
             example.setOrderByClause("p_time desc");
         }
 

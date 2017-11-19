@@ -15,4 +15,6 @@ public interface TagMapper extends Mapper<Tag> {
 
     int deleteUserTag(@Param("userId") Integer userId, @Param("tagId") Integer tagId);
 
+    List<Integer> selectTagIdsByUserId(@Param("userId")Integer userId);
+
 }

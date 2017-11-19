@@ -1,18 +1,25 @@
 package com.topie.huaifang.core.api;
 
 import com.github.pagehelper.PageInfo;
+import com.topie.huaifang.common.utils.Option;
 import com.topie.huaifang.common.utils.PageConvertUtil;
 import com.topie.huaifang.common.utils.ResponseUtil;
 import com.topie.huaifang.common.utils.Result;
+import com.topie.huaifang.core.service.IAppUserService;
 import com.topie.huaifang.core.service.INoticeService;
+import com.topie.huaifang.core.service.ITagService;
+import com.topie.huaifang.database.core.model.AppUser;
 import com.topie.huaifang.database.core.model.Notice;
+import com.topie.huaifang.database.core.model.Tag;
 import com.topie.huaifang.security.utils.SecurityUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by chenguojun on 2017/4/19.
@@ -24,11 +31,27 @@ public class NoticeController {
     @Autowired
     private INoticeService iNoticeService;
 
+    @Autowired
+    private IAppUserService iAppUserService;
+
+    @Autowired
+    private ITagService iTagService;
+
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
     public Result list(Notice notice,
             @RequestParam(value = "pageNum", required = false, defaultValue = "1") int pageNum,
             @RequestParam(value = "pageSize", required = false, defaultValue = "15") int pageSize) {
+        AppUser appUser = iAppUserService.selectByPlatformId(SecurityUtil.getCurrentUserId());
+        List<Integer> tagIds = new ArrayList<>();
+        tagIds.add(0);
+        if (appUser != null) {
+            List<Integer> list = iTagService.selectTagIdsByUserId(appUser.getId());
+            for (Integer id : list) {
+                tagIds.add(id);
+            }
+        }
+        notice.setTagIds(tagIds);
         PageInfo<Notice> pageInfo = iNoticeService.selectByFilterAndPage(notice, pageNum, pageSize);
         return ResponseUtil.success(PageConvertUtil.grid(pageInfo));
     }
@@ -88,4 +111,14 @@ public class NoticeController {
         return ResponseUtil.success();
     }
 
+    @RequestMapping(value = "/tags")
+    @ResponseBody
+    public List<Option> tags() {
+        List<Option> options = new ArrayList<>();
+        List<Tag> list = iTagService.selectByFilter(new Tag());
+        for (Tag item : list) {
+            options.add(new Option(item.getTagName(), item.getId()));
+        }
+        return options;
+    }
 }

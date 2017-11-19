@@ -23,4 +23,6 @@ public interface ITagService extends IService<Tag> {
 
     int deleteUserTag(Integer userId, Integer tagId);
 
+    List<Integer> selectTagIdsByUserId(Integer id);
+
 }

@@ -52,4 +52,9 @@ public class TagServiceImpl extends BaseService<Tag> implements ITagService {
         return tagMapper.deleteUserTag(userId, tagId);
     }
 
+    @Override
+    public List<Integer> selectTagIdsByUserId(Integer userId) {
+        return tagMapper.selectTagIdsByUserId(userId);
+    }
+
 }

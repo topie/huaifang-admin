@@ -29,4 +29,7 @@
             and ut.tag_id=#{tagId}
         </if>
     </select>
+    <select id="selectTagIdsByUserId" resultType="java.lang.Integer">
+        select disinct tag_id from d_user_tag where user_id=#{userId}
+    </select>
 </mapper>

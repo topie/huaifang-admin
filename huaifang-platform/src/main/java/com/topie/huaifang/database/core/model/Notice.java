@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Table(name = "d_notice")
 public class Notice extends Sortable {
@@ -67,6 +68,12 @@ public class Notice extends Sortable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date pTime;
 
+    @Column(name = "tag_id")
+    private Integer tagId;
+
+    @Transient
+    private List<Integer> tagIds;
+
     /**
      * 内容
      */
@@ -82,6 +89,22 @@ public class Notice extends Sortable {
 
     @Column(name = "read_count")
     private Integer readCount;
+
+    public List<Integer> getTagIds() {
+        return tagIds;
+    }
+
+    public void setTagIds(List<Integer> tagIds) {
+        this.tagIds = tagIds;
+    }
+
+    public Integer getTagId() {
+        return tagId;
+    }
+
+    public void setTagId(Integer tagId) {
+        this.tagId = tagId;
+    }
 
     public String getPeriodC() {
         return periodC;
