@@ -16,5 +16,7 @@
         <result column="p_time" jdbcType="TIMESTAMP" property="pTime"/>
         <result column="content" jdbcType="LONGVARCHAR" property="content"/>
         <result column="read_count" jdbcType="INTEGER" property="readCount"/>
+        <result column="tag_id" jdbcType="INTEGER" property="tagId"/>
+
     </resultMap>
 </mapper>
