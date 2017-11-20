@@ -265,10 +265,23 @@
                                         required: "正文"
                                     }
                                 }, {
+                                    type: 'select',
+                                    name: 'tagId',
+                                    id: 'tagId',
+                                    label: '可见标签',
+                                    items: [
+                                        {
+                                            text: '全部',
+                                            value: 0
+                                        }
+                                    ],
+                                    itemsUrl: App.href + "/api/core/notice/tags"
+                                }, {
                                     type: 'text',
                                     name: 'cUser',
                                     id: 'cUser',
-                                    label: '发布者'
+                                    label: '发布者',
+                                    detail: '不填写是为当前用户'
                                 }
                             ]
                         });
@@ -392,6 +405,7 @@
                             showReset: true,
                             resetText: "重置",
                             isValidate: true,
+                            select2: true,
                             buttons: [
                                 {
                                     type: 'button',
@@ -486,10 +500,23 @@
                                         required: "正文"
                                     }
                                 }, {
+                                    type: 'select',
+                                    name: 'tagId',
+                                    id: 'tagId',
+                                    label: '可见标签',
+                                    items: [
+                                        {
+                                            text: '全部',
+                                            value: 0
+                                        }
+                                    ],
+                                    itemsUrl: App.href + "/api/core/notice/tags"
+                                }, {
                                     type: 'text',
                                     name: 'cUser',
                                     id: 'cUser',
-                                    label: '发布者'
+                                    label: '发布者',
+                                    detail: '不填写则默认为当前用户'
                                 }
                             ]
                         })
