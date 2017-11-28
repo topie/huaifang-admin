@@ -35,7 +35,10 @@ public class PersonInfoRentServiceImpl extends BaseService<PersonInfoRent> imple
     public PersonInfoRent selectByPersonId(Integer id) {
         PersonInfoRent personInfoRent = new PersonInfoRent();
         personInfoRent.setrPersonId(id);
-        return getMapper().selectOne(personInfoRent);
+        List<PersonInfoRent> list = getMapper().select(personInfoRent);
+        if(list.size()>0)
+            return list.get(0);
+        return null;
     }
 
 }

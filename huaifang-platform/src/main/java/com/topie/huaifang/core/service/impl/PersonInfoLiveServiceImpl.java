@@ -35,7 +35,9 @@ public class PersonInfoLiveServiceImpl extends BaseService<PersonInfoLive> imple
     public PersonInfoLive selectByPersonId(Integer lId) {
         PersonInfoLive personInfoLive = new PersonInfoLive();
         personInfoLive.setlPersonId(lId);
-        return getMapper().selectOne(personInfoLive);
+        List<PersonInfoLive> list = getMapper().select(personInfoLive);
+        if (list.size() > 0) return list.get(0);
+        return null;
     }
 
 }
