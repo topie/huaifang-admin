@@ -67,7 +67,8 @@
                     <property name="properties">
                         <value>
                             dialect=mysql
-                            reasonable=true
+                            pageSizeZero=true
+                            reasonable=false
                             supportMethodsArguments=true
                             params=count=countSql
                             autoRuntimeDialect=true
