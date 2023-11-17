@@ -8,19 +8,6 @@
     <version>1.0-SNAPSHOT</version>
     <name>huaifang-platform</name>
 
-    <distributionManagement>
-        <repository>
-            <id>releases</id>
-            <name>Nexus Release Repository</name>
-            <url>http://123.56.244.10:8081/nexus/content/repositories/releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>snapshots</id>
-            <name>Nexus Snapshot Repository</name>
-            <url>http://123.56.244.10:8081/nexus/content/repositories/snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
-
     <developers>
         <developer>
             <name>chenJz1012</name>
